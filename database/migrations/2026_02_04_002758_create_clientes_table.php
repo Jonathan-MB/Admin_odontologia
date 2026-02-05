@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('segundo_apellido',45);
             $table->string('numero_documento',45)->unique();
             $table->string('direccion',80);
+            $table->string('correo',150);
             $table->string('telefono',45);
             $table->date('fecha_nacimiento');
-            $table->date('fecha_cita')->index();
+            $table->dateTime('fecha_cita')->index();
             $table->decimal('saldo', 10, 2)->default(0);
             
             $table->timestamps();
