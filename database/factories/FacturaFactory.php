@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Cliente;
+use App\Models\Especialista;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FacturaFactory extends Factory
@@ -11,8 +13,8 @@ class FacturaFactory extends Factory
         return [
             'abono' => fake()->randomFloat(2, 0, 10000),
             'saldo' => fake()->randomFloat(2, 0, 1000000),
-            'cliente_id' => fake()->numberBetween(1, 10),
-            'especialista_id' => fake()->numberBetween(1, 8),
+            'cliente_id' => Cliente::inRandomOrder()->value('id'),
+            'especialista_id' => Especialista::inRandomOrder()->value('id'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Sede;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class EspecialistaFactory extends Factory
     {
         return [
             'nombre'=>fake()->name(),
-            'sede_id'=>fake()->numberBetween(1,2),
+            'sede_id'=>Sede::inRandomOrder()->value('id'),
         ];
     }
 }
