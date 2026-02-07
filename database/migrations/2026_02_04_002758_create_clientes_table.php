@@ -24,11 +24,11 @@ return new class extends Migration
             $table->dateTime('fecha_cita')->index();
             $table->decimal('saldo', 10, 2)->default(0);
             
-            $table->timestamps();
             
             $table->foreignId('tipo_documento_id')->constrained('tipo_documentos')->restrictOnDelete();
             $table->foreignId('eps_id')->constrained('eps')->restrictOnDelete();
-
+            
+            $table->timestamps();
             
         });
     }

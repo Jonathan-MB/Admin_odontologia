@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->decimal('abono', 10, 2)->default(0);
             $table->decimal('saldo', 10, 2)->default(0);
-            $table->timestamps();
-
+            
             $table->foreignId('cliente_id')->constrained('clientes')->restrictOnDelete();
             $table->foreignId('especialista_id')->constrained('especialistas')->restrictOnDelete();
-
+            
+            $table->timestamps();
 
         });
     }
