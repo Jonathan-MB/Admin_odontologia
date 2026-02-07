@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Eps;
+use App\Models\TipoDocumento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClienteFactory extends Factory
@@ -19,8 +21,8 @@ class ClienteFactory extends Factory
             'fecha_nacimiento' => fake()->dateTimeBetween('-80 years', '-5 years')->format('Y-m-d'),
             'fecha_cita' => fake()->dateTimeBetween('now', '+1 month'),
             'saldo' => fake()->randomFloat(2, 0, 1000000),
-            'tipo_documento_id' => fake()->numberBetween(1, 5),
-            'eps_id' => fake()->numberBetween(1, 11),
+            'tipo_documento_id' => TipoDocumento::inRandomOrder()->value('id'),
+            'eps_id' => Eps::inRandomOrder()->value('id'),
         ];
     }
 }
