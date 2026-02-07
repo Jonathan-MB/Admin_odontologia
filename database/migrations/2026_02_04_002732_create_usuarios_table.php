@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string('correo')->unique();
             $table->string('contrasena');
             $table->rememberToken();
-            $table->timestamps();
             
-
             $table->foreignId('rol_id')->constrained('rols')->restrictOnDelete();
-
+            
+            $table->timestamps();
 
         });
 
