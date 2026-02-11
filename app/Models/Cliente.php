@@ -28,9 +28,9 @@ class Cliente extends Model
     ];
 
     protected $casts = [
-        'fecha_nacimiento' => 'date',
-        'fecha_cita' => 'datetime',
-        'saldo' => 'decimal:2',
+        'fecha_nacimiento'  => 'date',
+        'fecha_cita'        => 'datetime',
+        'saldo'             => 'decimal:2',
     ];
 
 

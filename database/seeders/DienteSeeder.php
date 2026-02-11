@@ -18,10 +18,10 @@ class DienteSeeder extends Seeder
             'Vestibular Abajo Derecha'    => range(41, 48),
 
             // UNGUALES
-            'Unguales Arriba Derecha'     => range(11, 18),
-            'Unguales Arriba Izquierda'   => range(21, 28),
-            'Unguales Abajo Izquierda'    => range(31, 38),
-            'Unguales Abajo Derecha'      => range(41, 48),
+            'Unguales Arriba Derecha'     => range(51, 55),
+            'Unguales Arriba Izquierda'   => range(61, 65),
+            'Unguales Abajo Izquierda'    => range(71, 75),
+            'Unguales Abajo Derecha'      => range(81, 85),
         ];
 
         // 🔹 Crear dientes numerados
@@ -34,27 +34,33 @@ class DienteSeeder extends Seeder
 
             foreach ($dientes as $numero) {
                 Diente::firstOrCreate([
-                    'nombre' => (string) $numero,
-                    'grupo_id' => $grupo->id,
+
+                    'nombre'    => (string) $numero,
+                    'grupo_id'  => $grupo->id,
+
                 ]);
             }
         }
 
-        // 🔹 Crear diente "General" en grupo "General"
+        //  Crear diente "General" en grupo "General"
         $grupoGeneral = Grupo::where('nombre', 'General')->first();
         if ($grupoGeneral) {
             Diente::firstOrCreate([
-                'nombre' => 'General',
-                'grupo_id' => $grupoGeneral->id,
+
+                'nombre'    => 'General',
+                'grupo_id'  => $grupoGeneral->id,
+
             ]);
         }
 
-        // 🔹 Crear diente "Otros" en grupo "Otros"
+        // Crear diente "Otros" en grupo "Otros"
         $grupoOtros = Grupo::where('nombre', 'Otros')->first();
         if ($grupoOtros) {
             Diente::firstOrCreate([
-                'nombre' => 'Otros',
-                'grupo_id' => $grupoOtros->id,
+
+                'nombre'    => 'Otros',
+                'grupo_id'  => $grupoOtros->id,
+
             ]);
         }
     }

@@ -9,18 +9,26 @@ class EpsSeeder extends Seeder
 {
     public function run(): void
     {
-        Eps::insert([
-            ['nombre' => 'Coosalud'],
-            ['nombre' => 'Nueva EPS'],
-            ['nombre' => 'Salud Mía'],
-            ['nombre' => 'Salud Total'],
-            ['nombre' => 'Sanitas'],
-            ['nombre' => 'Sura'],
-            ['nombre' => 'Famisanar'],
-            ['nombre' => 'SOS (Servicio Occidental de Salud)'],
-            ['nombre' => 'Comfenalco Valle'],
-            ['nombre' => 'Compensar'],
-            ['nombre' => 'Emssanar'],
-        ]);
+
+
+        $eps = [
+            'Coosalud',
+            'Nueva EPS',
+            'Salud Mía',
+            'Salud Total',
+            'Sanitas',
+            'Sura',
+            'Famisanar',
+            'SOS (Servicio Occidental de Salud)',
+            'Comfenalco Valle',
+            'Compensar',
+            'Emssanar',
+        ];
+
+        foreach ($eps as $nombre) {
+            Eps::firstOrCreate([
+                'nombre' => $nombre,
+            ]);
+        }
     }
 }
