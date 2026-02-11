@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             GrupoSeeder::class,
             DienteSeeder::class,
             
-            
             ]);
+
             Cliente::factory(10)->create();
             Especialista::factory(8)->create();
             Historia::factory(40)->create();

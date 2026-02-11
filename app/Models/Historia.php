@@ -11,10 +11,10 @@ class Historia extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'observacion',
-        'diente_id',
         'cliente_id',
-        'especialista_id'
+        'especialista_id',
+        'diente_id',
+        'observacion',
 
     ];
 

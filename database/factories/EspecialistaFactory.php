@@ -18,8 +18,8 @@ class EspecialistaFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre'=>fake()->name(),
-            'sede_id'=>Sede::inRandomOrder()->value('id'),
+            'nombre'    => fake()->name(),
+            'sede_id'   => Sede::inRandomOrder()->value('id'),
         ];
     }
 }

@@ -13,13 +13,19 @@ class TipoDocumentoSeeder extends Seeder
      */
     public function run(): void
     {
-        TipoDocumento::insert([
-            ['nombre' => 'Cédula de ciudadanía'],
-            ['nombre' => 'Tarjeta de identidad'],
-            ['nombre' => 'Registro civil'],
-            ['nombre' => 'Cédula de extranjería'],
-            ['nombre' => 'Pasaporte'],
 
-        ]);
+        $tipoDocumentos = [
+            'Cédula de ciudadanía',
+            'Tarjeta de identidad',
+            'Registro civil',
+            'Cédula de extranjería',
+            'Pasaporte',
+        ];
+
+        foreach ($tipoDocumentos as $nombre) {
+            TipoDocumento::firstOrCreate([
+                'nombre' => $nombre,
+            ]);
+        }
     }
 }
