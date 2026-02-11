@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
 
 use App\Filters\UsuarioFilter;
 use App\Http\Requests\StoreUsuarioRequest;

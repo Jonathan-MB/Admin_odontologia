@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\DienteController;
-use App\Http\Controllers\EpsController;
-use App\Http\Controllers\EspecialistaController;
-use App\Http\Controllers\FacturaController;
-use App\Http\Controllers\GrupoController;
-use App\Http\Controllers\HistoriaController;
-use App\Http\Controllers\RolController;
-use App\Http\Controllers\SedeController;
-use App\Http\Controllers\TipoDocumentoController;
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\Api\V1\ClienteController;
+use App\Http\Controllers\Api\V1\DienteController;
+use App\Http\Controllers\Api\V1\EpsController;
+use App\Http\Controllers\Api\V1\EspecialistaController;
+use App\Http\Controllers\Api\V1\FacturaController;
+use App\Http\Controllers\Api\V1\GrupoController;
+use App\Http\Controllers\Api\V1\HistoriaController;
+use App\Http\Controllers\Api\V1\RolController;
+use App\Http\Controllers\Api\V1\SedeController;
+use App\Http\Controllers\Api\V1\TipoDocumentoController;
+use App\Http\Controllers\Api\V1\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -21,7 +21,7 @@ Route::get('/test', function () {
     return 'hola';
 });
 
-Route::group(['prefix'=>'v1', 'namespace' => 'App\Http\Controllers'], function(){
+Route::group(['prefix'=>'v1'], function(){
     Route::apiResource('dientes',DienteController::class);
     Route::apiResource('clientes',ClienteController::class);
     Route::apiResource('especialistas',EspecialistaController::class);
@@ -33,5 +33,6 @@ Route::group(['prefix'=>'v1', 'namespace' => 'App\Http\Controllers'], function()
     Route::apiResource('tipoDocumentos',TipoDocumentoController::class);
     Route::apiResource('usuarios',UsuarioController::class);
     Route::apiResource('eps', EpsController::class)->parameters(['eps' => 'eps']);
-    Route::post('historias/bulk',['uses'=>'HistoriaController@bulkStore']);
+    Route::post('historias/bulk', [HistoriaController::class, 'bulkStore']);
+
 });
