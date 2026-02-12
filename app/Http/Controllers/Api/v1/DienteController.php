@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Diente;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\DienteCollection;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

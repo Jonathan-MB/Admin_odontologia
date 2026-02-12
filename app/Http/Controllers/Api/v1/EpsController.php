@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
+
 
 use App\Filters\EpsFilter;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEpsRequest;
 use App\Http\Requests\UpdateEpsRequest;
 use App\Http\Resources\EpsCollection;
