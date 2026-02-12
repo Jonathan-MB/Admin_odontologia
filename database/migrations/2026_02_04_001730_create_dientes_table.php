@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('dientes', function (Blueprint $table) {
             $table->id();            
             $table->string('nombre',45);
-            $table->timestamps();
-
+            
             $table->foreignId('grupo_id')->constrained('grupos')->restrictOnDelete();
-
+            
+            $table->timestamps();
+            
         });
     }
 
