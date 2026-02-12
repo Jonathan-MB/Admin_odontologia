@@ -21,18 +21,32 @@ Route::get('/test', function () {
     return 'hola';
 });
 
-Route::group(['prefix'=>'v1'], function(){
-    Route::apiResource('dientes',DienteController::class);
-    Route::apiResource('clientes',ClienteController::class);
-    Route::apiResource('especialistas',EspecialistaController::class);
-    Route::apiResource('facturas',FacturaController::class);
-    Route::apiResource('grupos',GrupoController::class);
-    Route::apiResource('historias',HistoriaController::class);
-    Route::apiResource('rols',RolController::class);
-    Route::apiResource('sedes',SedeController::class);
-    Route::apiResource('tipoDocumentos',TipoDocumentoController::class);
-    Route::apiResource('usuarios',UsuarioController::class);
-    Route::apiResource('eps', EpsController::class)->parameters(['eps' => 'eps']);
-    Route::post('historias/bulk', [HistoriaController::class, 'bulkStore']);
+Route::prefix('v1')->group(function () {
 
+    // LOGIN libre
+    Route::post('login', [UsuarioController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+        // LOGOUT solo autenticado
+        Route::post('logout', [UsuarioController::class, 'logout']);
+
+        // TODO usuarios solo ADMIN
+        Route::middleware('rol:1')->group(function () {
+            Route::apiResource('usuarios', UsuarioController::class);
+        });
+
+        // Otras rutas normales autenticadas
+        Route::apiResource('dientes', DienteController::class);
+        Route::apiResource('clientes', ClienteController::class);
+        Route::apiResource('especialistas', EspecialistaController::class);
+        Route::apiResource('facturas', FacturaController::class);
+        Route::apiResource('grupos', GrupoController::class);
+        Route::apiResource('historias', HistoriaController::class);
+        Route::post('historias/bulk', [HistoriaController::class, 'bulkStore']);
+        Route::apiResource('rols', RolController::class);
+        Route::apiResource('sedes', SedeController::class);
+        Route::apiResource('tipoDocumentos', TipoDocumentoController::class);
+        Route::apiResource('eps', EpsController::class)->parameters(['eps' => 'eps']);
+    });
 });

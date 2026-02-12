@@ -11,14 +11,14 @@ class StoreUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('api')->check() && auth('api')->user()->rol_id === 1;
     }
 
 
     public function rules(): array
     {
         return [
-            'nombre'        => ['required', 'string', 'max:45', 'unique:usuario,nombre'],
+            'nombre'        => ['required', 'string', 'max:45', 'unique:usuarios,nombre'],
             'correo'        => ['required', 'email', 'unique:usuarios,correo'],
             'contrasena'    => ['required', 'string', 'min:8'],
             'rol_id'        => ['required', 'integer', 'exists:rols,id'],

@@ -19,7 +19,7 @@ class UsuarioSeeder extends Seeder
             ['correo' => 'develobri@gmail.com'],
             [
                 'nombre' => 'Jonathan Marin',
-                'contrasena' => Hash::make('Administrador1$'),
+                'contrasena' => 'Administrador1$',
                 'rol_id' => $rolAdmin?->id,
             ]
         );
@@ -29,7 +29,7 @@ class UsuarioSeeder extends Seeder
             ['correo' => 'pruebas@gmail.com'],
             [
                 'nombre' => 'Usuario Prueba',
-                'contrasena' => Hash::make('Prueba1$'),
+                'contrasena' => '123456789',
                 'rol_id' => $rolColaborador?->id,
             ]
         );
