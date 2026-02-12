@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('eps', function (Blueprint $table) {
             $table->id();            
             $table->string('nombre',45)->index();
+            
             $table->timestamps();
         });
     }

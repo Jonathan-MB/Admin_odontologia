@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string('correo')->unique();
             $table->string('contrasena');
             $table->rememberToken();
-            $table->timestamps();
             
-
             $table->foreignId('rol_id')->constrained('rols')->restrictOnDelete();
-
+            
+            $table->timestamps();
 
         });
 
@@ -30,7 +29,7 @@ return new class extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
-
+        
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('usuario_id')->nullable()->index();

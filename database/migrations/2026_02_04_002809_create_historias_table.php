@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('historias', function (Blueprint $table) {
             $table->id();
             $table->string('observacion',1000);
-            $table->timestamps();
-
+            
             $table->foreignId('diente_id')->constrained('dientes')->restrictOnDelete();
             $table->foreignId('cliente_id')->constrained('clientes')->restrictOnDelete();
             $table->foreignId('especialista_id')->constrained('especialistas')->restrictOnDelete();
-
+            
+            $table->timestamps();
 
         });
     }
