@@ -1,0 +1,122 @@
+.titulo-elemento-p {
+    text-shadow: 0px 3px 6px #000003a2;
+    color: #ffffff;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.dato-traido {
+    height: 30px;
+    width: 240px;
+    border-radius: 10px;
+    background-color: #001165;
+    border: 3px solid #01018c;
+    box-shadow: 0px 3px 6px #000003a2;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px;
+    overflow: hidden;
+    color: #000000;
+}
+
+.saldo {
+    background-color: #fc6e75;
+    width: 100%;
+    border-radius: 10px;
+    justify-content: center;
+    padding: 10px;
+    font-size: x-large;
+}
+
+.factura-tarjeta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 30px;
+}
+
+.factura-tarjeta p {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cuerpo-historias {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    overflow: hidden;
+}
+
+.factura-linea {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+.factura-linea label {
+    width: 150px;
+    margin: 10px 0px;
+    font-size: large;
+    font-weight: bold;
+    color: #001165;
+    text-shadow: 0px 1px 2px #000003a2;
+}
+.factura-linea input {
+    width: 350px;
+    height: 30px;
+    border: 3px solid #001165;
+    border-radius: 10px;
+    padding: 4px;
+    font-size: larger;
+    font-weight: bold;
+}
+.factura-linea select {
+    width: 350px;
+    height: 30px;
+    border: 3px solid #001165;
+    border-radius: 10px;
+    padding: 4px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.factura-linea p {
+    
+    border-radius: 10px;
+    padding: 4px;
+    font-size: larger;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.boton-guardar{
+    width: 100%;
+    height: 40px;
+    margin: 40px 0px;
+    background-color: #01018c;
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+}
+.boton-guardar:hover{
+      transform: scale(1.2);
+    transition: 0.4s;
+    border-radius: 10px;
+    background-color: #fc6e75;
+    box-shadow: 1px 6px 8px #000000;
+}
+
+.factura-linea input:focus{
+    transform: scale(1.2);
+    transition: 0.4s;
+    box-shadow: 1px 6px 8px #000000;
+}
+
+.factura-linea select:focus{
+    transform: scale(1.2);
+    transition: 0.4s;
+    box-shadow: 1px 6px 8px #000000;
+}
+

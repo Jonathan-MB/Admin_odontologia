@@ -15,6 +15,8 @@ class Historia extends Model
         'especialista_id',
         'diente_id',
         'observacion',
+        'fecha',
+
 
     ];
 
@@ -26,12 +28,12 @@ class Historia extends Model
 
     public function cliente(): BelongsTo
     {
-        return $this->belongsTo(Cliente::class, 'diente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
 
     public function especialista(): BelongsTo
     {
-        return $this->belongsTo(Especialista::class, 'diente_id');
+        return $this->belongsTo(Especialista::class, 'especialista_id');
     }
 }

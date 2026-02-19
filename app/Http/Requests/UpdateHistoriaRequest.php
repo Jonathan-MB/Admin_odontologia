@@ -22,6 +22,7 @@ class UpdateHistoriaRequest extends FormRequest
                 'cliente_id'      => ['required', 'integer', 'exists:clientes,id'],
                 'especialista_id' => ['required', 'integer', 'exists:especialistas,id'],
                 'diente_id'       => ['required', 'integer', 'exists:dientes,id'],
+                'fecha'           => ['required', 'date'],
                 'observacion'     => ['required', 'string', 'max:900'],
             ];
         }
@@ -33,6 +34,7 @@ class UpdateHistoriaRequest extends FormRequest
             'cliente_id'      => ['sometimes', 'integer', 'exists:clientes,id'],
             'especialista_id' => ['sometimes', 'integer', 'exists:especialistas,id'],
             'diente_id'       => ['sometimes', 'integer', 'exists:dientes,id'],
+            'fecha'           => ['required', 'date'],
             'observacion'     => ['sometimes', 'string', 'max:900'],
         ];
     }

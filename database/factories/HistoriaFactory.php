@@ -17,6 +17,7 @@ class HistoriaFactory extends Factory
             'cliente_id'        => fake()->numberBetween(1,10),
             'especialista_id'   => fake()->numberBetween(1,8),
             'diente_id'         => fake()->numberBetween(1,54),
+            'fecha'            => fake()->date(),
             'observacion'       => fake()->realTextBetween(15,400),
             ];
     }

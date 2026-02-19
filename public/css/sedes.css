@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+.contenedor-general {
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.tarjeta-sedes {
+    background-color: #ffffff;
+    height: 400px;
+    width: 400px;
+    border-radius: 15px;
+    border: 3px solid #041dde;
+    box-shadow: 5px 5px 9px #00000080;
+}
+.tarjeta-titulo {
+    height: 20%;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #041dde;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tarjeta-titulo {
+    color: #ffffff;
+    font-size: xx-large;
+    font-weight: 600;
+     text-shadow: 3px 3px 6px #000003a2;
+}
+
+.contenedor-sedes {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 80%;
+    padding: 30px;
+    gap: 40px;
+}
+
+.contenedor-sedes button {
+    transform: scale(1);
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border 0.4s ease;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #45aef0;
+    box-shadow: 5px 5px 9px rgba(0, 0, 0, 0.5);
+}
+
+.contenedor-sedes button p {
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: 400;
+    text-shadow: 3px 3px 6px #000003a2;
+}
+
+.contenedor-sedes button:hover {
+    transform: scale(1.1);
+    transition: 0.4s;
+    box-shadow: 13px 13px 13px #000003a2;
+    background-color: #fc6e75;
+}
+

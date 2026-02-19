@@ -1,0 +1,450 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.contenedor-agregar-cliente {
+    background-color: #041ddec9;
+    width: 1100px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 6px 6px 16px #000000;
+    border: 3px solid #01018c;
+}
+
+.linea-agregar-cliente {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3px;
+}
+
+.elemento-formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-elemento {
+    text-shadow: 0px 3px 6px #000003a2;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.dato-elemento {
+    text-shadow: 0px 3px 6px #000003a2;
+    font-size: x-large;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.linea-agregar-cliente label {
+    text-shadow: 0px 3px 6px #000003a2;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.linea-agregar-cliente input {
+    height: 40px;
+    width: 240px;
+    border: 3px solid #01018c;
+
+    box-shadow: 0px 3px 6px #000003a2;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 600;
+    padding: 3px;
+}
+
+.dato-cliente{
+    height: 40px;
+    width: 240px;
+    border: 3px solid #01018c;
+    box-shadow: 0px 3px 6px #000003a2;
+    border-radius: 10px;
+    background-color: #ffffff;
+    font-size: small;
+    text-align: center;
+    align-content: center;
+    color: #000000 !important; 
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+.linea-agregar-cliente input:focus {
+    transform: scale(1.1);
+    transition: 0.4s;
+    box-shadow: 8px 8px 8px #000000;
+}
+
+.linea-agregar-cliente select:focus {
+    transition: 0.4s;
+    box-shadow: 8px 8px 8px #000000;
+}
+
+#titulo-edad {
+    text-shadow: 0px 3px 6px #000003a2;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+#dato-edad {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    color: #000000;
+    background-color: #ffffff;
+    border: 3px solid #01018c;
+    box-shadow: 0px 3px 6px #000003a2;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10%;
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.linea-agregar-cliente button {
+    width: 80px;
+    height: 80px;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: #01018c;
+    box-shadow: 3px 3px 8px #00000071;
+}
+
+.linea-agregar-cliente button:hover {
+    background-color: #fc6e75;
+    transform: scale(1.2);
+    transition: 0.4s;
+    cursor: pointer;
+}
+.linea-agregar-cliente img {
+    width: auto;
+    height: 70%;
+    padding: 8px;
+}
+.linea-agregar-cliente p {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.linea-saldo {
+    width: 100%;
+    background-color: #01018c;
+    border-radius: 10px;
+    justify-content: center;
+    padding: 10px;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.linea-saldo:hover {
+    transform: scale(1.2);
+    transition: 0.4s;
+    border-radius: 10px;
+    background-color: #fc6e75;
+    box-shadow: 1px 6px 8px #000000;
+}
+
+.linea-cita {
+    width: 100%;
+    border-radius: 10px;
+    justify-content: center;
+    padding: 10px;
+    font-size: x-large;
+    gap: 10px;
+}
+
+.linea-cita button {
+    height: 40px;
+}
+
+/* ------Historias-------- */
+
+.historias-contenedor {
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 3px solid #01018c;
+    box-shadow: 0 3px 5px #000000;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+.tipo-diente {
+    margin-top: 20px;
+    text-align: center;
+    font-size: xx-large;
+    color: #01018c;
+    font-weight: 800;
+}
+.titulos-grupos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15%;
+    margin: 10px 10px 4px 10px;
+}
+
+.titulos-grupos p {
+    font-size: x-large;
+    font-weight: 400;
+    color: #01018c;
+}
+
+.dientes-fila {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%;
+}
+
+.dientes-grupo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.diente {
+    border: none;
+    outline: none;
+    background-color: #ffffff00;
+    background-image: url("/img/iconoDienteBlanco.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+    align-content: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.diente:hover {
+    background-image: url("/img/iconoDienteRosa.png");
+    transform: scale(1.5);
+    transition: 0.4s;
+    box-shadow: 1px 6px 8px #000000;
+    border-radius: 10px;
+}
+
+/* ---------Historia idividual pop Up ------------ */
+
+.contenedor-pop-up{
+    padding: 0px;
+}
+
+.cuerpo-historias {
+    overflow: scroll;
+}
+.historia-encabezado {
+    background-color: #01018c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-direction: row;
+    padding: 10px;
+    box-shadow: 0px 0px 15px #000000;
+    font-size: xx-large;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0px 3px 6px #000003a2;
+}
+
+.historia-tarjeta {
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border-bottom: 3px dotted #01018c;
+}
+.tarjeta-encabezado {
+    font-size: x-large;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.tarjeta-obsevacion {
+    padding: 0px 30px;
+    font-size: large;
+    letter-spacing: 2px;
+}
+
+.tarjeta-separador {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+/* ---------Nuevas Historias--------- */
+
+.cuerpo-historias-nuevas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+}
+.contenedor-datos-historia {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.datos-historia {
+    display: flex;
+    flex-direction: column;
+
+}
+.datos-historia label {
+    margin: 20px;
+    font-size: large;
+    font-weight: bold;
+    color: #ffffff;
+
+}
+
+.datos-historia .datos-historias-titulo{
+    color: #01018c !important;
+    font-size: large;
+}
+
+.datos-historia input {
+
+    width: 400px;
+    height: 40px;
+    margin: 20px;
+    padding: 6px;
+    border: 4px solid #01018c;
+    border-radius: 20px;
+}
+.datos-historia select {
+
+    width: 400px;
+    height: 40px;
+    margin: 20px;
+    padding: 6px;
+    border: 4px solid #01018c;
+    border-radius: 20px;
+}
+
+.agregar-historia-tarjeta {
+    background-color: #0404d8;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    margin: 10px 0px;
+    border: 4px solid #01018c;
+    border-radius: 20px;
+}
+
+.mas-historias{
+    width: 60px;
+    height: 60px;
+    background-color: #01018c;
+    border-radius: 100%;
+    font-size: xx-large;
+    color: #ffffff;
+    margin: 40px 0px 160px 0px ;
+}
+
+.mas-historias:hover{
+    background-color: #fc6e75;
+    transform: scale(1.5);
+    transition: 0.4s;
+    box-shadow: 1px 6px 8px #000000;
+}
+.boton-historial {
+    width: 100%;
+    background-image: none !important;
+    height: 40px;
+    font-size: larger;
+    font-weight: bold;
+    margin: 5px 0px;
+    color: #ffffff;
+    background-color: #354ae6;
+    text-shadow: 0px 3px 6px #000003a2;
+}
+
+
+.boton-historial:hover {
+    transform: scale(1.2);
+    transition: 0.4s;
+    border-radius: 10px;
+    background-color: #fc6e75;
+    box-shadow: 1px 6px 8px #000000;
+}
+.boton-nueva-historia {
+    margin: 0 0 10px 0;
+    height: 50px;
+    font-size: xx-large;
+    background-color: #01018c;
+}
+.observaciones-nueva-historia{
+    min-height: 90px;
+    overflow:hidden;
+    margin: 3px;
+    border-radius: 20px;
+    border: 3px solid #01018c;
+    padding: 6px;
+    font-size: large;
+}
+
+.diente-nueva-historia{
+    max-height: 50px;
+
+}
+
+.datos-historia input {
+    padding: 10px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+
+#boton-guardar-historias{
+    background-color: #fc6e75;
+    height: 60px;
+        color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+    
+}
+
+#boton-guardar-historias:hover{
+    transform: scale(1.2);
+    transition: 0.4s;
+    background-color: #eb2a2a;
+
+}

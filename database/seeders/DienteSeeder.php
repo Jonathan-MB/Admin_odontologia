@@ -10,6 +10,30 @@ class DienteSeeder extends Seeder
 {
     public function run(): void
     {
+
+
+        //  Crear diente "General" en grupo "General"
+        $grupoGeneral = Grupo::where('nombre', 'General')->first();
+        if ($grupoGeneral) {
+            Diente::firstOrCreate([
+
+                'nombre'    => 'General',
+                'grupo_id'  => $grupoGeneral->id,
+
+            ]);
+        }
+
+                // Crear diente "Otros" en grupo "Otros"
+        $grupoOtros = Grupo::where('nombre', 'Otros')->first();
+        if ($grupoOtros) {
+            Diente::firstOrCreate([
+
+                'nombre'    => 'Otros',
+                'grupo_id'  => $grupoOtros->id,
+
+            ]);
+        }
+
         $config = [
             // VESTIBULARES
             'Vestibular Arriba Derecha'   => range(11, 18),
@@ -42,26 +66,8 @@ class DienteSeeder extends Seeder
             }
         }
 
-        //  Crear diente "General" en grupo "General"
-        $grupoGeneral = Grupo::where('nombre', 'General')->first();
-        if ($grupoGeneral) {
-            Diente::firstOrCreate([
 
-                'nombre'    => 'General',
-                'grupo_id'  => $grupoGeneral->id,
 
-            ]);
-        }
 
-        // Crear diente "Otros" en grupo "Otros"
-        $grupoOtros = Grupo::where('nombre', 'Otros')->first();
-        if ($grupoOtros) {
-            Diente::firstOrCreate([
-
-                'nombre'    => 'Otros',
-                'grupo_id'  => $grupoOtros->id,
-
-            ]);
-        }
     }
 }

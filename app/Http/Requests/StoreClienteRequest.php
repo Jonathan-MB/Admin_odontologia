@@ -44,6 +44,7 @@ class StoreClienteRequest extends FormRequest
             'fecha_cita'        => $this->fechaCita,
             'tipo_documento_id' => $this->tipoDocumentoId,
             'eps_id'            => $this->epsId,
+            'telefono'          => $this->telefono,
         ]);
     }
 }

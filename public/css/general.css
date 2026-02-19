@@ -1,0 +1,213 @@
+@font-face {
+    font-family: "Breathing";
+    src: url("/fonts/Breathing.ttf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.contenedor-general {
+    /* background-color: blueviolet; */
+    width: 100vw;
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    background-image: url("/img/fondo.png");
+    background-size: 1500px;
+    background-repeat: repeat;
+    background-position: top left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    height: 70px;
+    background-color: #354ae6;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.header-contenedor {
+    height: 60px;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ----------- logo -------------- */
+
+.header-logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* ----------- sede -------------- */
+
+.sede-nombre {
+    max-height: 100%;
+    width: 400px;
+    font-size: xx-large;
+    color: #ffffff;
+    font-weight: 60;
+    font-family: "Breathing", sans-serif;
+    text-align: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ----------- usuario ----------- */
+
+.usuario-nombre {
+    font-size: 50px;
+    color: #ffffff;
+    font-weight: 60;
+    font-family: "RemachineScript", sans-serif;
+    text-align: center;
+}
+#contenedor-usuario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px 8px;
+    gap: 10px;
+}
+.header-usuario-nombre {
+    max-width: 300px;
+    max-height: 50px;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.usuario-imagen {
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    background-color: #ffffff;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 0 2px 5px #000003a2;
+}
+
+.usuario-imagen img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    padding: 5px;
+}
+
+/* ----------Titulos vistas-------------- */
+.vista-titulo {
+    color: #041dde;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0px 3px 6px #000003a2;
+    margin: 40px;
+}
+
+/* ------------------ Pop Up -------------- */
+
+.contenedor-pop-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    background-color: #000000ad;
+    z-index: 9999;
+}
+
+.cerrar-pop-up {
+    width: 1200px;
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+}
+
+.boton-cerrar-pop-up {
+    background-color: #f6454e;
+    width: 60px;
+    height: 60px;
+    border: 4px solid #000000;
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px #000000;
+}
+
+.boton-cerrar-pop-up img {
+    width: 100%;
+    height: auto;
+}
+
+.boton-cerrar-pop-up:hover {
+    transform: scale(1.5);
+    transition: 0.4s;
+    background-color: #ff0000;
+}
+
+
+/* ----------- menú usuario ----------- */
+
+#contenedor-usuario {
+    position: relative; /* necesario para posicionar el menú */
+}
+
+.menu-usuario {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background-color: #354ae6;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 5px 15px #000003a2;
+    z-index: 10000;
+}
+
+.btn-logout {
+    background-color: #ffffff;
+    color: #354ae6;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.btn-logout:hover {
+    background-color: #f6454e;
+    color: #ffffff;
+    transition: 0.3s;
+}
+
+.usuario-imagen {
+    cursor: pointer; /* que se note que es clickeable */
+}

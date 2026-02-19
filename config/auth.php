@@ -13,10 +13,11 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => 'api',
-        'passwords' => 'usuarios',
-    ],
+   'defaults' => [
+    'guard' => 'web',
+    'passwords' => 'users',
+],
+
 
 
 
@@ -38,11 +39,12 @@ return [
     */
 
     'guards' => [
-        'api' => [
-            'driver' => 'sanctum',
+        'web' => [
+            'driver' => 'session',
             'provider' => 'usuarios',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

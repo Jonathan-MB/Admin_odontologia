@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('correo',150);
             $table->string('telefono',45);
             $table->date('fecha_nacimiento');
-            $table->dateTime('fecha_cita')->index();
+            $table->dateTime('fecha_cita')->nullable();
             $table->decimal('saldo', 10, 2)->default(0);
             
             

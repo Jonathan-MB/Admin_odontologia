@@ -22,6 +22,7 @@ class StoreHistoriaRequest extends FormRequest
             'cliente_id'        => ['required', 'integer', 'exists:clientes,id'],
             'especialista_id'   => ['required', 'integer', 'exists:especialistas,id'],
             'diente_id'         => ['required', 'integer', 'exists:dientes,id'],
+            'fecha'             => ['required', 'date',],
             'observacion'       => ['required', 'string','max:900'],
 
         ];

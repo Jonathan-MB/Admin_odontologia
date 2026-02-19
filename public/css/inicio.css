@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.contenedor-general {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.contenedor-tarjetas {
+    width: 100vw;
+    height: 80vh;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.tarjeta-inicio {
+    transform: scale(1);
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border 0.4s ease;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 8px solid #354ae6;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px #000003a2;
+}
+#agregar-usuario {
+    border: 8px solid #e64a35;
+}
+
+#agregar-usuario .contenedor-inicio-img {
+    border-bottom: 8px solid #e64a35;
+}
+
+#agregar-usuario .contenedor-titulo-tarjeta {
+    background-color: #e64a35;
+}
+
+.tarjeta-inicio:hover {
+    transform: scale(1.1);
+    box-shadow: 13px 13px 13px #000003a2;
+    transition: 0.5s;
+    border: 8px solid #fc6e75;
+}
+.tarjeta-inicio:hover .contenedor-titulo-tarjeta {
+    transition: 0.5s;
+    background-color: #fc6e75;
+    text-shadow: 3px 3px 6px #000003a2;
+}
+.tarjeta-inicio:hover .contenedor-inicio-img {
+    transition: 0.5s;
+    border-bottom: 8px solid #fc6e75;
+}
+
+.contenedor-inicio-img {
+    background-color: #ffffff;
+    width: 100%;
+    height: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 8px solid #354ae6;
+}
+.contenedor-inicio-img img {
+    height: 100%;
+    width: auto;
+    padding: 30px;
+}
+
+.contenedor-titulo-tarjeta {
+    background-color: #354ae6;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+}
+
+.titulo-tarjeta {
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: 600;
+}
+
