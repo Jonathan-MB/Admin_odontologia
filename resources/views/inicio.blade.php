@@ -9,16 +9,16 @@
 
 
 
-    @if (auth()->user()->rol_id == 1)
-        <a class="tarjeta-inicio" href="*" id="agregar-usuario">
+    {{-- @if (auth()->user()->rol_id == 1) --}}
+        <a class="tarjeta-inicio" href="{{route('configuracion')}}" id="agregar-usuario">
             <div class="contenedor-inicio-img">
-                <img class="inicio-img" src="{{asset('img/logoAgregarUsuario.png')}}" alt="">
+                <img class="inicio-img" src="{{asset('img/engranaje.png')}}" alt="">
             </div>
             <div class="contenedor-titulo-tarjeta">
-                <p class="titulo-tarjeta">Agregar Usuario</p>
+                <p class="titulo-tarjeta">Configuración</p>
             </div>
         </a>
-    @endif
+    {{-- @endif --}}
 
 
     <a class="tarjeta-inicio" href="{{ route('clientes.create') }}">

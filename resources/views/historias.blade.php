@@ -295,7 +295,7 @@
 
 {{-- --------------------POP UP Nueva Historia------------------- --}}
 
-    <div class="contenedor-pop-up hidden" id="pop-up-historias-nuevas">
+    <div class="contenedor-pop-up  hidden" id="pop-up-historias-nuevas">
         <div class="cerrar-pop-up">
             <button class="boton-cerrar-pop-up ">
                 <img src="{{ asset('img/iconoCerrar.png') }}" alt="">
@@ -317,6 +317,7 @@
                     <div class="datos-historia">
                         <input autocomplete="off" type="date" name="fecha" id="" value="">
                         <select  name="especialistaId" id="">
+
                             <option value="" selected disabled>Seleccionar</option>
                               @foreach ($especialistas as $especialista)
                 @if ($especialista->sede_id == session('sede.id'))
@@ -333,12 +334,13 @@
             <label for="observacion">Observacion</label>
         </div>
         <div class="datos-historia">
-            <select class="diente-nueva-historia" name="dienteId" id="">
+            <input type="text" class="diente-nueva-historia" list="diente-list" name="dienteId" id="">
+            <datalist id="diente-list" class="diente-nueva-historia" >
                 <option value="" selected disabled> seleccionar </option>
                 @foreach ($dientes as $diente)
-                    <option value="{{ $diente->id }}">{{ $diente->nombre }}</option>
+                    <option value="{{ $diente->nombre }}"></option>
                 @endforeach
-            </select>
+            </datalist>
             <textarea class="observaciones-nueva-historia" name="observacion" id=""></textarea>
         </div>
 

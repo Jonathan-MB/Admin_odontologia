@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateEspecialistaRequest;
 use App\Http\Resources\EspecialistaCollection;
 use App\Http\Resources\EspecialistaResource;
 use App\Models\Especialista;
+use App\Models\Sede;
 use Illuminate\Http\Request;
 
 class EspecialistaController extends Controller
@@ -17,28 +18,15 @@ class EspecialistaController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index(Request $request)
     {
 
-        $filter = new EspecialistaFilter();
-        $queryItems = $filter->transform($request);
-        $includeFacturas = $request->query('includeFacturas');
-        $includeHistorias = $request->query('includeHistorias');
+        $especialistas   = Especialista::all();
+        $sedes       = Sede::all();
 
-        $especialista = Especialista::where($queryItems);
-        if ($includeFacturas) {
-            $especialista = $especialista->with('facturas');
-        }
-        if ($includeHistorias) {
-            $especialista = $especialista->with('historias');
-        }
-
-
-        return new EspecialistaCollection(
-            $especialista
-                ->paginate()
-                ->appends($request->query())
-        );
+        return view('especialista', compact('especialistas', 'sedes'));
     }
 
 
@@ -57,6 +45,13 @@ class EspecialistaController extends Controller
     public function show(Especialista $especialista)
     {
         return new EspecialistaResource($especialista);
+    }
+
+    
+    public function edit(Especialista $especialista)
+    {
+        $sedes = Sede::all();
+        return view('especialistaEditar', compact('especialista', 'sedes'));
     }
 
 

@@ -70,10 +70,7 @@
     box-shadow: 8px 8px 8px #000000;
 }
 
-.linea-agregar-cliente select:focus {
-    transition: 0.4s;
-    box-shadow: 8px 8px 8px #000000;
-}
+
 
 .linea-agregar-cliente button {
     width: 80px;

@@ -8,66 +8,24 @@ use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use App\Http\Resources\UsuarioCollection;
 use App\Http\Resources\UsuarioResource;
+use App\Models\Rol;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-    // Login con token 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'correo' => 'required|email',
-            'password' => 'required|string'
-        ]);
-
-        // Buscar usuario por correo
-        $user = Usuario::where('correo', $request->correo)->first();
-
-        // Verificar contraseña
-        if (!$user || !Hash::check($request->password, $user->contrasena)) {
-            return response()->json(['message' => 'Credenciales inválidas'], 401);
-        }
-
-        // Crear token
-        $token = $user->createToken('token-api', [], now()->addHours(10))->plainTextToken;
-
-        // Devolver JSON con token y datos de usuario
-        return response()->json([
-            'token' => $token,
-            'AuthType' => 'Bearer',
-            'usuario' => [
-                'nombre' => $user->nombre,
-                'rol_id' => $user->rol_id,
-                'correo' => $user->correo
-            ]
-        ]);
-    }
-
-    public function logout(Request $request)
-    {
-        // Elimina token
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            'message' => 'Sesión cerrada correctamente'
-        ]);
-    }
 
 
 
-    /**
-     * Display a listing of the resource.
-     */
 
     public function index(Request $request)
     {
-        $filter = new UsuarioFilter();
-        $queryItems = $filter->transform($request);
-        $usuario = Usuario::where($queryItems);
 
-        return new UsuarioCollection($usuario->paginate()->appends($request->query()));
+        $usuarios   = Usuario::all();
+        $rols       = Rol::all();
+        
+        return view('usuarios', compact('usuarios', 'rols'));
     }
 
     /**
@@ -86,9 +44,21 @@ class UsuarioController extends Controller
         return new UsuarioResource($usuario);
     }
 
+
+
+
+
+public function edit(Usuario $usuario)
+{
+    $rols = Rol::all();
+    return view('usuarioEditar', compact('usuario', 'rols'));
+}
+
+
     /**
      * Update the specified resource in storage.
      */
+    
     public function update(UpdateUsuarioRequest $request, Usuario $usuario)
     {
 

@@ -74,11 +74,12 @@ body {
 
 .tarjeta-login button:hover{
     background-color: #fc6e75 ;
-     transform: scale(1.5);
+    transform: scale(1.5);
     transition: 0.4s;
     box-shadow: 1px 6px 8px #000000;
     
 }
+
 
 .tarjeta-login input:hover{
 

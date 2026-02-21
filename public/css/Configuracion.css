@@ -1,0 +1,19 @@
+#agregar-especialista {
+    border: 8px solid #009a83;
+}
+
+#agregar-especialista .contenedor-inicio-img {
+    border-bottom: 8px solid #009a83;
+}
+
+#agregar-especialista .contenedor-titulo-tarjeta {
+    background-color:#009a83;
+}
+.vista-titulo{
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.contenedor-tarjetas{
+    padding-top: 0px;
+}

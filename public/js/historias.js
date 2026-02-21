@@ -56,9 +56,11 @@ function historiasFiltradas() {
         const [anio, mes, dia] = h.fecha.split('-');
         const fechaFormateada = `${dia}/${mes}/${anio}`;
 
+        const codDiente = h.diente ? `# ${h.diente.nombre}` : 'No Aplica';
+
         clone.querySelector('.fecha-tarjeta').textContent = fechaFormateada;
         clone.querySelector('.especialista-tarjeta').textContent = h.especialista.nombre;
-        clone.querySelector('.diente-tarjeta').textContent = h.diente?.nombre ?? 'No Aplica';
+        clone.querySelector('.diente-tarjeta').textContent = codDiente;
         clone.querySelector('.obserbacion-tarjeta').textContent = h.observacion;
         cuerpo.appendChild(clone);
     });

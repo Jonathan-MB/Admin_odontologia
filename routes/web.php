@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 | Sin Sede
 -------------------------------------------------------------------
 */
+
     Route::resource('sedes', SedeController::class)->only(['index']);
     Route::post('/guardar-sede', [SedeController::class, 'guardarSede'])
         ->name('guardar.sede');
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::middleware('rol:1')->group(function () {
             Route::resource('usuarios', UsuarioController::class);
         });
+
 
         Route::view('/', 'inicio')->name('inicio');
         Route::view('/busqueda', 'busqueda')->name('busqueda');
@@ -78,6 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/facturas/buscar', [FacturaController::class, 'buscar'])
             ->name('facturas.buscar');
 
+        Route::view('/config', 'configuracion')->name('configuracion');
         Route::post('/facturas/guardar', [FacturaController::class, 'guardar']);
     });
 });

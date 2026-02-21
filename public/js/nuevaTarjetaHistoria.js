@@ -16,10 +16,7 @@ botonMasHistorias.addEventListener('click', () => {
             <label>Observacion</label>
         </div>
         <div class="datos-historia">
-            <select class="diente-nueva-historia" name="dienteId">
-                <option value="" selected disabled>seleccionar</option>
-                ${opcionesDientes}
-            </select>
+            <input type="text" class="diente-nueva-historia" list="diente-list" name="dienteId" autocomplete="off">
             <textarea class="observaciones-nueva-historia" name="observacion"></textarea>
         </div>
     `;
