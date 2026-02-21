@@ -17,6 +17,8 @@ class SedeResource extends JsonResource
         return [
             'id'            => $this->id,
             'nombre'        => $this->nombre,
+            'no_factura'    => $this->no_factura,
+
             
             'especialistas' => EspecialistaResource::collection($this->whenLoaded('especialistas')),
         ];

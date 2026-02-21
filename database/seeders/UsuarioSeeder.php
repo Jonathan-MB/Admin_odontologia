@@ -33,5 +33,6 @@ class UsuarioSeeder extends Seeder
                 'rol_id' => $rolColaborador?->id,
             ]
         );
+        
     }
 }

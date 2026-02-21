@@ -15,6 +15,8 @@ class Factura extends Model
         'especialista_id',
         'saldo',
         'abono',
+        'nombre',
+        'no_factura'
     ];
 
 

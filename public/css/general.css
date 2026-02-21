@@ -144,6 +144,7 @@ body {
     padding-top: 80px;
     background-color: #000000ad;
     z-index: 9999;
+    padding-bottom: 30px;
 }
 
 .cerrar-pop-up {

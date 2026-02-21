@@ -22,6 +22,7 @@ use App\Http\Controllers\UsuarioController;
 
 Route::view('/login', 'login')->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('web.login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 /*
@@ -31,8 +32,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('web.login');
 */
 Route::middleware('auth')->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/prueba', fn() => view('prueba'))->name('prueba');
+
 
     /*
 |--------------------------------------------------------------------------
@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
         Route::view('/', 'inicio')->name('inicio');
         Route::view('/busqueda', 'busqueda')->name('busqueda');
         Route::view('/facturacion', 'facturacion')->name('facturacion');
+        Route::get('facturas/{cliente}', [FacturaController::class, 'show'])->name('facturaCliente');
+
 
         Route::resources([
             'clientes' => ClienteController::class,
@@ -73,5 +75,9 @@ Route::middleware('auth')->group(function () {
         Route::post('historias/bulk', [HistoriaController::class, 'bulkStore']);
         Route::post('/clientes/buscar', [ClienteController::class, 'buscar'])
             ->name('clientes.buscar');
+        Route::post('/facturas/buscar', [FacturaController::class, 'buscar'])
+            ->name('facturas.buscar');
+
+        Route::post('/facturas/guardar', [FacturaController::class, 'guardar']);
     });
 });

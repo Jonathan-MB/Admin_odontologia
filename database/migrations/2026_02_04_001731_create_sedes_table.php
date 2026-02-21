@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sedes', function (Blueprint $table) {
             $table->id();            
             $table->string('nombre',45);
+            $table->integer('no_factura')->default(0);
 
             $table->timestamps();
             

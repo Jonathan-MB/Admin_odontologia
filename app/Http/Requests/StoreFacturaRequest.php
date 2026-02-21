@@ -18,8 +18,10 @@ class StoreFacturaRequest extends FormRequest
     {
         return [
 
+            'no_factura'      => ['required', 'integer'],
             'cliente_id'      => ['required', 'integer', 'exists:clientes,id'],
             'especialista_id' => ['required', 'integer', 'exists:especialistas,id'],
+            'nombre'          => ['required'],
             'abono'           => ['nullable', 'min:0', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
             'saldo'           => ['nullable', 'min:0', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
 
@@ -29,6 +31,7 @@ class StoreFacturaRequest extends FormRequest
     protected  function prepareForValidation(): void
     {
         $this->merge([
+            'no_factura'      => $this->noFactura,
             'cliente_id'      => $this->clienteId,
             'especialista_id' => $this->especialistaId,
 

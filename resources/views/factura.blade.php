@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="{{ asset('css/historias.css') }}">
 <link rel="stylesheet" href="{{ asset('css/factura.css') }}">
+<link rel="stylesheet" href="{{ asset('css/facturaImprimir.css') }}">
 
 <title>Nombre</title>
 
@@ -13,7 +14,7 @@
 
 <div class="contenedor-general">
 
-    <H1 class="vista-titulo">Datos Cliente</H1>
+    <H1 class="vista-titulo">Facturas Cliente</H1>
 
 
     <div class="contenedor-agregar-cliente">
@@ -25,17 +26,19 @@
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Tipo Documento</p>
-                <p class="dato-traido">Cedula de ciudadania</p>
+                <p class="dato-traido">{{ $cliente->tipoDocumento->nombre }}</p>
             </div>
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Numero Documento</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->numero_documento }}</p>
             </div>
 
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Fecha Nacimiento</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">
+                    {{ \Carbon\Carbon::parse($cliente->fecha_nacimiento)->format('d/m/Y') }}
+                </p>
             </div>
 
 
@@ -46,22 +49,22 @@
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Eps</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->eps->nombre }}</p>
             </div>
 
 
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Nombre</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->nombre }}</p>
             </div>
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Primer Apellido</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->primer_apellido }}</p>
             </div>
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Segundo Apellido</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->segundo_apellido }}</p>
             </div>
         </div>
 
@@ -70,25 +73,30 @@
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Direccion</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->direccion }}</p>
             </div>
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Correo</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->correo }}</p>
             </div>
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Celular</p>
-                <p class="dato-traido"></p>
+                <p class="dato-traido">{{ $cliente->telefono }}</p>
             </div>
 
-
+            <a href="{{ route('clientes.edit', $cliente->id) }}">
+                <button class="boton-guardar" type="button">
+                    <img src="{{ asset('img/editar.png') }}" alt="">
+                    <p>Editar</p>
+                </button>
+            </a>
 
         </div>
 
         <div class="linea-agregar-cliente saldo">
-            <p>Saldo: $ 688999</p>
-        </div>
+            <p>Saldo: $ {{ number_format($cliente->saldo, 0, ',', '.') }}</p>
 
+        </div>
     </div>
 
 
@@ -98,44 +106,52 @@
 
 
 
-        <button class="boton-historial boton-nueva-historia"> + Nueva Factura</button>
+        <button class="boton-historial boton-nueva-historia" id="boton-nueva-factura"> + Nueva Factura</button>
 
 
 
 
 
-        {{-- @foreach ($historias as $historia) --}}
-        <div class="factura-tarjeta">
 
-            <div>
-                <p class="tarjeta-encabezado">Fecha - Hora</p>
-                <p class="tarjeta-encabezado">00/00/0000-00:00</p>
+        @foreach ($cliente->facturas as $factura)
+            <div class="factura-tarjeta">
+
+                <div class="columna-fatura">
+                    <p class="tarjeta-encabezado">Fecha - Hora</p>
+                    <p class="tarjeta-obsevacion ">{{ $factura->created_at }}</p>
+                </div>
+
+
+                <div class="columna-fatura">
+                    <p class="tarjeta-encabezado">nombre</p>
+                    <p class="tarjeta-obsevacion ">{{ $factura->nombre }}</p>
+                </div>
+                <div class="columna-fatura">
+                    <p class="tarjeta-encabezado">abono</p>
+                    <p class="tarjeta-obsevacion ">$ {{ number_format($factura->abono, 0, ',', '.') }}</p>
+                </div>
+                <div class="columna-fatura">
+                    <p class="tarjeta-encabezado">Saldo</p>
+                    <p class="tarjeta-obsevacion ">$ {{ number_format($factura->saldo, 0, ',', '.') }}</p>
+                </div>
+                <div class="columna-fatura">
+                    <p class="tarjeta-encabezado">No. Factura</p>
+                    <p class="tarjeta-obsevacion ">{{ str_pad($factura->no_factura, 4, '0', STR_PAD_LEFT) }}</p>
+                </div>
             </div>
-            <div>
-                <p class="tarjeta-encabezado">abono</p>
-                <p class="tarjeta-encabezado">$ 777777</p>
-            </div>
-            <div>
-                <p class="tarjeta-encabezado">Saldo</p>
-                <p class="tarjeta-encabezado">$ 999999</p>
-            </div>
-            <div>
-                <p class="tarjeta-encabezado">No. Factura</p>
-                <p class="tarjeta-encabezado">0000</p>
-            </div>
-        </div>
 
-        <p class="tarjeta-separador">
-            ----------------------------------------------------------------------------</p>
+            <p class="tarjeta-separador">
+                -------------------------------------------------------------------------------------------</p>
+        @endforeach
     </div>
 
 
 
     {{-- --------------------POP UP------------------- --}}
 
-    <div class="contenedor-pop-up hidden">
+    <div class="contenedor-pop-up  hidden" id="pop-up-nueva-factura">
         <div class="cerrar-pop-up">
-            <button class="boton-cerrar-pop-up ">
+            <button class="boton-cerrar-pop-up " id="cerrar-pop-up">
                 <img src="{{ asset('img/iconoCerrar.png') }}" alt="">
             </button>
         </div>
@@ -146,46 +162,70 @@
             </div>
             <div class="cuerpo-historias">
 
-                {{-- @foreach ($historias as $historia) --}}
-                <form action="" method="post">
+
+                <div>
+
                     <div class="factura-linea">
-                        <label for="">Nombre</label>
-                        <input type="text" name="" id="">
+                        <label for="nombre">Nombre</label>
+                        <input autocomplete="off" type="text" name="nombre" id="nombre-input">
                     </div>
                     <div class="factura-linea">
-                        <label for="">Saldo</label>
-                        <input type="number" placeholder="Déjelo en blanco si es solo abono" name="" id="">
+                        <label for="saldo-input">Saldo</label>
+                        <input autocomplete="off" type="number" placeholder="Déjelo en blanco si es solo abono" name="saldo-input"
+                            id="saldo-input">
                         <p><- SUMA a saldo pendiente</p>
                     </div>
                     <div class="factura-linea">
-                        <label for="">Abono</label>
-                        <input type="number" name="" id="">
+                        <label for="abono-input">Abono</label>
+                        <input autocomplete="off" name="abono" type="number" id="abono-input">
                         <p><- RESTA a saldo pendiente</p>
                     </div>
-
                     <div class="factura-linea">
-                        <label for="">Atendido por</label>
-                        <select name="" id="">
-
+                        <label for="especialistaId">Atendido por</label>
+                        <select name="especialistaId" id="especialista-input">
+                            <option value="" selected disabled> seleccionar </option>
+                            @foreach ($especialistas as $especialista)
+                                @if ($especialista->sede_id == session('sede.id'))
+                                    <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
+                                @endif
+                            @endforeach
                         </select>
                     </div>
 
-
                     <div class="factura-linea">
-                        <label for="">Próxima cita</label>
-                        <input type="datetime-local" name="" id="">
+                        <label for="mostrar-fecha-cita">Agendar proxima Cita</label>
+                        <select name="mostrar-fecha-cita" id="mostrar-fecha-cita-id">
+
+                            <option value="1" selected>NO</option>
+                            <option value="2">Si</option>
+                        </select>
                     </div>
 
-                    <button class="boton-guardar" type="button">
+                    <div class="factura-linea  hidden" id="proxima-cita-factura">
+                        <label for="">Próxima cita</label>
+                        <input autocomplete="off" type="datetime-local" name="" id="">
+                    </div>
+
+                    <button class="boton-guardar" id="boton-guardar-factura" type="button">
                         <p>Guardar / Imprimir</p>
                     </button>
 
 
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
+@include('partials.facturaImprimir')
+
+
+
+<script>
+    const clienteSaldo = {{ $cliente->saldo }};
+    const clienteId = {{ $cliente->id }};
+</script>
+<script src="{{ asset('js/factura.js') }}"></script>
+<script src="{{ asset('js/guardarImprimirFactura.js') }}"></script>
 @include('partials.footer')

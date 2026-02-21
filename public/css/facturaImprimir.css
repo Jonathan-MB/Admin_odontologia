@@ -1,0 +1,144 @@
+.factura-imprimir-contenedor {
+    display: flex;
+    flex-direction: column;
+    border: 4px solid #000000;
+    margin: 16px;
+    max-width: 700px ;
+}
+
+.secciones-factura-imprimir {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.encabezado-factura-imprimir {
+    height: 150px;
+}
+.contenedor-imagen-factura-imprimir {
+    display: grid;
+    width: 20%;
+    max-height: 100%;
+    padding: 15px;
+    align-content: center;
+    justify-items: center;
+}
+
+.contenedor-imagen-factura-imprimir img {
+    width: 100%;
+}
+
+.datos-encabezado-factura-imprimir {
+
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.titulo-datos-encabezado-factura-imprimir {
+    font-size: large;
+    font-weight: bold;
+}
+.sede-datos-encabezado-factura-imprimir{
+    font-family: "Breathing", sans-serif;
+    font-size: x-large;
+}
+.nit-datos-encabezado-factura-imprimir{
+    font-weight: bold;
+    font-size: large;
+}
+
+.numero-factura-encabezado-factura-imprimir{
+    display: flex;
+    flex-direction: row;
+    border: 6px solid #000000;
+    padding: 10px;
+    margin-right: 40px;
+    border-radius: 12px;
+}
+
+.numero-factura-encabezado-factura-imprimir p{
+    font-size: x-large;
+}
+
+
+.direcciones-factura-imprimir {
+    max-width: 900px ;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 60px;
+    border-bottom: 3px solid #000000;
+    border-top: 3px solid #000000;
+}
+.dierecciones-factura-imprimir p {
+    font-size: larger;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+.cuerpo-factura-imprimir{
+
+    padding: 20px;
+
+    
+}
+
+.columna-cuerpo-factura-imprimir{
+
+    width: 350px;
+    margin-right: 20px;
+
+}
+
+.item-cuerpo-factura-imprimir{
+
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-bottom: 5px;
+
+}
+
+
+.item-titulo-cuerpo-factura-imprimir{
+    font-size: medium;
+    font-weight: bold;
+    width: 150px;
+
+}
+.relleno{
+    color: #ffffff;
+}
+
+
+@media print {
+    @page {
+        margin: 5mm;
+        size: auto;
+    }
+    body * { 
+        visibility: hidden; 
+    }
+    body {
+        height: 100%;
+    }
+    #factura-imprimible { 
+        display: block !important;
+        visibility: visible !important;
+        position: absolute;
+        top: 0; 
+        left: 0; 
+        width: 100%;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    #factura-imprimible * { 
+        visibility: visible !important; 
+    }
+}

@@ -19,7 +19,7 @@ class StoreEpsRequest extends FormRequest
     {
         return [
 
-            'nombre' => ['required', 'string', 'max:45', 'unique:eps,nombre'],
+            'nombre'        => ['required', 'string', 'max:45', 'unique:eps,nombre'],
 
         ];
     }

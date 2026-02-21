@@ -18,8 +18,18 @@ class StoreSedeRequest extends FormRequest
     {
         return [
 
-            'nombre' => ['required', 'string', 'max:45', 'unique:sedes,nombre'],
-
+            'nombre'     => ['required', 'string', 'max:45', 'unique:sedes,nombre'],
+            'no_factura' => ['nullable', 'integer', 'min:0'],
         ];
+    }
+
+
+    protected  function prepareForValidation(): void
+    {
+        $this->merge([
+
+            'no_factura'  => $this->noFactura,
+
+        ]);
     }
 }

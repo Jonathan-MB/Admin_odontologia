@@ -56,54 +56,52 @@ class clienteController extends Controller
         $cliente = Cliente::create($request->validated());
 
         // Redirigir a una vista, por ejemplo la lista de clientes
-
-        return redirect()->route('prueba');
+        return redirect()->route('clientes.show', $cliente->id);
     }
 
     /**
      * Display the specified resource.
      */
-public function show(Cliente $cliente)
-{
-    $cliente->load(['historias.especialista', 'facturas']); // ← cargar relación anidada
-    $dientes = Diente::all();
-    $especialistas = Especialista::all();
+    public function show(Cliente $cliente)
+    {
+        $cliente->load(['historias.especialista','historias.diente', 'facturas']); // ← cargar relación anidada
+        $dientes = Diente::all();
+        $especialistas = Especialista::all();
 
-    return view('historias', compact('cliente', 'dientes', 'especialistas')); // no necesitas pasar $especialistas
-}
-
-
+        return view('historias', compact('cliente', 'dientes', 'especialistas')); // no necesitas pasar $especialistas
+    }
 
 
+    public function edit(Cliente $cliente)
+    {
+        $tipoDocumentos = TipoDocumento::all();
+        $eps = Eps::all();
+
+        return view('editarCliente', compact('cliente', 'tipoDocumentos', 'eps'));
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
-
         $data = $request->validated();
 
-        // PATCH sin data
         if (empty($data)) {
-            return response()->json([
-                'message' => 'Sin datos'
-            ], 422);
+            return response()->json(['message' => 'Sin datos'], 422);
         }
 
-        // Cargar datos sin guardar
         $cliente->fill($data);
 
-        // No hubo cambios
-        if (! $cliente->isDirty()) {
-            return response()->json([
-                'message' => 'No se detectaron cambios'
-            ], 422);
+        if (!$cliente->isDirty()) {
+            return response()->json(['message' => 'No se detectaron cambios'], 422);
         }
 
         $cliente->save();
 
-        return back()->with('success', 'Actualizado correctamente');
+        // Redirigir al método show usando el nombre de la ruta
+        return redirect()->route('clientes.show', $cliente->id)
+            ->with('success', 'Cliente actualizado correctamente');
     }
 
     /**

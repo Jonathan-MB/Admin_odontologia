@@ -11,13 +11,15 @@ botones.forEach(boton => {
     boton.addEventListener('click', () => {
         const dienteSeleccionado = boton.dataset.diente;
 
-        dienteActual = dientes.find(d => d.nombre == dienteSeleccionado);
+        if (dienteSeleccionado === 'Todas') {
+            dienteActual = { nombre: 'Todas', id: null }; // ← objeto especial
+        } else {
+            dienteActual = dientes.find(d => d.nombre == dienteSeleccionado);
+        }
 
         document.getElementById('diente-Actual-nombre').textContent = dienteActual.nombre;
-
         popup.classList.remove('hidden');
-
-        historiasFiltradas()
+        historiasFiltradas();
     });
 });
 
@@ -26,31 +28,41 @@ document.querySelectorAll('.boton-cerrar-pop-up').forEach(boton => {
         document.querySelectorAll('.contenedor-pop-up').forEach(p => p.classList.add('hidden'));
     });
 });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.contenedor-pop-up').forEach(p => p.classList.add('hidden'));
+    }
+});
 
 function historiasFiltradas() {
     cuerpo.innerHTML = '';
 
-    const filtradas = historias.filter(h =>
-        h.diente_id == dienteActual.id ||
-        (h.diente_id == 1 && dienteActual.id != 1 && dienteActual.id != 2)) .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));;
+    const filtradas = dienteActual.nombre === 'Todas' ? [...historias]
+        : historias.filter(h =>
+            h.diente_id == dienteActual.id ||
+            (h.diente_id == 1 && dienteActual.id != 1 && dienteActual.id != 2)
+    );
 
-    filtradas.forEach(h => {
+    if (filtradas.length === 0) {
+        cuerpo.innerHTML = '<p class="sin-historias">Sin Historias</p>';
+        return;
+    }
+
+    filtradas
+    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+    .forEach(h => {
         const clone = template.content.cloneNode(true);
 
-        const fecha = new Date(h.fecha);
-        const fechaFormateada = fecha.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
+        const [anio, mes, dia] = h.fecha.split('-');
+        const fechaFormateada = `${dia}/${mes}/${anio}`;
 
         clone.querySelector('.fecha-tarjeta').textContent = fechaFormateada;
         clone.querySelector('.especialista-tarjeta').textContent = h.especialista.nombre;
+        clone.querySelector('.diente-tarjeta').textContent = h.diente?.nombre ?? 'No Aplica';
         clone.querySelector('.obserbacion-tarjeta').textContent = h.observacion;
         cuerpo.appendChild(clone);
     });
 }
-
 
 
 

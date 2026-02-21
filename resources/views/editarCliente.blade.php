@@ -7,48 +7,44 @@
 
 <div class="contenedor-general">
 
-    <h1 class="vista-titulo">Agregar Cliente</h1>
+    <h1 class="vista-titulo">Editar Cliente</h1>
 
-    <form action="{{ route('clientes.store') }}" method="post" autocomplete="off">
+    <form action="{{ route('clientes.update', $cliente->id) }}" method="post" autocomplete="off">
+        @method('PATCH')
         @csrf
-
-
 
         <div class="contenedor-agregar-cliente">
 
             <div class="linea-agregar-cliente">
                 <div class="elemento-formulario">
                     <label for="tipo-doc">Tipo Documento</label>
-                    <input type="text" id="tipo-doc-input" list="tipo-doc-list"
-                        placeholder="Buscar tipo documento..." required>
-                    <input type="hidden" name="tipoDocumentoId" id="tipo-doc-hidden">
-                    <datalist id="tipo-doc-list">
+                    <select name="tipoDocumentoId" id="tipo-doc"  >
+                        <option value="{{$cliente->tipo_documento_id}}" selected>{{$cliente->tipoDocumento->nombre}}</option>
                         @foreach ($tipoDocumentos as $tipoDocumento)
-                            <option value="{{ $tipoDocumento->nombre }}" data-id="{{ $tipoDocumento->id }}">
+                            <option value="{{ $tipoDocumento->id }}">{{ $tipoDocumento->nombre }}</option>
                         @endforeach
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="num-doc">Número Documento</label>
                     <input type="text" name="numeroDocumento" id="num-doc" class="input" minlength="5"
-                        maxlength="45" pattern="[0-9]+" required autocomplete="off">
+                        maxlength="45" pattern="[0-9]+" value="{{ $cliente->numero_documento }}" autocomplete="off">
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="eps">EPS</label>
-                    <input type="text" id="eps-input" list="eps-list" placeholder="Buscar EPS..." required>
-                    <input type="hidden" name="epsId" id="eps-id-hidden">
-                    <datalist id="eps-list">
+                    <select name="epsId" id="eps">
+                        <option value="{{ $cliente->eps_id }}" selected >{{ $cliente->eps->nombre }}</option>
                         @foreach ($eps as $ep)
-                            <option value="{{ $ep->nombre }}" data-id="{{ $ep->id }}">
+                            <option value="{{ $ep->id }}">{{ $ep->nombre }}</option>
                         @endforeach
-                    </datalist>
+                    </select>
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="fecha-nacimiento">Fecha Nacimiento</label>
-                    <input type="date" name="fechaNacimiento" id="fecha-nacimiento" required autocomplete="off">
+                    <input type="date" name="fechaNacimiento" id="fecha-nacimiento" value="{{ \Carbon\Carbon::parse($cliente->fecha_nacimiento)->format('Y-m-d') }}">
                 </div>
             </div>
 
@@ -56,41 +52,39 @@
 
                 <div class="elemento-formulario">
                     <label for="nombre">Nombre</label>
-                    <input autocomplete="off" type="text" name="nombre" id="nombre" maxlength="45" required>
+                    <input type="text" name="nombre" id="nombre" maxlength="45" value="{{ $cliente->nombre }}" autocomplete="off">
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="primer-apellido">Primer Apellido</label>
-                    <input autocomplete="off" type="text" name="primerApellido" id="primer-apellido" maxlength="45"
-                        required>
+                    <input type="text" name="primerApellido" id="primer-apellido" maxlength="45" value="{{ $cliente->primer_apellido }}" autocomplete="off">
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="segundo-apellido">Segundo Apellido</label>
-                    <input autocomplete="off" type="text" name="segundoApellido" id="segundo-apellido" maxlength="45"
-                        required>
+                    <input type="text" name="segundoApellido" id="segundo-apellido" maxlength="45" value="{{ $cliente->segundo_apellido }}" autocomplete="off">
                 </div>
             </div>
 
             <div class="linea-agregar-cliente">
                 <div class="elemento-formulario">
                     <label for="direccion">Dirección</label>
-                    <input autocomplete="off" type="text" name="direccion" id="direccion" maxlength="80" required>
+                    <input type="text" name="direccion" id="direccion" maxlength="80" value="{{ $cliente->direccion }}" autocomplete="off">
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="correo">Correo</label>
-                    <input autocomplete="off" type="email" name="correo" id="correo" maxlength="150">
+                    <input type="email" name="correo" id="correo" maxlength="150" value="{{ $cliente->correo }}" autocomplete="off">
                 </div>
 
                 <div class="elemento-formulario">
                     <label for="celular">Celular</label>
-                    <input autocomplete="off" type="text" name="telefono" id="celular" maxlength="45" required>
+                    <input type="text" name="telefono" id="celular" maxlength="45" value="{{ $cliente->telefono }}" autocomplete="off">
                 </div>
 
                 <button class="boton-guardar" type="submit">
                     <img src="{{ asset('img/logoAgregarUsuarioN.png') }}" alt="">
-                    <p>Guardar</p>
+                    <p>Actualizar</p>
                 </button>
             </div>
 
@@ -98,13 +92,5 @@
     </form>
 
 </div>
-
-<script>
-    const tipoDocumentos = @json($tipoDocumentos);
-    const epsData = @json($eps);
-</script>
-
-<script src="{{ asset('js/crearCliente.js') }}"></script>
-
 
 @include('partials.footer')

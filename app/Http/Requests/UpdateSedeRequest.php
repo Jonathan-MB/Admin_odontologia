@@ -22,13 +22,29 @@ class UpdateSedeRequest extends FormRequest
 
         if ($this->isMethod('put')) {
             return [
-                'nombre'    => ['required', 'string', 'max:45', Rule::unique('sedes', 'nombre')->ignore($sedeId)],
+                'nombre'        => ['required', 'string', 'max:45', Rule::unique('sedes', 'nombre')->ignore($sedeId)],
+                'no_factura'    => ['required', 'integer', 'min:0'],
             ];
         } else {
             return [
 
-                'nombre'    => ['sometimes', 'string', 'max:45',  Rule::unique('sedes', 'nombre')->ignore($sedeId)],
+                'nombre'        => ['sometimes', 'string', 'max:45',  Rule::unique('sedes', 'nombre')->ignore($sedeId)],
+                'no_factura'    => ['sometimes', 'integer', 'min:0'],
+
             ];
         }
     }
+
+    protected function prepareForValidation(): void
+    {
+        $data = [];
+
+        if ($this->has('noFactura')) {
+            $data['no_factura'] = $this->noFactura;
+        }
+
+
+        $this->merge($data);
+    }
+
 }

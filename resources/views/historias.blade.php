@@ -43,7 +43,7 @@
 
             <div class="elemento-formulario">
                 <p class="titulo-elemento-p">Edad</p>
-                <p id="dato-edad">88</p>
+                <p id="dato-edad">{{ \Carbon\Carbon::parse($cliente->fecha_nacimiento)->age }}</p>
             </div>
 
         </div>
@@ -87,29 +87,33 @@
                 <p class="dato-cliente"> {{ $cliente->telefono }}</p>
 
             </div>
-
-            <button class="boton-guardar" type="submit">
-                <img src="{{ asset('img/logoAgregarUsuarioN.png') }}" alt="">
-                <p>Editar</p>
-            </button>
+            <a href="{{ route('clientes.edit', $cliente->id) }}">
+                <button class="boton-guardar" type="button">
+                    <img src="{{ asset('img/editar.png') }}" alt="">
+                    <p>Editar</p>
+                </button>
+            </a>
 
 
         </div>
 
-
-        <a href="{{ route('facturacion') }}" class="linea-agregar-cliente linea-saldo">
-
-            <p>Saldo: $ {{ number_format($cliente->saldo, 0, ',', '.') }}</p>
-        </a>
-        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST">
+        <form action="{{ route('facturas.buscar') }}" method="post" autocomplete="off">
             @csrf
+            <input autocomplete="off" type="hidden" name="numeroDocumento" value="{{ $cliente->numero_documento }}">
+            <button id="boton-saldo-cliente-historia" type="submit" href="{{ route('facturacion') }}"
+                class="linea-agregar-cliente linea-saldo">
+                <p>Saldo: $ {{ number_format($cliente->saldo, 0, ',', '.') }}</p>
+            </button>
+        </form>
+        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" autocomplete="off">
             @method('PATCH')
+            @csrf
             <div class="linea-agregar-cliente linea-cita" ">
 
                 <p class="titulo-elemento-p">Proxima Cita:</p>
 
                 <div class="cita-contenedor">
-                    <input type="datetime-local"  name="fechaCita" value ="{{ $cliente->fecha_cita }}" id="">
+                    <input autocomplete="off" type="datetime-local"  name="fecha_cita" value ="{{ $cliente->fecha_cita }}" id="">
                 </div>
                 <button class="boton-guardar" id="boton-agendar" value="" type="submit">
                     <p>Agendar</p>
@@ -128,8 +132,8 @@
 
 
         <button class="boton-historial boton-nueva-historia" id="boton-pop-historia"> + Nueva Historia</button>
+        <button class="boton-historial diente" data-diente="Todas">Todas las historias</button>
         <button class="boton-historial diente" data-diente="General">General</button>
-        <button class="boton-historial diente" data-diente="Otros">Otros</button>
 
 
         <div class="veribular-grupo">
@@ -258,6 +262,7 @@
                 <img src="{{ asset('img/iconoCerrar.png') }}" alt="">
             </button>
         </div>
+        
         <div class="historias-contenedor historias-pop-up">
 
             <div class="historia-encabezado">
@@ -271,6 +276,7 @@
                     <div class="historia-tarjeta">
                     <div>
                         <p class="tarjeta-encabezado fecha-tarjeta">fecha</p>
+                        <p class="tarjeta-encabezado diente-tarjeta">diente</p>
                     </div>
                     <div>
                         <p class="tarjeta-encabezado especialista-tarjeta"> especialista</p>
@@ -309,49 +315,55 @@
                         <label class="datos-historias-titulo" for="especialistaId">Atendido por </label>
                     </div>
                     <div class="datos-historia">
-                        <input type="date" name="fecha" id="" value="">
+                        <input autocomplete="off" type="date" name="fecha" id="" value="">
                         <select  name="especialistaId" id="">
                             <option value="" selected disabled>Seleccionar</option>
-                            @foreach ($especialistas as $especialista )
-                                <option value="{{$especialista->id}}">{{$especialista->nombre}}</option>
-                            @endforeach
-                            
-                        </select>
-                    </div>
-                </div>
-
-                <div class="agregar-historia-tarjeta">
-                    <div class="datos-historia">
-                        <label for="dienteId">Diente</label>
-                        <label for="observacion">Observacion</label>
-                    </div>
-                    <div class="datos-historia">
-                            <select class="diente-nueva-historia" name="dienteId" id="">
-                                <option value="" selected disabled>  seleccionar   </option>
-                                @foreach ( $dientes as $diente)
-                                    <option value="{{$diente->id}}">{{$diente->nombre}}</option>
-                                @endforeach
-                            </select>
-                        <textarea class="observaciones-nueva-historia" name="observacion" id=""></textarea>
-                    </div>
-                    
-                </div>
-                
-                <button type="button" class="mas-historias">+</button>
+                              @foreach ($especialistas as $especialista)
+                @if ($especialista->sede_id == session('sede.id'))
+                    <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
+                @endif
+                @endforeach
+                </select>
             </div>
-            <button type="button" id="boton-guardar-historias">Guardar</button>
-        </div>
     </div>
+
+    <div class="agregar-historia-tarjeta">
+        <div class="datos-historia">
+            <label for="dienteId">Diente</label>
+            <label for="observacion">Observacion</label>
+        </div>
+        <div class="datos-historia">
+            <select class="diente-nueva-historia" name="dienteId" id="">
+                <option value="" selected disabled> seleccionar </option>
+                @foreach ($dientes as $diente)
+                    <option value="{{ $diente->id }}">{{ $diente->nombre }}</option>
+                @endforeach
+            </select>
+            <textarea class="observaciones-nueva-historia" name="observacion" id=""></textarea>
+        </div>
+
+    </div>
+
+    <button type="button" class="mas-historias">+</button>
+</div>
+<button type="button" id="boton-guardar-historias">Guardar</button>
+</div>
+</div>
 
 </div>
 
 <script>
-    const historias = @json($cliente->historias);
-    
+    const historias = @json($cliente->historias->map(function($h) {
+        return array_merge($h->toArray(), [
+            'fecha' => \Carbon\Carbon::parse($h->created_at)
+                ->setTimezone('America/Bogota')
+                ->format('Y-m-d'),
+        ]);
+    }));
+
     const dientes = @json($dientes);
     const especialistas = @json($especialistas);
     const clienteId = {{ $cliente->id }};
-    console.log(especialistas);
 </script>
 <script src="{{ asset('js/nuevaTarjetaHistoria.js') }}"></script>
 <script src="{{ asset('js/bulkHistorias.js') }}"></script>

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Sede extends Model
 {
     protected $fillable = [
-        'nombre'
+        'nombre',
+        'no_factura'
     ];
 
 

@@ -130,15 +130,20 @@
     box-shadow: 3px 3px 8px #00000071;
 }
 
+#boton-saldo-cliente-historia{
+    width: 1000px;
+
+}
 .linea-agregar-cliente button:hover {
     background-color: #fc6e75;
     transform: scale(1.2);
     transition: 0.4s;
     cursor: pointer;
 }
+
 .linea-agregar-cliente img {
     width: auto;
-    height: 70%;
+    height: 75%;
     padding: 8px;
 }
 .linea-agregar-cliente p {
@@ -257,10 +262,10 @@
 /* ---------Historia idividual pop Up ------------ */
 
 .contenedor-pop-up{
-    padding: 0px;
+    padding-top:   10px;
 }
 
-.cuerpo-historias {
+#cuerpo-historias {
     overflow: scroll;
 }
 .historia-encabezado {
@@ -295,12 +300,20 @@
     padding: 0px 30px;
     font-size: large;
     letter-spacing: 2px;
+
 }
 
 .tarjeta-separador {
     text-align: center;
     font-size: xx-large;
     font-weight: bold;
+}
+.sin-historias{
+
+text-align: center;
+margin: 10px 0px;
+font-size: xx-large;
+
 }
 
 /* ---------Nuevas Historias--------- */

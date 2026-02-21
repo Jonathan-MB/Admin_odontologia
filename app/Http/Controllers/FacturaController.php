@@ -9,9 +9,13 @@ use App\Http\Requests\StoreFacturaRequest;
 use App\Http\Requests\UpdateFacturaRequest;
 use App\Http\Resources\FacturaCollection;
 use App\Http\Resources\FacturaResource;
+use App\Models\Cliente;
+use App\Models\Especialista;
 use App\Models\Factura;
+use App\Models\Sede;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class FacturaController extends Controller
 {
@@ -56,15 +60,23 @@ class FacturaController extends Controller
     public function store(StoreFacturaRequest $request)
     {
         return new FacturaResource(Factura::create($request->validated()));
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Factura $factura)
+    public function show(Cliente $cliente)
     {
-        return new FacturaResource($factura);
+
+        $cliente->load([
+            'facturas' => fn($q) => $q->orderBy('created_at', 'desc')->with('especialista'),
+            'tipoDocumento', // ← agregar
+            'eps',           // ← agregar
+        ]);
+
+        $especialistas = Especialista::all();
+
+        return view('factura', compact('cliente', 'especialistas'));
     }
 
 
@@ -111,5 +123,53 @@ class FacturaController extends Controller
         return response()->json([
             'message' => 'Eliminado correctamente'
         ], 200);
+    }
+
+
+public function buscar(Request $request)
+{
+    $numeroDocumento = $request->numeroDocumento;
+
+    $cliente = Cliente::where('numero_documento', $numeroDocumento)->first();
+
+    if (!$cliente) {
+        return back()->with('error', 'Cliente no encontrado');
+    }
+
+    return redirect()->route('facturaCliente', $cliente->id);
+}
+
+
+    public function guardar(Request $request)
+    {
+        // 1. Traer sede por sesión y obtener consecutivo
+        $sede = Sede::find((int) session('sede.id'));
+        logger('sede: ' . json_encode($sede));
+        logger('session sede.id: ' . session('sede.id'));
+        $nuevoNoFactura = $sede->no_factura + 1;
+        $sede->update(['no_factura' => $nuevoNoFactura]);
+
+        // 2. Crear factura con el consecutivo
+        Factura::create([
+            'cliente_id'      => $request->clienteId,
+            'especialista_id' => $request->especialistaId,
+            'nombre'          => $request->nombre,
+            'abono'           => $request->abono,
+            'saldo'           => $request->saldoFinal,
+            'no_factura'      => $nuevoNoFactura, // ← consecutivo de la sede
+        ]);
+
+        // 3. Actualizar cliente
+        $cliente = Cliente::find($request->clienteId);
+        $cliente->update([
+            'saldo'      => $request->saldoFinal,
+            'fecha_cita' => $request->fechaCita,
+        ]);
+
+        // 4. Retornar el noFactura al JS
+        return response()->json([
+            'success'   => true,
+            'noFactura' => $nuevoNoFactura, // ← el JS lo usa para mostrar en la factura
+        ]);
     }
 }

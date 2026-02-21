@@ -19,7 +19,7 @@ class EspecialistaFactory extends Factory
     {
         return [
             'nombre'    => fake()->name(),
-            'sede_id'   => Sede::inRandomOrder()->value('id'),
+            'sede_id'   => fake()->numberBetween(1,2),
         ];
     }
 }

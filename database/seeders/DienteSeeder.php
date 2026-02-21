@@ -23,16 +23,6 @@ class DienteSeeder extends Seeder
             ]);
         }
 
-                // Crear diente "Otros" en grupo "Otros"
-        $grupoOtros = Grupo::where('nombre', 'Otros')->first();
-        if ($grupoOtros) {
-            Diente::firstOrCreate([
-
-                'nombre'    => 'Otros',
-                'grupo_id'  => $grupoOtros->id,
-
-            ]);
-        }
 
         $config = [
             // VESTIBULARES

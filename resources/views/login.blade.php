@@ -18,15 +18,24 @@
 
     <div class="contenedor-login">
         <form action="{{ route('web.login') }}" method="post">
+            @if ($errors->has('correo'))
+                <div class="popup-error" id="popup-error">
+                    <p>{{ $errors->first('correo') }}</p>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="popup-error" id="popup-error">
+                    <p>{{ session('error') }}</p>
+                </div>
+            @endif
             @csrf
             <div class="tarjeta-login">
-                <input type="email" name="correo" id="" required>
-                <input type="password" name="password" id="" required>
+                <input type="email" name="correo" placeholder="Correo" id="" required>
+                <input type="password" name="password" placeholder="Contraseña" id="" required
+                    autocomplete="new-password">
                 <button type="submit">Iniciar Sesion</button>
             </div>
-            @error('correo')
-                <p style="color:red">{{ $message }}</p>
-            @enderror
+
         </form>
     </div>
 
