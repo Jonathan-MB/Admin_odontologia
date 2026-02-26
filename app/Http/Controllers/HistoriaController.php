@@ -17,9 +17,7 @@ use Illuminate\Support\Arr;
 
 class HistoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         return view('historias');
@@ -27,9 +25,6 @@ class HistoriaController extends Controller
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreHistoriaRequest $request)
     {
         return new HistoriaResource(Historia::create($request->validated()));
@@ -38,19 +33,19 @@ class HistoriaController extends Controller
 
     public function bulkStore(BulkStoreHistoriaRequest $request)
     {
-        Historia::insert($request->validated()['historias']);
+        $historias = collect($request->validated()['historias'])->map(fn($h) => array_merge($h, [
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]))->toArray();
+
+        Historia::insert($historias);
 
         return response()->json([
             'message' => 'Historias creadas correctamente',
-            'total'   => count($request->validated()['historias'])
+            'total'   => count($historias)
         ], 201);
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Historia $historia)
     {
         return new HistoriaResource($historia);
@@ -58,9 +53,6 @@ class HistoriaController extends Controller
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateHistoriaRequest $request, Historia $historia)
     {
 
@@ -91,9 +83,8 @@ class HistoriaController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(Historia $historia)
     {
         $historia->delete();

@@ -15,20 +15,16 @@ use App\Models\Factura;
 use App\Models\Sede;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SebastianBergmann\CodeCoverage\Filter;
 use SebastianBergmann\Environment\Console;
 
 class FacturaController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     */
-
     public function index(Request $request)
     {
         $filter = new FacturaFilter();
         $queryItems = $filter->transform($request);
-
         $factura = Factura::query();
 
         if (!empty($queryItems)) {
@@ -54,36 +50,32 @@ class FacturaController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
     public function store(StoreFacturaRequest $request)
     {
         return new FacturaResource(Factura::create($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(Cliente $cliente)
     {
 
         $cliente->load([
             'facturas' => fn($q) => $q->orderBy('created_at', 'desc')->with('especialista'),
-            'tipoDocumento', // ← agregar
-            'eps',           // ← agregar
+            'tipoDocumento',
+            'eps',
         ]);
-
         $especialistas = Especialista::all();
+        $sedes = Sede::all();
 
-        return view('factura', compact('cliente', 'especialistas'));
+        return view('factura', compact('cliente', 'especialistas', 'sedes'));
     }
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateFacturaRequest $request, Factura $factura)
     {
 
@@ -114,9 +106,8 @@ class FacturaController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(Factura $factura)
     {
         $factura->delete();
@@ -126,50 +117,66 @@ class FacturaController extends Controller
     }
 
 
-public function buscar(Request $request)
-{
-    $numeroDocumento = $request->numeroDocumento;
+    public function buscar(Request $request)
+    {
+        $numeroDocumento = $request->numeroDocumento;
+        $cliente = Cliente::where('numero_documento', $numeroDocumento)->first();
 
-    $cliente = Cliente::where('numero_documento', $numeroDocumento)->first();
+        if (!$cliente) {
+            return back()->with('error', 'Cliente no encontrado');
+        }
 
-    if (!$cliente) {
-        return back()->with('error', 'Cliente no encontrado');
+        return redirect()->route('facturaCliente', $cliente->id);
     }
-
-    return redirect()->route('facturaCliente', $cliente->id);
-}
 
 
     public function guardar(Request $request)
     {
-        // 1. Traer sede por sesión y obtener consecutivo
+        //  Traer sede por sesión y obtener consecutivo
         $sede = Sede::find((int) session('sede.id'));
         logger('sede: ' . json_encode($sede));
         logger('session sede.id: ' . session('sede.id'));
         $nuevoNoFactura = $sede->no_factura + 1;
         $sede->update(['no_factura' => $nuevoNoFactura]);
 
-        // 2. Crear factura con el consecutivo
+        //  Crear factura con el consecutivo
         Factura::create([
             'cliente_id'      => $request->clienteId,
             'especialista_id' => $request->especialistaId,
             'nombre'          => $request->nombre,
             'abono'           => $request->abono,
             'saldo'           => $request->saldoFinal,
-            'no_factura'      => $nuevoNoFactura, // ← consecutivo de la sede
+            'no_factura'      => $nuevoNoFactura,
         ]);
 
-        // 3. Actualizar cliente
+        //  Actualizar cliente
         $cliente = Cliente::find($request->clienteId);
         $cliente->update([
             'saldo'      => $request->saldoFinal,
             'fecha_cita' => $request->fechaCita,
         ]);
 
-        // 4. Retornar el noFactura al JS
+        //  Retornar el noFactura al JS
         return response()->json([
             'success'   => true,
-            'noFactura' => $nuevoNoFactura, // ← el JS lo usa para mostrar en la factura
+            'noFactura' => $nuevoNoFactura,
         ]);
+    }
+
+    public function totalDia(Request $request)
+    {
+        $fecha = $request->input('fecha', now()->toDateString());
+
+        $sedes = Sede::with([
+            'especialistas' => function ($q) use ($fecha) {
+                $q->with([
+                    'facturas' => function ($q) use ($fecha) {
+                        $q->whereDate('created_at', $fecha);
+                    }
+                ]);
+            }
+        ])->get();
+
+        return view('especialistasTotal', compact('sedes', 'fecha'));
     }
 }

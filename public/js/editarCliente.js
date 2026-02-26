@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const epsIdHidden = document.getElementById('eps-id-hidden');
     const tipoDocInput = document.getElementById('tipo-doc-input');
     const epsInput = document.getElementById('eps-input');
+    const numDoc = document.getElementById('num-doc');
 
     tipoDocInput.addEventListener('change', () => {
         const encontrado = tipoDocumentos.find(t => t.nombre === tipoDocInput.value);
@@ -16,41 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
         epsInput.style.backgroundColor = encontrado ? '' : '#ef5252';
     });
 
-    document.getElementById('form-crear-cliente').addEventListener('submit', async (e) => {
+    document.getElementById('form-editar-cliente').addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        console.log('submit ejecutado');
-        console.log('tipoDoc:', tipoDocHidden.value);
-        console.log('eps:', epsIdHidden.value);
-
-
         let valido = true;
 
         if (!tipoDocHidden.value) {
             tipoDocInput.style.backgroundColor = '#ef5252';
-            tipoDocInput.focus();
             valido = false;
         }
 
         if (!epsIdHidden.value) {
             epsInput.style.backgroundColor = '#ef5252';
-            epsInput.focus();
             valido = false;
         }
 
         if (!valido) return;
 
-        const numDoc = document.getElementById('num-doc').value;
-        console.log('numDoc:', numDoc);
-        const res = await fetch(`/clientes/verificar-documento/${numDoc}`);
-        console.log('status:', res.status);
+        // Verificar si el documento ya existe (excluyendo el cliente actual)
+        const res = await fetch(`/clientes/verificar-documento/${numDoc.value}?clienteId=${clienteId}`);
         const data = await res.json();
-        console.log('data:', data);
 
         if (data.existe) {
             alert('El número de documento ya existe');
-            document.getElementById('num-doc').style.backgroundColor = '#ef5252';
-            document.getElementById('num-doc').focus();
+            numDoc.style.backgroundColor = '#ef5252';
+            numDoc.focus();
             return;
         }
 

@@ -47,7 +47,7 @@
     color: #ffffff;
     margin-bottom: 3px;
     font-weight: bold;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .linea-agregar-cliente label {
@@ -70,7 +70,7 @@
     padding: 3px;
 }
 
-.dato-cliente{
+.dato-cliente {
     height: 40px;
     width: 240px;
     border: 3px solid #01018c;
@@ -80,10 +80,9 @@
     font-size: small;
     text-align: center;
     align-content: center;
-    color: #000000 !important; 
+    color: #000000 !important;
     overflow: hidden;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .linea-agregar-cliente input:focus {
@@ -118,7 +117,7 @@
     font-weight: 600;
     padding: 10%;
     overflow: hidden;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .linea-agregar-cliente button {
@@ -130,9 +129,8 @@
     box-shadow: 3px 3px 8px #00000071;
 }
 
-#boton-saldo-cliente-historia{
+#boton-saldo-cliente-historia {
     width: 1000px;
-
 }
 .linea-agregar-cliente button:hover {
     background-color: #fc6e75;
@@ -196,10 +194,6 @@
     margin-bottom: 20px;
 }
 
-
-
-
-
 .tipo-diente {
     margin-top: 20px;
     text-align: center;
@@ -213,12 +207,16 @@
     justify-content: center;
     gap: 15%;
     margin: 10px 10px 4px 10px;
+    justify-content: center;
 }
 
 .titulos-grupos p {
     font-size: x-large;
     font-weight: 400;
     color: #01018c;
+    width: 400px;
+    text-align: center;
+
 }
 
 .dientes-fila {
@@ -230,9 +228,32 @@
 
 .dientes-grupo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     padding: 10px;
+}
+
+.contenedor-info-diente {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 5px;
+}
+
+.diente-textarea {
+    border: 3px solid #01018c;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: x-large;
+    font-weight: bold;
+    width: 300px;
+    height: 50px;
+    /* width: 80%; */
+    /* height: 90%; */
+    align-content: center;
 }
 
 .diente {
@@ -261,8 +282,8 @@
 
 /* ---------Historia idividual pop Up ------------ */
 
-.contenedor-pop-up{
-    padding-top:   10px;
+.contenedor-pop-up {
+    padding-top: 10px;
 }
 
 #cuerpo-historias {
@@ -296,7 +317,7 @@
     font-weight: bold;
 }
 
-.diente-tarjeta{
+.diente-tarjeta {
     color: #354ae6;
     text-shadow: 0px 0px 1px #000000;
     text-align: center;
@@ -307,7 +328,6 @@
     padding: 0px 30px;
     font-size: large;
     letter-spacing: 2px;
-
 }
 
 .tarjeta-separador {
@@ -315,12 +335,10 @@
     font-size: xx-large;
     font-weight: bold;
 }
-.sin-historias{
-
-text-align: center;
-margin: 10px 0px;
-font-size: xx-large;
-
+.sin-historias {
+    text-align: center;
+    margin: 10px 0px;
+    font-size: xx-large;
 }
 
 /* ---------Nuevas Historias--------- */
@@ -332,7 +350,6 @@ font-size: xx-large;
     overflow: scroll;
 }
 .contenedor-datos-historia {
-
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -343,23 +360,20 @@ font-size: xx-large;
 .datos-historia {
     display: flex;
     flex-direction: column;
-
 }
 .datos-historia label {
     margin: 20px;
     font-size: large;
     font-weight: bold;
     color: #ffffff;
-
 }
 
-.datos-historia .datos-historias-titulo{
+.datos-historia .datos-historias-titulo {
     color: #01018c !important;
     font-size: large;
 }
 
 .datos-historia input {
-
     width: 400px;
     height: 40px;
     margin: 20px;
@@ -368,7 +382,6 @@ font-size: xx-large;
     border-radius: 20px;
 }
 .datos-historia select {
-
     width: 400px;
     height: 40px;
     margin: 20px;
@@ -389,17 +402,17 @@ font-size: xx-large;
     border-radius: 20px;
 }
 
-.mas-historias{
+.mas-historias {
     width: 60px;
     height: 60px;
     background-color: #01018c;
     border-radius: 100%;
     font-size: xx-large;
     color: #ffffff;
-    margin: 40px 0px 160px 0px ;
+    margin: 40px 0px 160px 0px;
 }
 
-.mas-historias:hover{
+.mas-historias:hover {
     background-color: #fc6e75;
     transform: scale(1.5);
     transition: 0.4s;
@@ -417,7 +430,6 @@ font-size: xx-large;
     text-shadow: 0px 3px 6px #000003a2;
 }
 
-
 .boton-historial:hover {
     transform: scale(1.2);
     transition: 0.4s;
@@ -431,9 +443,9 @@ font-size: xx-large;
     font-size: xx-large;
     background-color: #01018c;
 }
-.observaciones-nueva-historia{
+.observaciones-nueva-historia {
     min-height: 90px;
-    overflow:hidden;
+    overflow: hidden;
     margin: 3px;
     border-radius: 20px;
     border: 3px solid #01018c;
@@ -441,9 +453,8 @@ font-size: xx-large;
     font-size: large;
 }
 
-.diente-nueva-historia{
+.diente-nueva-historia {
     max-height: 50px;
-
 }
 
 .datos-historia input {
@@ -452,19 +463,67 @@ font-size: xx-large;
     font-weight: bold;
 }
 
-
-#boton-guardar-historias{
+#boton-guardar-historias {
     background-color: #fc6e75;
     height: 60px;
-        color: #ffffff;
+    color: #ffffff;
     font-size: x-large;
     font-weight: bold;
-    
 }
 
-#boton-guardar-historias:hover{
+#boton-guardar-historias:hover {
     transform: scale(1.2);
     transition: 0.4s;
     background-color: #eb2a2a;
+}
 
+
+.F-A-Odontograma{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+}
+.F-A-Odontograma label{
+    width: 150px;
+}
+.F-A-Odontograma-data{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 0px;
+    
+}
+.F-A-Odontograma-data label{
+    width: 150px;
+}
+
+.diente-general{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #01018c;
+    
+}
+
+#diente-general-img{
+    background-image: none;
+    margin-right: 30px;
+    color: #ffffff;
+    background-color: #fc6e75;
+    width: 150px;
+    border-radius: 20px;
+    border: 3px solid #000000ca;
+}
+
+#diente-general-img:hover{
+color: #fc6e75;
+background-color: #ffffff;
+}
+
+.info-diente-general textarea{
+    width: 300px;
+    height: 80px;
 }

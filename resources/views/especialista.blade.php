@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="{{ asset('css/crearCliente.css') }}">
 <link rel="stylesheet" href="{{ asset('css/listasEditarCrear.css') }}">
 
-<title>Usuarios</title>
+<title>Especialistas</title>
 
 @include('partials.header')
 
 <div class="contenedor-general">
 
     <h1 class="vista-titulo">Especialistas</h1>
-    <form action="{{ route('clientes.store') }}" method="post" autocomplete="off">
+    <form action="{{ route('especialistas.store') }}" method="post" autocomplete="off">
         @csrf
 
 
@@ -29,8 +29,8 @@
 
                     <div class="elemento-formulario">
                         <label for="sedeId">Sede</label>
-                        <select name="sedeId" id="sedeId">
-                            <option selected disabled>Seleccionar</option>
+                        <select name="sedeId" id="sedeId" required>
+                            <option selected value="" disabled>Seleccionar</option>
                             @foreach ($sedes as $sede)
                                 <option value="{{ $sede->id }}">{{ $sede->nombre }}</option>
                             @endforeach
@@ -46,6 +46,9 @@
             </div>
         </div>
     </form>
+
+
+    @include('partials.mensaje')
 
 
     <div class="contenedor-listas">

@@ -16,29 +16,24 @@ use Illuminate\Support\Facades\Hash;
 class UsuarioController extends Controller
 {
 
-
-
-
     public function index(Request $request)
     {
 
         $usuarios   = Usuario::all();
         $rols       = Rol::all();
-        
+
         return view('usuarios', compact('usuarios', 'rols'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreUsuarioRequest $request)
     {
-        return new UsuarioResource(Usuario::create($request->validated()));
+        Usuario::create($request->validated());
+    return redirect()->back()->with('mensajeCreado', 'Usuario creado correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(Usuario $usuario)
     {
         return new UsuarioResource($usuario);
@@ -46,57 +41,25 @@ class UsuarioController extends Controller
 
 
 
-
-
-public function edit(Usuario $usuario)
-{
-    $rols = Rol::all();
-    return view('usuarioEditar', compact('usuario', 'rols'));
-}
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    
-    public function update(UpdateUsuarioRequest $request, Usuario $usuario)
+    public function edit(Usuario $usuario)
     {
-
-        $data = $request->validated();
-
-        // PATCH sin data
-        if (empty($data)) {
-            return response()->json([
-                'message' => 'Sin datos'
-            ], 422);
-        }
-
-        // Cargar datos sin guardar
-        $usuario->fill($data);
-
-        // No hubo cambios
-        if (! $usuario->isDirty()) {
-            return response()->json([
-                'message' => 'No se detectaron cambios'
-            ], 422);
-        }
-
-        $usuario->save();
-
-        return response()->json([
-            'message' => 'Actualizado Correctamente',
-            'data'    => $usuario->fresh()
-        ], 200);
+        $rols = Rol::all();
+        return view('usuarioEditar', compact('usuario', 'rols'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Usuario $usuario)
+
+
+    public function update(UpdateUsuarioRequest $request, Usuario $usuario)
     {
-        $usuario->delete();
-        return response()->json([
-            'message' => 'Eliminado correctamente'
-        ], 200);
+        $data = $request->validated();
+
+        if (empty($data['contrasena'])) {
+            unset($data['contrasena']);
+        }
+
+        $usuario->fill($data);
+        $usuario->save();
+
+        return redirect()->route('usuarios.index')->with('mensajeActualizado', 'Usuario actualizado correctamente');
     }
 }

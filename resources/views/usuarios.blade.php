@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="{{ asset('css/crearCliente.css') }}">
 <link rel="stylesheet" href="{{ asset('css/listasEditarCrear.css') }}">
 
-<title>Usuarios</title>
+<title>Lista Usuarios</title>
 
 @include('partials.header')
 
 <div class="contenedor-general">
 
     <h1 class="vista-titulo">Usuarios</h1>
-    <form action="{{ route('clientes.store') }}" method="post" autocomplete="off">
+    <form action="{{ route('usuarios.store') }}" method="post" autocomplete="off">
         @csrf
 
 
@@ -24,20 +24,20 @@
                     </div>
                     <div class="elemento-formulario">
                         <label for="correo">Correo</label>
-                        <input autocomplete="off" type="email" name="correo" id="correo" maxlength="150">
+                        <input autocomplete="off" type="email" name="correo" id="correo" maxlength="150" required>
                     </div>
                 </div>
 
                 <div>
 
                     <div class="elemento-formulario">
-                        <label for="celular">Contraseña</label>
+                        <label for="password">Contraseña</label>
                         <input autocomplete="off" type="text" name="password" id="password" minlength="8" required>
                     </div>
                     <div class="elemento-formulario">
                         <label for="rolId">Tipo Usuario</label>
-                        <select name="rolId" id="rolId">
-                            <option selected disabled>Seleccionar</option>
+                        <select name="rolId" id="rolId" required>
+                            <option selected value="" disabled>Seleccionar</option>
                             @foreach ($rols as $rol)
                                 <option value="{{ $rol->id }}">{{ $rol->nombre }}</option>
                             @endforeach
@@ -54,6 +54,8 @@
         </div>
     </form>
 
+
+    @include('partials.mensaje')
 
     <div class="contenedor-listas">
         <div class="titulo-listas">

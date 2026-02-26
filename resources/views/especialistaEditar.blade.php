@@ -2,20 +2,20 @@
 <link rel="stylesheet" href="{{ asset('css/crearCliente.css') }}">
 <link rel="stylesheet" href="{{ asset('css/listasEditarCrear.css') }}">
 
-<title>Usuarios</title>
+<title>Editar Especialista</title>
 
 @include('partials.header')
 
 <div class="contenedor-general">
 
-    <h1 class="vista-titulo">Usuarios</h1>
-    <form action="{{ route('clientes.store') }}" method="post" autocomplete="off">
+    <h1 class="vista-titulo">Editar especialistas</h1>
+    <form action="{{ route('especialistas.update',$especialista->id) }}" method="post" autocomplete="off">
+        @method('PATCH')
         @csrf
 
 
 
         <div class="contenedor-agregar-cliente">
-            <p class="titulo-tarjeta-agregar">Editar Usuario</p>
             <div class="contenedor-agregar">
                 <div>
                     <div class="elemento-formulario">
@@ -39,7 +39,7 @@
                 </div>
 
                 <button class="boton-guardar" type="submit">
-                    <img src="{{ asset('img/logoAgregarUsuarioN.png') }}" alt="">
+                    <img src="{{ asset('img/guardar.png') }}" alt="">
                     <p>Guardar</p>
                 </button>
             </div>

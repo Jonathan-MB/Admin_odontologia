@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Filters\ClienteFilter;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
-use App\Http\Resources\ClienteCollection;
-use App\Http\Resources\ClienteResource;
 use App\Models\Cliente;
 use App\Models\Diente;
 use App\Models\Eps;
@@ -17,58 +14,38 @@ use Illuminate\Http\Request;
 
 class clienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        // $filter = new ClienteFilter();
-        // $queryItems = $filter->transform($request);
-        // $includeFacturas = $request->query('includeFacturas');
-        // $includeHistorias = $request->query('includeHistorias');
 
-        // $clientesQuery = Cliente::where($queryItems);
-        // if ($includeFacturas) {
-        //     $clientesQuery = $clientesQuery->with('facturas');
-        // }
-        // if ($includeHistorias) {
-        //     $clientesQuery = $clientesQuery->with('historias');
-        // }
-
-        // $clientes = $clientesQuery->get();
-
-        // return view('clientes.index', compact('clientes'));
-    }
 
     public function create()
     {
         $tipoDocumentos = TipoDocumento::all();
-        $eps = Eps::all(); // si también quieres llenar otro select
+        $eps = Eps::all();
+
         return view('crearCliente', compact('tipoDocumentos', 'eps'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
     public function store(StoreClienteRequest $request)
     {
-        // Crear el cliente
         $cliente = Cliente::create($request->validated());
 
-        // Redirigir a una vista, por ejemplo la lista de clientes
-        return redirect()->route('clientes.show', $cliente->id);
+        return redirect()->route('clientes.show', $cliente->id)->with('mensajeCreado', 'Cliente creado correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(Cliente $cliente)
     {
-        $cliente->load(['historias.especialista','historias.diente', 'facturas']); // ← cargar relación anidada
+        $cliente->load(['historias.especialista', 'historias.diente', 'facturas']); 
         $dientes = Diente::all();
         $especialistas = Especialista::all();
+        $ultimasHistorias = $cliente->historias
+        ->groupBy('diente_id')
+        ->map(fn($historias) => $historias->sortByDesc('created_at')->first());
 
-        return view('historias', compact('cliente', 'dientes', 'especialistas')); // no necesitas pasar $especialistas
+    
+        return view('historias', compact('cliente', 'dientes', 'especialistas','ultimasHistorias')); 
     }
 
 
@@ -80,9 +57,8 @@ class clienteController extends Controller
         return view('editarCliente', compact('cliente', 'tipoDocumentos', 'eps'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $data = $request->validated();
@@ -99,26 +75,29 @@ class clienteController extends Controller
 
         $cliente->save();
 
-        // Redirigir al método show usando el nombre de la ruta
+
         return redirect()->route('clientes.show', $cliente->id)
-            ->with('success', 'Cliente actualizado correctamente');
+            ->with('mensajeActualizado', 'Cliente Actualizado correctamente');
+    
+    
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(cliente $cliente)
     {
         $cliente->delete();
+
         return response()->json([
             'message' => 'Eliminado correctamente'
         ], 200);
     }
 
+
+
     public function buscar(Request $request)
     {
         $numeroDocumento = $request->numeroDocumento;
-
         $cliente = Cliente::where('numero_documento', $numeroDocumento)->first();
 
         if (!$cliente) {
@@ -127,4 +106,17 @@ class clienteController extends Controller
 
         return redirect()->route('clientes.show', $cliente->id);
     }
+
+
+public function verificarDocumento(Request $request, $numero)
+{
+    $query = Cliente::where('numero_documento', $numero);
+    
+    if ($request->clienteId) {
+        $query->where('id', '!=', $request->clienteId);
+    }
+    
+    return response()->json(['existe' => $query->exists()]);
+}
+
 }

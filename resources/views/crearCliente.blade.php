@@ -9,7 +9,7 @@
 
     <h1 class="vista-titulo">Agregar Cliente</h1>
 
-    <form action="{{ route('clientes.store') }}" method="post" autocomplete="off">
+    <form id="form-crear-cliente"  action="{{ route('clientes.store') }}" method="post" autocomplete="off">
         @csrf
 
 
@@ -18,7 +18,7 @@
 
             <div class="linea-agregar-cliente">
                 <div class="elemento-formulario">
-                    <label for="tipo-doc">Tipo Documento</label>
+                    <label for="tipo-doc-input">Tipo Documento</label>
                     <input type="text" id="tipo-doc-input" list="tipo-doc-list"
                         placeholder="Buscar tipo documento..." required>
                     <input type="hidden" name="tipoDocumentoId" id="tipo-doc-hidden">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="elemento-formulario">
-                    <label for="eps">EPS</label>
+                    <label for="eps-input">EPS</label>
                     <input type="text" id="eps-input" list="eps-list" placeholder="Buscar EPS..." required>
                     <input type="hidden" name="epsId" id="eps-id-hidden">
                     <datalist id="eps-list">

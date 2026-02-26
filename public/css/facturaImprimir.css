@@ -1,3 +1,4 @@
+
 .factura-imprimir-contenedor {
     display: flex;
     flex-direction: column;
@@ -72,7 +73,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 60px;
+    gap: 15px;
     border-bottom: 3px solid #000000;
     border-top: 3px solid #000000;
 }
@@ -116,6 +117,17 @@
     color: #ffffff;
 }
 
+.direcciones-factura-imprimir img{
+    max-height: 20px;
+    width: auto;
+    margin-right: 3px;
+}
+.direccion-items{
+    display: flex;
+    flex-direction: row;
+    margin: 3px 6px;
+}
+
 
 @media print {
     @page {
@@ -128,6 +140,11 @@
     body {
         height: 100%;
     }
+    
+    .factura-imprimir-titulo{
+        font-family: "Breathing", sans-serif;
+    }
+    
     #factura-imprimible { 
         display: block !important;
         visibility: visible !important;

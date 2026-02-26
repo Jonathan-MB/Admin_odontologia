@@ -51,8 +51,8 @@ class UpdateUsuarioRequest extends FormRequest
             $data['rol_id'] = $this->rolId;
         }
 
-        if ($this->has('password')) {
-            $data['contrasena'] = $this->password;
+        if ($this->filled('password')) { 
+            $data['contrasena'] = bcrypt($this->password);
         }
 
         $this->merge($data);

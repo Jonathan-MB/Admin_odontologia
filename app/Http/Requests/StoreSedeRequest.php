@@ -20,6 +20,11 @@ class StoreSedeRequest extends FormRequest
 
             'nombre'     => ['required', 'string', 'max:45', 'unique:sedes,nombre'],
             'no_factura' => ['nullable', 'integer', 'min:0'],
+            'nit'        => ['required', 'string', 'max:45'],
+            'direccion'  => ['required', 'string', 'max:120'],
+            'telefono'   => ['required', 'string', 'max:45'],
+            'celular'    => ['required', 'string', 'max:45'],
+
         ];
     }
 

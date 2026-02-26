@@ -14,79 +14,42 @@ use Illuminate\Http\Request;
 
 class EpsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-
-        $filter = new EpsFilter();
-        $queryItems = $filter->transform($request);
-        $includeClientes = $request->query('includeClientes');
-        $eps = Eps::where($queryItems);
-        if ($includeClientes) {
-            $eps = $eps->with('clientes');
-        }
-
-        return new EpsCollection($eps->paginate()->appends($request->query()));
+        $eps   = Eps::all();
+        return view('eps', compact('eps'));
     }
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreEpsRequest $request)
     {
-        return new EpsResource(Eps::create($request->validated()));
+        Eps::create($request->validated());
+        return redirect()->back()->with('mensajeCreado', 'Eps creado correctamente');
+    
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Eps $eps)
     {
         return new EpsResource($eps);
     }
 
 
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEpsRequest $request, Eps $eps)
+    public function edit(Eps $ep)
     {
-
-        $data = $request->validated();
-
-        // PATCH sin data
-        if (empty($data)) {
-            return response()->json([
-                'message' => 'Sin datos'
-            ], 422);
-        }
-
-        // Cargar datos sin guardar
-        $eps->fill($data);
-
-        // No hubo cambios
-        if (! $eps->isDirty()) {
-            return response()->json([
-                'message' => 'No se detectaron cambios'
-            ], 422);
-        }
-
-        $eps->save();
-
-        return response()->json([
-            'message' => 'Actualizado Correctamente',
-            'data'    => $eps->fresh()
-        ], 200);
+        return view('epsEditar', compact('ep'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+    public function update(UpdateEpsRequest $request, Eps $ep)
+    {
+        $ep->update(['nombre' => $request->nombre]);
+
+        return redirect()->route('eps.index')->with('mensajeActualizado', 'EPS actualizada correctamente');
+    }
+
+
+
     public function destroy(Eps $eps)
     {
         $eps->delete();

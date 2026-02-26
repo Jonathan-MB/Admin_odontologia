@@ -90,17 +90,23 @@ botonGuardarFactura.addEventListener('click', async () => {
         const ventana = window.open('', '_blank');
         ventana.document.write(`
         <html>
-            <head>
-                ${estilos}
-                <style>
-                    @page { margin: 5mm; size: auto; }
-                    body { margin: 0; }
-                </style>
-            </head>
-            <body>
-                ${document.getElementById('factura-imprimible').outerHTML}
-            </body>
-        </html>
+        <head>
+            ${estilos}
+            <style>
+                @font-face {
+                    font-family: "Breathing";
+                    src: url("${fontBreathingUrl}") format("truetype");
+                    font-weight: normal;
+                    font-style: normal;
+                }
+                @page { margin: 5mm; size: auto; }
+                body { margin: 0; }
+            </style>
+        </head>
+        <body>
+            ${document.getElementById('factura-imprimible').outerHTML}
+        </body>
+    </html>
     `);
         ventana.document.close();
 

@@ -22,9 +22,11 @@
         <div class="contenedor-sedes">
 
             @foreach ($sedes as $sede)
-            <button class="seleccion-sede" data-id="{{ $sede->id }}" data-nombre="{{ $sede->nombre }}"" >
-                <p>{{$sede->nombre}}</p>
-            </button>
+                <button class="seleccion-sede" data-id="{{ $sede->id }}" data-nombre="{{ $sede->nombre }}"
+                    data-nit="{{ $sede->nit }}" data-direccion="{{ $sede->direccion }}"
+                    data-telefono="{{ $sede->telefono }}" data-celular="{{ $sede->celular }}">
+                    <p>{{ $sede->nombre }}</p>
+                </button>
             @endforeach
 
         </div>

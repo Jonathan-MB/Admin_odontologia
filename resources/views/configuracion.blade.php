@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{{ asset('css/inicio.css') }}">
 <link rel="stylesheet" href="{{ asset('css/configuracion.css') }}">
-<title>Inicio</title>
+<title>Configuración</title>
 
 @include('partials.header')
 
@@ -32,7 +32,7 @@
     @endif
 
 
-    <a class="tarjeta-inicio" href="{{ route('clientes.create') }}">
+    <a class="tarjeta-inicio" href="{{ route('eps.index') }}">
         <div class="contenedor-inicio-img">
             <img class="inicio-img" src="{{ asset('img/eps.png') }}" alt="">
         </div>
@@ -42,7 +42,7 @@
     </a>
 
 
-    <a class="tarjeta-inicio"href="{{ route('busqueda') }}">
+    <a class="tarjeta-inicio" href="{{ route('tipoDocumentos.index')}}">
         <div class="contenedor-inicio-img">
             <img class="inicio-img" src="{{ asset('img/documento.png') }}" alt="">
         </div>

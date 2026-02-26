@@ -9,10 +9,11 @@
                 <p class="titulo-datos-encabezado-factura-imprimir">CENTRO DE ODONTOLOGÍA INTEGRAL</p>
             </div>
             <div>
-                <p class="sede-datos-encabezado-factura-imprimir">{{ session('sede.nombre') }}</p>
+                <p class="sede-datos-encabezado-factura-imprimir factura-imprimir-titulo">{{ session('sede.nombre') }}
+                </p>
             </div>
             <div>
-                <p class="nit-datos-encabezado-factura-imprimir">Nit - 000000000</p>
+                <p class="nit-datos-encabezado-factura-imprimir">Nit - {{ session('sede.nit') }}</p>
             </div>
         </div>
         <div class="numero-factura-encabezado-factura-imprimir">
@@ -22,19 +23,32 @@
     </div>
 
     <div class="secciones-factura-imprimir direcciones-factura-imprimir">
-        <p>sede direccion</p>
-        <p>Wpp : 32000000</p>
-        <p>PBX :3389412</p>
+        <div class="direccion-items">
+            <img src="{{ asset('img/direccion.png') }}" alt="">
+            <p>{{ session('sede.direccion') }}</p>
+        </div>
+        <div class="direccion-items">
+
+            <img src="{{ asset('img/tel.png') }}" alt="">
+            <p>{{ session('sede.telefono') }}</p>
+        </div>
+
+        <div class="direccion-items">
+
+            <img src="{{ asset('img/wapp.png') }}" alt="">
+            <p>{{ session('sede.celular') }}</p>
+        </div>
+
         <p>Cali - Colombia</p>
     </div>
     <div class="secciones-factura-imprimir cuerpo-factura-imprimir">
         <div class="columna-cuerpo-factura-imprimir">
             <div class="item-cuerpo-factura-imprimir">
                 <p class="item-titulo-cuerpo-factura-imprimir">Fecha :</p>
-                <p  id="factura-fecha">00/00/0000</p>
+                <p id="factura-fecha">00/00/0000</p>
             </div>
             <div class="item-cuerpo-factura-imprimir">
-                <p class="item-titulo-cuerpo-factura-imprimir" >Nombre :</p>
+                <p class="item-titulo-cuerpo-factura-imprimir">Nombre :</p>
                 <p id="factura-nombre">Nombre</p>
             </div>
             <div class="item-cuerpo-factura-imprimir">
@@ -67,3 +81,6 @@
         </div>
     </div>
 </div>
+<script>
+    const fontBreathingUrl = "{{ asset('fonts/Breathing.ttf') }}";
+</script>

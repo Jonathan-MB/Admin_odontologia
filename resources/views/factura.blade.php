@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/factura.css') }}">
 <link rel="stylesheet" href="{{ asset('css/facturaImprimir.css') }}">
 
-<title>Nombre</title>
+<title> Factura - {{$cliente->nombre_completo}}</title>
 
 @include('partials.header')
 
@@ -116,25 +116,25 @@
         @foreach ($cliente->facturas as $factura)
             <div class="factura-tarjeta">
 
-                <div class="columna-fatura">
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">Fecha - Hora</p>
                     <p class="tarjeta-obsevacion ">{{ $factura->created_at }}</p>
                 </div>
 
 
-                <div class="columna-fatura">
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">nombre</p>
                     <p class="tarjeta-obsevacion ">{{ $factura->nombre }}</p>
                 </div>
-                <div class="columna-fatura">
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">abono</p>
                     <p class="tarjeta-obsevacion ">$ {{ number_format($factura->abono, 0, ',', '.') }}</p>
                 </div>
-                <div class="columna-fatura">
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">Saldo</p>
                     <p class="tarjeta-obsevacion ">$ {{ number_format($factura->saldo, 0, ',', '.') }}</p>
                 </div>
-                <div class="columna-fatura">
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">No. Factura</p>
                     <p class="tarjeta-obsevacion ">{{ str_pad($factura->no_factura, 4, '0', STR_PAD_LEFT) }}</p>
                 </div>
@@ -172,12 +172,12 @@
                     <div class="factura-linea">
                         <label for="saldo-input">Saldo</label>
                         <input autocomplete="off" type="number" placeholder="Déjelo en blanco si es solo abono" name="saldo-input"
-                            id="saldo-input">
+                            id="saldo-input" min="0" oninput="if(this.value < 0) this.value = 0;">
                         <p><- SUMA a saldo pendiente</p>
                     </div>
                     <div class="factura-linea">
                         <label for="abono-input">Abono</label>
-                        <input autocomplete="off" name="abono" type="number" id="abono-input">
+                        <input autocomplete="off" name="abono" type="number" id="abono-input" min="0" oninput="if(this.value < 0) this.value = 0;">
                         <p><- RESTA a saldo pendiente</p>
                     </div>
                     <div class="factura-linea">
@@ -203,7 +203,7 @@
 
                     <div class="factura-linea  hidden" id="proxima-cita-factura">
                         <label for="">Próxima cita</label>
-                        <input autocomplete="off" type="datetime-local" name="" id="">
+                        <input autocomplete="off" type="datetime-local"   min="{{ now()->format('Y-m-d\TH:i') }}">
                     </div>
 
                     <button class="boton-guardar" id="boton-guardar-factura" type="button">

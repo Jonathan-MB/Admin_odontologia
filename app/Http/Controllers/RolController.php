@@ -12,9 +12,7 @@ use Illuminate\Http\Request;
 
 class RolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
 
@@ -31,9 +29,6 @@ class RolController extends Controller
 
 
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Rol $rol)
     {
         $includeUsuarios = Request()->query('includeUsuarios');
@@ -45,9 +40,6 @@ class RolController extends Controller
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Rol $rol)
     {
         return response()->json([
@@ -56,9 +48,7 @@ class RolController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Rol $rol)
     {
         $rol->delete();

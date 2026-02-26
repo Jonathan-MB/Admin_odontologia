@@ -15,52 +15,45 @@ use Illuminate\Http\Request;
 
 class GrupoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
-        
+
         $filter = new GrupoFilter();
-        $queryItems= $filter->transform($request);
+        $queryItems = $filter->transform($request);
         $includeDientes = $request->query('includeDientes');
         $grupos = Grupo::where($queryItems);
-        if ($includeDientes){
-            $grupos = $grupos->with ('dientes');
+        if ($includeDientes) {
+            $grupos = $grupos->with('dientes');
         }
 
         return new GrupoCollection($grupos->paginate()->appends($request->query()));
-
-
-    
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreGrupoRequest $request)
     {
         return new GrupoResource(Grupo::create($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(Grupo $grupo)
     {
 
         $includeDientes = Request()->query('includeDientes');
-        if($includeDientes){
-        return new GrupoResource($grupo->loadMissing('dientes'));
+
+        if ($includeDientes) {
+
+            return new GrupoResource($grupo->loadMissing('dientes'));
         };
+
         return new GrupoResource($grupo);
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateGrupoRequest $request, Grupo $grupo)
     {
 
@@ -91,9 +84,8 @@ class GrupoController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(Grupo $grupo)
     {
         $grupo->delete();

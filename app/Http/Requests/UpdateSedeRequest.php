@@ -24,13 +24,20 @@ class UpdateSedeRequest extends FormRequest
             return [
                 'nombre'        => ['required', 'string', 'max:45', Rule::unique('sedes', 'nombre')->ignore($sedeId)],
                 'no_factura'    => ['required', 'integer', 'min:0'],
+                'nit'           => ['required', 'string', 'max:45'],
+                'direccion'     => ['required', 'string', 'max:120'],
+                'telefono'      => ['required', 'string', 'max:45'],
+                'celular'       => ['required', 'string', 'max:45'],
             ];
         } else {
             return [
 
                 'nombre'        => ['sometimes', 'string', 'max:45',  Rule::unique('sedes', 'nombre')->ignore($sedeId)],
                 'no_factura'    => ['sometimes', 'integer', 'min:0'],
-
+                'nit'           => ['sometimes', 'string', 'max:45'],
+                'direccion'     => ['sometimes', 'string', 'max:120'],
+                'telefono'      => ['sometimes', 'string', 'max:45'],
+                'celular'       => ['sometimes', 'string', 'max:45'],
             ];
         }
     }
@@ -46,5 +53,4 @@ class UpdateSedeRequest extends FormRequest
 
         $this->merge($data);
     }
-
 }

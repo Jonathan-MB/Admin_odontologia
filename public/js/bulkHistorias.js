@@ -1,8 +1,8 @@
+const popupNuevasHistorias = document.getElementById('pop-up-historias-nuevas');
 const botonGuardar = document.getElementById('boton-guardar-historias');
-const fechaInput = document.querySelector('input[name="fecha"]');
-const especialistaSelect = document.querySelector('select[name="especialistaId"]');
+const fechaInput = popupNuevasHistorias.querySelector('input[name="fecha"]');
+const especialistaSelect = popupNuevasHistorias.querySelector('select[name="especialistaId"]');
 
-// Validación visual al cambiar
 fechaInput.addEventListener('change', () => {
     fechaInput.style.backgroundColor = fechaInput.value ? '' : '#ffcccc';
 });
@@ -11,7 +11,6 @@ especialistaSelect.addEventListener('change', () => {
     especialistaSelect.style.backgroundColor = especialistaSelect.value ? '' : '#ffcccc';
 });
 
-// Validación visual en dientes de cada tarjeta
 document.addEventListener('change', (e) => {
     if (e.target.matches('input[name="dienteId"]')) {
         const encontrado = dientes.find(d => d.nombre === e.target.value);
@@ -55,18 +54,20 @@ botonGuardar.addEventListener('click', () => {
         historias.push({
             clienteId,
             especialistaId,
-            dienteId: encontrado.id, // ← id correcto
+            dienteId: encontrado.id,
             observacion,
             fecha
         });
     });
-
+console.log('valido:', valido, 'historias:', historias);
     if (!valido) return;
 
     if (historias.length === 0) {
         alert('No hay historias válidas para guardar');
         return;
     }
+
+    console.log('enviando fetch...');
 
     fetch('/historias/bulk', {
         method: 'POST',
@@ -77,9 +78,14 @@ botonGuardar.addEventListener('click', () => {
         },
         body: JSON.stringify({ historias })
     })
-        .then(res => res.json())
+        .then(res => {
+            console.log('Status:', res.status);
+            return res.json();
+        })
         .then(data => {
+            console.log('Data:', data);
             if (data.message) {
+                alert('El odontograma ha sido actualizado correctamente');
                 window.location.reload();
             }
         })

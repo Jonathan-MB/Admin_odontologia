@@ -9,7 +9,11 @@ class Sede extends Model
 {
     protected $fillable = [
         'nombre',
-        'no_factura'
+        'no_factura',
+        'nit',
+        'direccion',
+        'telefono',
+        'celular',
     ];
 
 

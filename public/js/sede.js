@@ -13,7 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify({
                     id: this.dataset.id,
-                    nombre: this.dataset.nombre
+                    nombre: this.dataset.nombre,
+                    nit: this.dataset.nit,           
+                    direccion: this.dataset.direccion, 
+                    telefono: this.dataset.telefono,   
+                    celular: this.dataset.celular,   
+    
                 })
             })
                 .then(res => res.json())

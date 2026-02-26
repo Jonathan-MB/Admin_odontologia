@@ -18,8 +18,13 @@ class SedeResource extends JsonResource
             'id'            => $this->id,
             'nombre'        => $this->nombre,
             'no_factura'    => $this->no_factura,
+            'nit'           => $this->nit,
+            'direccion'     => $this->direccion,
+            'telefono'      => $this->telefono,
+            'celular'       => $this->celular,
 
-            
+
+
             'especialistas' => EspecialistaResource::collection($this->whenLoaded('especialistas')),
         ];
     }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
     public function login(Request $request)
     {
         $request->validate([
@@ -31,18 +32,16 @@ class AuthController extends Controller
         return redirect('sedes');
     }
 
-public function logout(Request $request)
-{
-    // Cerrar sesión del usuario autenticado
-    Auth::logout();
+    public function logout(Request $request)
+    {
 
-    // Eliminar TODAS las variables de sesión
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    // Redirigir al login
-    return redirect()->route('login');
-}
+        Auth::logout();
 
 
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+
+        return redirect()->route('login');
+    }
 }

@@ -16,9 +16,7 @@ use App\Http\Resources\DienteResource;
 
 class DienteController extends Controller
 {
-    /**
-     * Listar todos los dientes
-     */
+
     public function index(Request $request)
     {
         $filter = new DienteFilter();
@@ -28,25 +26,22 @@ class DienteController extends Controller
         return new DienteCollection($dientes->paginate()->appends($request->query()));
     }
 
-    /**
-     * Mostrar un diente por ID
-     */
+
+
     public function show(Diente $diente)
     {
         return new DienteResource($diente);
     }
 
-    /**
-     * Crear un nuevo diente
-     */
+
+
     public function store(StoreDienteRequest $request)
     {
         return new DienteResource(Diente::create($request->validated()));
     }
 
-    /**
-     * Actualizar un diente existente
-     */
+
+
     public function update(UpdateDienteRequest $request, Diente $diente)
     {
 

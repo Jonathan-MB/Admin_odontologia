@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreUsuarioRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('api')->check() && auth('api')->user()->rol_id === 1;
+        return Auth::check() && Auth::user()->rol_id === 1;
     }
 
 

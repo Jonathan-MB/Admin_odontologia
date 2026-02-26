@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('sedes', function (Blueprint $table) {
             $table->id();            
             $table->string('nombre',45);
+            $table->string('nit',45);
+            $table->string('direccion',150);
+            $table->string('telefono',45);
+            $table->string('celular',45);
             $table->integer('no_factura')->default(0);
+            
 
             $table->timestamps();
             

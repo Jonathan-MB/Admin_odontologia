@@ -20,7 +20,7 @@ class StoreEspecialistaRequest extends FormRequest
         return [
 
             'nombre'    => ['required', 'string', 'max:45', 'unique:especialistas,nombre'],
-            'sede_id'   => ['required', 'integer', 'exists:sede,id'],
+            'sede_id'   => ['required', 'integer', 'exists:sedes,id'],
 
         ];
     }

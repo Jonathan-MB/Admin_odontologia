@@ -30,7 +30,7 @@ class UpdateEspecialistaRequest extends FormRequest
             return [
 
                 'nombre'    => ['sometimes', 'string', 'max:45',  Rule::unique('especialistas', 'nombre')->ignore($especialistaId)],
-                'sede_id'   => ['sometimes', 'integer', 'exists:sede,id'],
+                'sede_id'   => ['sometimes', 'integer', 'exists:sedes,id'],
 
             ];
         }

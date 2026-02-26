@@ -14,73 +14,50 @@ use Illuminate\Http\Request;
 
 class TipoDocumentoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
+
     public function index(Request $request)
     {
         $filter = new TipoDocumentoFilter();
         $queryItems = $filter->transform($request);
         $tipoDocumentos = TipoDocumento::where($queryItems)->get();
 
-        return view('tipoDocumentos.index', compact('tipoDocumentos'));
+        return view('tipoDocumento', compact('tipoDocumentos'));
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreTipoDocumentoRequest $request)
-    {
-        return new TipoDocumentoResource(TipoDocumento::create($request->validated()));
-    }
 
-    /**
-     * Display the specified resource.
-     */
+public function store(StoreTipoDocumentoRequest $request)
+{
+    TipoDocumento::create($request->validated());
+    return redirect()->back()->with('mensajeCreado', 'Tipo de documento creado correctamente');
+}
+
+
     public function show(TipoDocumento $tipoDocumento)
     {
         return new TipoDocumentoResource($tipoDocumento);
     }
 
 
+    public function edit(TipoDocumento $tipoDocumento)
+    {
+        return view('tipoDocumentoEditar', compact('tipoDocumento'));
+    }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
     public function update(UpdateTipoDocumentoRequest $request, TipoDocumento $tipoDocumento)
     {
 
-        $data = $request->validated();
+       $tipoDocumento->update(['nombre' => $request->nombre]);
 
-        // PATCH sin data
-        if (empty($data)) {
-            return response()->json([
-                'message' => 'Sin datos'
-            ], 422);
-        }
-
-        // Cargar datos sin guardar
-        $tipoDocumento->fill($data);
-
-        // No hubo cambios
-        if (! $tipoDocumento->isDirty()) {
-            return response()->json([
-                'message' => 'No se detectaron cambios'
-            ], 422);
-        }
-
-        $tipoDocumento->save();
-
-        return response()->json([
-            'message' => 'Actualizado Correctamente',
-            'data'    => $tipoDocumento->fresh()
-        ], 200);
+        return redirect()->route('tipoDocumentos.index')->with('mensajeActualizado', 'Tipo Documento actualizado correctamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(TipoDocumento $tipoDocumento)
     {
         $tipoDocumento->delete();

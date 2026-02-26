@@ -14,30 +14,23 @@ use Illuminate\Http\Request;
 
 class SedeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
-
-
         $sedes = Sede::all();
+
         return view('sedes', compact('sedes'));
     }
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreSedeRequest $request)
     {
         return new SedeResource(Sede::create($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(Sede $sede)
     {
         $includeEspecialista = Request()->query('includeEspecialistas');
@@ -49,9 +42,6 @@ class SedeController extends Controller
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateSedeRequest $request, Sede $sede)
     {
 
@@ -82,9 +72,8 @@ class SedeController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(Sede $sede)
     {
         $sede->delete();
@@ -99,8 +88,13 @@ class SedeController extends Controller
     {
         session([
             'sede' => [
-                'id' => $request->id,
-                'nombre' => $request->nombre
+                'id'        => $request->id,
+                'nombre'    => $request->nombre,
+                'nit'       => $request->nit,
+                'direccion' => $request->direccion,
+                'telefono'  => $request->telefono,
+                'celular'  => $request->celular,
+
             ]
         ]);
 

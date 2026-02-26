@@ -51,15 +51,25 @@ Route::middleware('auth')->group(function () {
 */
     Route::middleware('verificar.sede')->group(function () {
 
+        /*
+|--------------------------------------------------------------------------
+| Rutas solo Administradores
+------------------------------------------------------------------------------
+*/
         Route::middleware('rol:1')->group(function () {
             Route::resource('usuarios', UsuarioController::class);
         });
+
+//-------------------FIN SOLO ADMIN------------------------------------------------
 
 
         Route::view('/', 'inicio')->name('inicio');
         Route::view('/busqueda', 'busqueda')->name('busqueda');
         Route::view('/facturacion', 'facturacion')->name('facturacion');
+        Route::get('/facturas/totalDia', [FacturaController::class, 'totalDia'])
+            ->name('facturas.totalDia');
         Route::get('facturas/{cliente}', [FacturaController::class, 'show'])->name('facturaCliente');
+        Route::get('/clientes/verificar-documento/{numero}', [ClienteController::class, 'verificarDocumento'])->name('clientes.verificarDocumento');
 
 
         Route::resources([
@@ -79,7 +89,6 @@ Route::middleware('auth')->group(function () {
             ->name('clientes.buscar');
         Route::post('/facturas/buscar', [FacturaController::class, 'buscar'])
             ->name('facturas.buscar');
-
         Route::view('/config', 'configuracion')->name('configuracion');
         Route::post('/facturas/guardar', [FacturaController::class, 'guardar']);
     });
