@@ -1,0 +1,112 @@
+.contenedor-general-totales {
+    width: 800px;
+}
+.citas {
+    padding: 30px;
+}
+.citas button {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0px 0px 0px;
+    border: 2px solid #041ddec9;
+    border-radius: 20px;
+    background-color: #dedede;
+}
+.citas button p {
+    width: 300px;
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.citas button:hover {
+    transform: scale(1.1);
+    transition: 0.4s;
+    box-shadow: 8px 8px 8px #000000;
+    cursor: pointer;
+    background-color: #45aef0;
+}
+.contenedor-datos-reagendar {
+    background-color: #01018c;
+    border-radius: 20px;
+    border: 3px solid #000000;
+}
+
+.contenedor-datos-reagendar p {
+    color: #ffffff;
+    text-align: center;
+    font-size: xx-large;
+    padding: 5px;
+}
+
+.datos-reagendar {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+.dato-reagendar {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+.dato-reagendar p {
+    width: 300px;
+    margin-top: 10px;
+    font-size: large;
+    font-weight: bold;
+    color: #000000;
+    text-align: left;
+    padding: 2px 30px;
+}
+.fecha-reagendar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+}
+.fecha-reagendar input {
+    width: 150px;
+    text-align: center;
+    margin: 0px 5px;
+    font-weight: bold;
+    font-size: large;
+    padding: 4px;
+    border: 3px solid #000000;
+    border-radius: 20px;
+}
+.fecha-reagendar button {
+    width: 100px;
+    text-align: center;
+    margin: 0px 5px;
+    font-weight: bold;
+    font-size: large;
+    padding: 4px;
+    border: 3px solid #000000;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: #45aef0;
+}
+
+#boton-eliminar-cita {
+    color: #ff0000;
+    background-color: #ffffff;
+}
+
+.fecha-reagendar button:hover {
+    background-color: #fc6e75;
+    transform: scale(1.2);
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+#boton-eliminar-cita:hover {
+        background-color: #fc6e75;
+    transform: scale(1.2);
+    transition: 0.4s;
+    cursor: pointer;
+    background-color: #ff0000;
+    color: #ffffff;
+}

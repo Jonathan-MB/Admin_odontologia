@@ -24,6 +24,7 @@ class Cliente extends Model
         'fecha_cita',
         'saldo',
         'eps_id',
+        'sede_id',
         'tipo_documento_id'
     ];
 
@@ -37,6 +38,11 @@ class Cliente extends Model
     public function eps(): BelongsTo
     {
         return $this->belongsTo(Eps::class, 'eps_id');
+    }
+    
+    public function sede(): BelongsTo
+    {
+        return $this->belongsTo(Eps::class, 'sede_id');
     }
 
 

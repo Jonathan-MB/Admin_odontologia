@@ -37,15 +37,15 @@ class clienteController extends Controller
 
     public function show(Cliente $cliente)
     {
-        $cliente->load(['historias.especialista', 'historias.diente', 'facturas']); 
+        $cliente->load(['historias.especialista', 'historias.diente', 'facturas']);
         $dientes = Diente::all();
         $especialistas = Especialista::all();
         $ultimasHistorias = $cliente->historias
-        ->groupBy('diente_id')
-        ->map(fn($historias) => $historias->sortByDesc('created_at')->first());
+            ->groupBy('diente_id')
+            ->map(fn($historias) => $historias->sortByDesc('created_at')->first());
 
-    
-        return view('historias', compact('cliente', 'dientes', 'especialistas','ultimasHistorias')); 
+
+        return view('historias', compact('cliente', 'dientes', 'especialistas', 'ultimasHistorias'));
     }
 
 
@@ -78,11 +78,24 @@ class clienteController extends Controller
 
         return redirect()->route('clientes.show', $cliente->id)
             ->with('mensajeActualizado', 'Cliente Actualizado correctamente');
-    
-    
     }
 
+    public function agendarCita(Request $request, Cliente $cliente)
+    {
+        $request->validate([
+            'fecha_cita' => ['nullable', 'date'],
+            'sede_id'    => ['required', 'integer', 'exists:sedes,id'],
+        ]);
 
+        $cliente->update([
+            'fecha_cita'   => $request->fecha_cita ?: null, 
+            'sede_cita_id' => $request->sede_id,
+        ]);
+
+
+
+        return redirect()->back()->with('mensaje', 'Cita actualizada correctamente');
+    }
 
     public function destroy(cliente $cliente)
     {
@@ -108,15 +121,26 @@ class clienteController extends Controller
     }
 
 
-public function verificarDocumento(Request $request, $numero)
-{
-    $query = Cliente::where('numero_documento', $numero);
-    
-    if ($request->clienteId) {
-        $query->where('id', '!=', $request->clienteId);
-    }
-    
-    return response()->json(['existe' => $query->exists()]);
-}
+    public function verificarDocumento(Request $request, $numero)
+    {
+        $query = Cliente::where('numero_documento', $numero);
 
+        if ($request->clienteId) {
+            $query->where('id', '!=', $request->clienteId);
+        }
+
+        return response()->json(['existe' => $query->exists()]);
+    }
+
+    public function citas(Request $request, $sedeId)
+    {
+        $fecha = $request->filled('fecha') ? $request->fecha : now()->toDateString();
+
+        $clientes = Cliente::where('sede_id', $sedeId)
+            ->whereDate('fecha_cita', $fecha)
+            ->orderBy('fecha_cita')
+            ->get();
+
+        return view('citas', compact('clientes', 'fecha'));
+    }
 }

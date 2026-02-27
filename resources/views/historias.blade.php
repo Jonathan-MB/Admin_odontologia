@@ -118,6 +118,7 @@
                     <input autocomplete="off" type="datetime-local" name="fecha_cita" 
                         value="{{ $cliente->fecha_cita }}" 
                         min="{{ now()->format('Y-m-d\TH:i') }}">
+                    <input type="hidden" name="sede_id" value="{{session('sede.id')}}">
                 </div>
                 <button class="boton-guardar" id="boton-agendar" value="" type="submit">
                     <p>Agendar</p>

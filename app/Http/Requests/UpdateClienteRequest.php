@@ -34,6 +34,7 @@ class UpdateClienteRequest extends FormRequest
                 'saldo'             => ['nullable', 'min:0', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
                 'tipo_documento_id' => ['required', 'integer', 'exists:tipo_documentos,id'],
                 'eps_id'            => ['required', 'integer', 'exists:eps,id'],
+                'sede_id'           => ['nullable', 'integer', 'exists:sedes,id'],
 
             ];
         }
@@ -51,10 +52,11 @@ class UpdateClienteRequest extends FormRequest
             'telefono'          => ['sometimes', 'string', 'max:45'],
             'direccion'         => ['sometimes', 'string', 'max:80'],
             'fecha_nacimiento'  => ['sometimes', 'date', 'before:today'],
-            'fecha_cita'        => ['sometimes', 'date', 'after_or_equal:today'],
+            'fecha_cita'        => ['sometimes', 'nullable','date', 'after_or_equal:today'],
             'saldo'             => ['sometimes', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
             'tipo_documento_id' => ['sometimes', 'integer', 'exists:tipo_documentos,id'],
             'eps_id'            => ['sometimes', 'integer', 'exists:eps,id'],
+            'sede_id'           => ['sometimes', 'integer', 'exists:sedes,id'],
 
         ];
     }
@@ -89,6 +91,9 @@ class UpdateClienteRequest extends FormRequest
 
         if ($this->has('epsId')) {
             $data['eps_id'] = $this->epsId;
+        }
+        if ($this->has('sedeId')) {
+            $data['sede_id'] = $this->sedeId;
         }
 
         $this->merge($data);

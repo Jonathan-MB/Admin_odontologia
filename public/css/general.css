@@ -220,6 +220,10 @@ body {
     border: 3px solid #000000;
     border-radius: 9px;
 }
+.mensaje-error {
+    background-color: #ff3300;
+color: #ffffff;
+}
 
 @media (max-width: 1366px) {
     body {

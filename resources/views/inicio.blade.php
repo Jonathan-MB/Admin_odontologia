@@ -10,14 +10,14 @@
 
 
     {{-- @if (auth()->user()->rol_id == 1) --}}
-        <a class="tarjeta-inicio" href="{{route('configuracion')}}" id="agregar-usuario">
-            <div class="contenedor-inicio-img">
-                <img class="inicio-img" src="{{asset('img/engranaje.png')}}" alt="">
-            </div>
-            <div class="contenedor-titulo-tarjeta">
-                <p class="titulo-tarjeta">Configuración</p>
-            </div>
-        </a>
+    <a class="tarjeta-inicio" href="{{ route('configuracion') }}" id="agregar-usuario">
+        <div class="contenedor-inicio-img">
+            <img class="inicio-img" src="{{ asset('img/engranaje.png') }}" alt="">
+        </div>
+        <div class="contenedor-titulo-tarjeta">
+            <p class="titulo-tarjeta">Configuración</p>
+        </div>
+    </a>
     {{-- @endif --}}
 
 
@@ -47,6 +47,15 @@
         </div>
         <div class="contenedor-titulo-tarjeta">
             <p class="titulo-tarjeta">Facturar</p>
+        </div>
+    </a>
+
+    <a class="tarjeta-inicio" href="{{ route('clientes.citas', ['sedeId' => session('sede.id')]) }}">
+        <div class="contenedor-inicio-img">
+            <img class="inicio-img" src="{{ asset('img/calendario.png') }}" alt="">
+        </div>
+        <div class="contenedor-titulo-tarjeta">
+            <p class="titulo-tarjeta">Citas</p>
         </div>
     </a>
 

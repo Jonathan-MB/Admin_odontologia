@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/factura.css') }}">
 <link rel="stylesheet" href="{{ asset('css/facturaImprimir.css') }}">
 
-<title> Factura - {{$cliente->nombre_completo}}</title>
+<title> Factura - {{ $cliente->nombre_completo }}</title>
 
 @include('partials.header')
 
@@ -171,13 +171,18 @@
                     </div>
                     <div class="factura-linea">
                         <label for="saldo-input">Saldo</label>
-                        <input autocomplete="off" type="number" placeholder="Déjelo en blanco si es solo abono" name="saldo-input"
-                            id="saldo-input" min="0" oninput="if(this.value < 0) this.value = 0;">
+                        <input autocomplete="off" type="number" placeholder="Déjelo en blanco si es solo abono"
+                            name="saldo-input" id="saldo-input" min="0" step="any"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value < 0 || this.value === '') this.value = '';"
+                            onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault();">
                         <p><- SUMA a saldo pendiente</p>
                     </div>
                     <div class="factura-linea">
                         <label for="abono-input">Abono</label>
-                        <input autocomplete="off" name="abono" type="number" id="abono-input" min="0" oninput="if(this.value < 0) this.value = 0;">
+                        <input autocomplete="off" name="abono" type="number" id="abono-input" min="0"
+                            step="any"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, ''); if(this.value < 0 || this.value === '') this.value = '';"
+                            onkeydown="if(event.key === '-' || event.key === 'e') event.preventDefault();">
                         <p><- RESTA a saldo pendiente</p>
                     </div>
                     <div class="factura-linea">
@@ -203,7 +208,7 @@
 
                     <div class="factura-linea  hidden" id="proxima-cita-factura">
                         <label for="">Próxima cita</label>
-                        <input autocomplete="off" type="datetime-local"   min="{{ now()->format('Y-m-d\TH:i') }}">
+                        <input autocomplete="off" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}">
                     </div>
 
                     <button class="boton-guardar" id="boton-guardar-factura" type="button">

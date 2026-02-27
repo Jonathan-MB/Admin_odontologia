@@ -23,6 +23,7 @@ class ClienteFactory extends Factory
             'saldo'             => fake()->randomFloat(2, 0, 1000000),
             'tipo_documento_id' => TipoDocumento::inRandomOrder()->value('id'),
             'eps_id'            => Eps::inRandomOrder()->value('id'),
+            'sede_id'            => fake()->numberBetween(1,2),
         ];
     }
 }

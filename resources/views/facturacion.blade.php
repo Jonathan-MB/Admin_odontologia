@@ -25,7 +25,7 @@
             </button>
         </div>
     </form>
-
+@include('partials.mensaje')
     <a type="button" class="tarjeta-inicio" href= "{{ route('facturas.totalDia') }}">
         <div class="contenedor-inicio-img">
             <img class="inicio-img" src="{{ asset('img/cuenta.png') }}" alt="">

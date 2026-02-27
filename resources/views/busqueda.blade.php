@@ -24,7 +24,7 @@
             </button>
         </div>
     </form>
-
+@include('partials.mensaje')
 
 </div>
 

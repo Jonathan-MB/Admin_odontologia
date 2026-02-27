@@ -21,4 +21,9 @@ class Sede extends Model
     {
         return $this->hasMany(Especialista::class);
     }
+    
+    public function clientes(): HasMany
+    {
+        return $this->hasMany(Cliente::class);
+    }
 }

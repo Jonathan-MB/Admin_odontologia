@@ -60,14 +60,17 @@ Route::middleware('auth')->group(function () {
             Route::resource('usuarios', UsuarioController::class);
         });
 
-//-------------------FIN SOLO ADMIN------------------------------------------------
+        //-------------------FIN SOLO ADMIN------------------------------------------------
 
 
         Route::view('/', 'inicio')->name('inicio');
         Route::view('/busqueda', 'busqueda')->name('busqueda');
         Route::view('/facturacion', 'facturacion')->name('facturacion');
+        Route::get('/citas/{sedeId}', [ClienteController::class, 'citas'])
+            ->name('clientes.citas');
         Route::get('/facturas/totalDia', [FacturaController::class, 'totalDia'])
             ->name('facturas.totalDia');
+        Route::patch('/clientes/{cliente}/agendar', [clienteController::class, 'agendarCita'])->name('clientes.agendar');
         Route::get('facturas/{cliente}', [FacturaController::class, 'show'])->name('facturaCliente');
         Route::get('/clientes/verificar-documento/{numero}', [ClienteController::class, 'verificarDocumento'])->name('clientes.verificarDocumento');
 

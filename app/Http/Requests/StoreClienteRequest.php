@@ -30,6 +30,7 @@ class StoreClienteRequest extends FormRequest
             'saldo'             => ['nullable', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
             'tipo_documento_id' => ['required', 'integer', 'exists:tipo_documentos,id'],
             'eps_id'            => ['required', 'integer', 'exists:eps,id'],
+            'sedes_id'          => ['nullable', 'integer', 'exists:sedes,id'],
 
         ];
     }
@@ -44,6 +45,7 @@ class StoreClienteRequest extends FormRequest
             'fecha_cita'        => $this->fechaCita,
             'tipo_documento_id' => $this->tipoDocumentoId,
             'eps_id'            => $this->epsId,
+            'sede_id'           => $this->sedeId,
             'telefono'          => $this->telefono,
         ]);
     }

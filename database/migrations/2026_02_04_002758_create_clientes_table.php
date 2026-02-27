@@ -27,6 +27,7 @@ return new class extends Migration
             
             $table->foreignId('tipo_documento_id')->constrained('tipo_documentos')->restrictOnDelete();
             $table->foreignId('eps_id')->constrained('eps')->restrictOnDelete();
+            $table->foreignId('sede_id')->constrained('sedes')->restrictOnDelete();
             
             $table->timestamps();
             
