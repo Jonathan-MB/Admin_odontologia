@@ -13,6 +13,8 @@ class Factura extends Model
     protected $fillable = [
         'cliente_id',
         'especialista_id',
+        'sede_id',
+        'metodo_pago_id',
         'saldo',
         'abono',
         'nombre',
@@ -30,9 +32,18 @@ class Factura extends Model
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
+        public function sede(): BelongsTo
+    {
+        return $this->belongsTo(Cliente::class, 'sede_id');
+    }
 
     public function especialista(): BelongsTo
     {
-        return $this->belongsTo(Especialista::class, 'cliente_id');
+        return $this->belongsTo(Especialista::class, 'especialista_id');
+    }
+
+    public function metodoPago(): BelongsTo
+    {
+        return $this->belongsTo(MetodoPago::class, 'metodo_pago_id');
     }
 }

@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Filters\TipoDocumentoFilter;
 use App\Http\Requests\StoreTipoDocumentoRequest;
 use App\Http\Requests\UpdateTipoDocumentoRequest;
-use App\Http\Resources\TipoDocumentoCollection;
-use App\Http\Resources\TipoDocumentoResource;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 
@@ -19,9 +16,7 @@ class TipoDocumentoController extends Controller
 
     public function index(Request $request)
     {
-        $filter = new TipoDocumentoFilter();
-        $queryItems = $filter->transform($request);
-        $tipoDocumentos = TipoDocumento::where($queryItems)->get();
+        $tipoDocumentos = TipoDocumento::all();
 
         return view('tipoDocumento', compact('tipoDocumentos'));
     }
@@ -35,10 +30,6 @@ public function store(StoreTipoDocumentoRequest $request)
 }
 
 
-    public function show(TipoDocumento $tipoDocumento)
-    {
-        return new TipoDocumentoResource($tipoDocumento);
-    }
 
 
     public function edit(TipoDocumento $tipoDocumento)
@@ -58,11 +49,4 @@ public function store(StoreTipoDocumentoRequest $request)
 
 
 
-    public function destroy(TipoDocumento $tipoDocumento)
-    {
-        $tipoDocumento->delete();
-        return response()->json([
-            'message' => 'Eliminado correctamente'
-        ], 200);
-    }
 }

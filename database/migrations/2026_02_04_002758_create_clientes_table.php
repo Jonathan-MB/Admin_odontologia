@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nombre',45);
             $table->string('primer_apellido',45);
-            $table->string('segundo_apellido',45);
+            $table->string('segundo_apellido',45)->nullable();
             $table->string('numero_documento',45)->unique();
             $table->string('direccion',80);
-            $table->string('correo',150);
+            $table->string('correo',150)->nullable();
             $table->string('telefono',45);
             $table->date('fecha_nacimiento');
             $table->dateTime('fecha_cita')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             
             $table->foreignId('tipo_documento_id')->constrained('tipo_documentos')->restrictOnDelete();
             $table->foreignId('eps_id')->constrained('eps')->restrictOnDelete();
-            $table->foreignId('sede_id')->constrained('sedes')->restrictOnDelete();
+            $table->foreignId('sede_id')->nullable()->constrained('sedes')->nullOnDelete();
             
             $table->timestamps();
             

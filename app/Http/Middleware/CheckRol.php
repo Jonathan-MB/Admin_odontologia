@@ -16,7 +16,7 @@ class CheckRol
 
         // Si no está logueado o no tiene rol permitido → al home
         if (!$user || !in_array($user->rol_id, $roles)) {
-            return redirect()->route('/');
+            return redirect()->route('inicio');
         }
 
         return $next($request);

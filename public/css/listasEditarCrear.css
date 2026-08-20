@@ -122,4 +122,131 @@
     box-shadow: 1px 6px 8px #000000;
 }
 
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   .contenedor-listas era de 900px fijos y las columnas de 200px se salian.
+   ========================================================================== */
+
+@media screen {
+    .contenedor-listas {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .contenedor-agregar {
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: flex-end;
+        row-gap: 16px;
+    }
+
+    .contenedor-agregar input,
+    .contenedor-agregar select {
+        width: 100%;
+        max-width: 240px;
+    }
+
+    .todos-lista {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .linea-listas {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .linea-listas p {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        word-break: break-word;
+    }
+
+    .editar-listas {
+        width: auto;
+        flex: 0 0 120px;
+        padding: 4px 10px;
+    }
+
+    /* scale(1.5) sacaba el boton del contenedor */
+    .editar-listas:hover {
+        transform: scale(1.08);
+    }
+
+    .contenedor-agregar-cliente input:focus,
+    .contenedor-agregar-cliente select:focus {
+        transform: scale(1.03);
+    }
+
+    .contenedor-agregar-cliente button:hover {
+        transform: scale(1.08);
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .contenedor-agregar {
+        gap: 30px;
+    }
+
+    .contenedor-agregar-cliente button {
+        width: 84px;
+        height: 84px;
+    }
+
+    .titulo-listas {
+        font-size: x-large;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .contenedor-agregar {
+        gap: 20px;
+    }
+
+    .contenedor-agregar label {
+        font-size: 1rem;
+    }
+
+    .contenedor-agregar-cliente button {
+        width: 72px;
+        height: 72px;
+    }
+
+    .linea-listas {
+        padding: 8px 6px;
+        font-size: 0.9rem;
+    }
+
+    .encabezado-lista p {
+        font-size: medium;
+    }
+
+    .editar-listas {
+        flex: 0 0 92px;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .contenedor-agregar {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .contenedor-agregar input,
+    .contenedor-agregar select {
+        max-width: 100%;
+    }
+
+    .linea-listas {
+        font-size: 0.82rem;
+    }
+
+    .editar-listas {
+        flex: 0 0 76px;
+    }
+}
+
 

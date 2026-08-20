@@ -222,7 +222,11 @@ body {
 }
 .mensaje-error {
     background-color: #ff3300;
-color: #ffffff;
+    color: #ffffff;
+}
+
+.mensaje-alerta {
+    background-color: #eeff34;
 }
 
 @media (max-width: 1366px) {
@@ -231,17 +235,156 @@ color: #ffffff;
     }
 
     .contenedor-pop-up {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 125vw !important;
-    height: 125vh !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #000000ad;
-    z-index: 9999;
-    overflow-y: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 125vw !important;
+        height: 125vh !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #000000ad;
+        z-index: 9999;
+        overflow-y: auto;
+    }
 }
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA
+   --------------------------------------------------------------------------
+   Todo lo de aqui abajo va dentro de @media screen a proposito.
+   Al imprimir, el navegador solo evalua @media print y las reglas sin media,
+   asi que NADA de este bloque puede alterar la factura ni la cotizacion.
+   El @media (max-width: 1366px) de arriba se deja intacto para que el papel
+   siga saliendo exactamente igual que hoy.
+   ========================================================================== */
+
+@media screen {
+    /* 100vw incluye la barra de scroll y genera scroll horizontal */
+    .contenedor-general {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+    }
+
+    /* El hover ampliaba el boton fuera de la pantalla */
+    .boton-cerrar-pop-up:hover {
+        transform: scale(1.25);
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    /* Se reemplaza el zoom global por un layout fluido de verdad */
+    body {
+        zoom: 1;
+    }
+
+    .contenedor-pop-up {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 16px 0;
+    }
+
+    .cerrar-pop-up {
+        width: 100%;
+        max-width: 1200px;
+        margin: 10px 16px;
+    }
+
+    .header {
+        height: auto;
+        min-height: 70px;
+        gap: 10px;
+    }
+
+    .header-contenedor {
+        width: auto;
+        min-width: 0;
+        flex: 0 1 auto;
+    }
+
+    .header-contenedor:first-child {
+        flex: 0 0 auto;
+    }
+
+    .sede-nombre {
+        width: auto;
+        max-width: 100%;
+        font-size: x-large;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .vista-titulo {
+        font-size: 2.4rem;
+        margin: 28px 16px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        padding: 8px;
+    }
+
+    .header-contenedor {
+        height: 48px;
+    }
+
+    .sede-nombre {
+        font-size: large;
+    }
+
+    .header-usuario-nombre {
+        max-width: 140px;
+        font-size: 0.9rem;
+    }
+
+    .usuario-imagen {
+        height: 40px;
+        width: 40px;
+    }
+
+    .vista-titulo {
+        font-size: 1.9rem;
+        margin: 20px 12px;
+    }
+
+    .boton-cerrar-pop-up {
+        width: 48px;
+        height: 48px;
+    }
+
+    .mensaje {
+        font-size: medium;
+        margin: 10px 16px;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .header {
+        flex-wrap: wrap;
+        padding: 8px 10px;
+    }
+
+    .header-contenedor {
+        height: 42px;
+    }
+
+    .sede-nombre {
+        font-size: medium;
+    }
+
+    .header-usuario-nombre {
+        max-width: 100px;
+    }
+
+    .vista-titulo {
+        font-size: 1.5rem;
+    }
+
+    .cerrar-pop-up {
+        margin: 8px;
+    }
 }

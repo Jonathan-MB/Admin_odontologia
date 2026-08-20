@@ -52,7 +52,7 @@ class UpdateUsuarioRequest extends FormRequest
         }
 
         if ($this->filled('password')) { 
-            $data['contrasena'] = bcrypt($this->password);
+            $data['contrasena'] = $this->password;
         }
 
         $this->merge($data);

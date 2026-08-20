@@ -83,4 +83,8 @@
 </div>
 <script>
     const fontBreathingUrl = "{{ asset('fonts/Breathing.ttf') }}";
+    const sedeId = {{ session('sede.id') }};
+    const sedes = @json($sedes);
+    const clienteSaldo = {{ $cliente->saldo }};
+    const clienteId = {{ $cliente->id }};
 </script>

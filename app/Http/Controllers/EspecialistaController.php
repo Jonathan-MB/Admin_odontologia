@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Filters\EspecialistaFilter;
 use App\Http\Requests\StoreEspecialistaRequest;
 use App\Http\Requests\UpdateEspecialistaRequest;
-use App\Http\Resources\EspecialistaCollection;
-use App\Http\Resources\EspecialistaResource;
 use App\Models\Especialista;
 use App\Models\Sede;
 use Illuminate\Http\Request;
@@ -37,10 +34,6 @@ class EspecialistaController extends Controller
 
 
 
-    public function show(Especialista $especialista)
-    {
-        return new EspecialistaResource($especialista);
-    }
 
 
     public function edit(Especialista $especialista)

@@ -9,37 +9,78 @@
 
 <div class="contenedor-general">
 
-    <h1 class="vista-titulo">Citas por dia</h1>
-    <form action="{{ route('clientes.citas', session('sede.id')) }}" method="GET">
-        <div class="contenedor-fecha-facturacion">
-            <label class="fecha" for="fecha">Fecha</label>
-            <input autocomplete="off" type="date" name="fecha" id="fecha" min="{{ now()->format('Y-m-d') }}"
-                value="{{ request('fecha', now()->toDateString()) }}">
+    <h1 class="vista-titulo">Agenda</h1>
 
-            <button type="submit">Buscar</button>
-        </div>
-    </form>
+    @php
+        $esHoy = $dia->isToday();
+
+        $proximaId = $esHoy
+            ? optional($citas->first(fn($c) => $c->fecha_hora->gte(now())))->id
+            : null;
+
+        // Agrupadas por doctor. Las citas migradas no tienen doctor:
+        // esas caen en "Sin doctor asignado".
+        $porDoctor = $citas->groupBy(fn($c) => $c->especialista->nombre ?? 'Sin doctor asignado');
+    @endphp
+
     @include('partials.mensaje')
-    <div class="contenedor-general-totales">
-        <p class="fecha-busqueda">{{ \Carbon\Carbon::parse($fecha)->translatedFormat('d \ F \ Y') }}</p>
 
-        <div class="citas">
-            @forelse ($clientes as $cliente)
-                <button type="button" class="btn-cliente" data-id="{{ $cliente->id }}"
-                    data-nombre="{{ $cliente->nombre_completo }}" data-fecha="{{ $cliente->fecha_cita }}"
-                    data-telefono="{{ $cliente->telefono }}" data-documento="{{ $cliente->numero_documento }}"
-                    data-correo="{{ $cliente->correo }}" data-edad="{{ $cliente->fecha_nacimiento }}"
-                    data-url="{{ route('clientes.agendar', $cliente->id) }}">
-                    <p>{{ $cliente->nombre_completo }}</p>
-                    <p>{{ \Carbon\Carbon::parse($cliente->fecha_cita)->translatedFormat('h:i A') }}</p>
+    <div class="agenda">
+
+        <div class="agenda-lateral">
+            @include('partials.calendario')
+
+            <div class="atajos-fecha">
+                <a class="atajo-fecha @if ($esHoy) atajo-activo @endif"
+                    href="{{ route('clientes.citas', ['sedeId' => session('sede.id'), 'fecha' => now()->toDateString()]) }}">Hoy</a>
+                <a class="atajo-fecha"
+                    href="{{ route('clientes.citas', ['sedeId' => session('sede.id'), 'fecha' => now()->addDay()->toDateString()]) }}">Mañana</a>
+            </div>
+
+            @if ($pendientes->count() > 0)
+                <button type="button" class="atajo-fecha atajo-pendientes" id="boton-pendientes">
+                    Sin reagendar ({{ $pendientes->count() }})
                 </button>
-                
-            @empty
-                <p class="sin-citas">No hay citas para este día</p>
-            @endforelse 
+
+                <div class="panel-pendientes hidden" id="panel-pendientes">
+                    <p class="aviso-pendientes">
+                        Pacientes con cita vencida sin fecha nueva.
+                    </p>
+                    @foreach ($pendientes as $cita)
+                        @include('partials.citaFila', ['pasada' => true, 'mostrarFecha' => true])
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+        <div class="agenda-dia">
+            <p class="fecha-busqueda">
+                {{ $dia->translatedFormat('l d \d\e F') }}
+                <span class="contador-citas">{{ $citas->count() }} citas</span>
+            </p>
+
+            <div class="citas">
+                @forelse ($porDoctor as $doctor => $citasDoctor)
+                    <p class="doctor-titulo">
+                        {{ $doctor }}
+                        <span class="doctor-conteo">{{ $citasDoctor->count() }}</span>
+                    </p>
+
+                    @foreach ($citasDoctor as $cita)
+                        @include('partials.citaFila')
+                    @endforeach
+                @empty
+                    <p class="sin-citas">No hay citas para este día</p>
+                @endforelse
+
+                <button type="button" class="boton-nueva-cita" id="boton-nueva-cita">
+                    + Agendar cita este día
+                </button>
+            </div>
         </div>
 
     </div>
+
     {{-- -------------------------POP UP------------------- --}}
 
 
@@ -76,6 +117,11 @@
                     <p id="popup-correo"></p>
                 </div>
             </div>
+            <div class="acciones-cliente">
+                <a class="accion-cliente" id="popup-historia" href="#">Ver historia</a>
+                <a class="accion-cliente" id="popup-ir-facturas" href="#">Ver facturas</a>
+            </div>
+
             <div class="fecha-reagendar">
                 
                 <form action="" id="form-agendar" method="POST">
@@ -101,10 +147,54 @@
         </div>
     </div>
 
-    <script>
-        const baseUrl = "{{ url('clientes') }}";
-    </script>
+    {{-- -------------------------POP UP NUEVA CITA------------------- --}}
+
+    <div class="contenedor-pop-up hidden" id="popup-nueva-cita">
+        <div class="cerrar-pop-up">
+            <button class="boton-cerrar-pop-up" type="button" id="cerrar-nueva-cita">
+                <img src="{{ asset('img/iconoCerrar.png') }}" alt="">
+            </button>
+        </div>
+
+        <div class="contenedor-datos-reagendar">
+            <p>Agendar cita</p>
+
+            <div class="datos-reagendar">
+                <div class="buscar-paciente-linea">
+                    <input autocomplete="off" type="text" id="buscar-paciente"
+                        placeholder="Nombre o documento del paciente" minlength="3">
+                </div>
+
+                <div class="resultados-paciente" id="resultados-paciente"></div>
+
+                <p class="paciente-elegido hidden" id="paciente-elegido"></p>
+            </div>
+
+            <form action="{{ route('citas.store') }}" method="POST" id="form-nueva-cita">
+                @csrf
+                <input type="hidden" name="cliente_id" id="nueva-cita-cliente">
+                <input type="hidden" name="fecha_hora" id="nueva-cita-fecha-hora">
+
+                <div class="fecha-reagendar">
+                    <select name="especialista_id" id="nueva-cita-especialista" required>
+                        <option value="" selected disabled>Doctor</option>
+                        @foreach ($especialistas as $especialista)
+                            <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
+                        @endforeach
+                    </select>
+
+                    <input type="date" id="nueva-cita-dia" value="{{ $fecha }}"
+                        min="{{ now()->format('Y-m-d') }}" required>
+                    <input type="time" id="nueva-cita-hora" step="60" required>
+
+                    <button type="submit">Agendar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="{{ asset('js/citas.js') }}"></script>
 
-    @include('partials.footer')
+</div>
+
+@include('partials.footer')

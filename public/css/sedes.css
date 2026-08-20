@@ -74,3 +74,65 @@
     background-color: #fc6e75;
 }
 
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .tarjeta-sedes {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tarjeta-titulo {
+        height: auto;
+        min-height: 80px;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .contenedor-sedes {
+        height: auto;
+        flex: 1 1 auto;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .tarjeta-sedes {
+        min-height: 340px;
+    }
+
+    .tarjeta-titulo {
+        font-size: x-large;
+        min-height: 66px;
+    }
+
+    .contenedor-sedes {
+        padding: 22px;
+        gap: 26px;
+    }
+
+    .contenedor-sedes button p {
+        font-size: large;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .tarjeta-sedes {
+        min-height: 0;
+    }
+
+    .tarjeta-titulo {
+        font-size: large;
+    }
+
+    .contenedor-sedes {
+        padding: 18px;
+        gap: 18px;
+    }
+}
+

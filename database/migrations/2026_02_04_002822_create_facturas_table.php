@@ -20,6 +20,7 @@ return new class extends Migration
 
 
             $table->foreignId('cliente_id')->constrained('clientes')->restrictOnDelete();
+            $table->foreignId('sede_id')->constrained('sedes')->restrictOnDelete();
             $table->foreignId('especialista_id')->constrained('especialistas')->restrictOnDelete();
 
             $table->timestamps();

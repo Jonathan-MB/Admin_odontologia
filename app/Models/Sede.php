@@ -14,6 +14,8 @@ class Sede extends Model
         'direccion',
         'telefono',
         'celular',
+
+        
     ];
 
 
@@ -25,5 +27,14 @@ class Sede extends Model
     public function clientes(): HasMany
     {
         return $this->hasMany(Cliente::class);
+    }
+        public function facturas(): HasMany
+    {
+        return $this->hasMany(Factura::class);
+    }
+
+    public function citas(): HasMany
+    {
+        return $this->hasMany(Cita::class);
     }
 }

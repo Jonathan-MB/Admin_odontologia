@@ -4,58 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Filters\FacturaFilter;
-use App\Http\Requests\StoreFacturaRequest;
-use App\Http\Requests\UpdateFacturaRequest;
-use App\Http\Resources\FacturaCollection;
-use App\Http\Resources\FacturaResource;
 use App\Models\Cliente;
 use App\Models\Especialista;
 use App\Models\Factura;
+use App\Models\MetodoPago;
 use App\Models\Sede;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Filter;
-use SebastianBergmann\Environment\Console;
 
 class FacturaController extends Controller
 {
 
-    public function index(Request $request)
-    {
-        $filter = new FacturaFilter();
-        $queryItems = $filter->transform($request);
-        $factura = Factura::query();
-
-        if (!empty($queryItems)) {
-            $factura->where($queryItems);
-        }
-
-        if ($request->filled('from') && $request->filled('to')) {
-            $from = Carbon::parse($request->query('from'))
-                ->startOfDay()
-                ->timezone('UTC');
-
-            $to = Carbon::parse($request->query('to'))
-                ->endOfDay()
-                ->timezone('UTC');
-
-            $factura->whereBetween('created_at', [$from, $to]);
-        }
-
-        return new FacturaCollection(
-            $factura
-                ->paginate()
-                ->appends($request->query())
-        );
-    }
 
 
 
-    public function store(StoreFacturaRequest $request)
-    {
-        return new FacturaResource(Factura::create($request->validated()));
-    }
 
 
 
@@ -63,70 +24,61 @@ class FacturaController extends Controller
     {
 
         $cliente->load([
-            'facturas' => fn($q) => $q->orderBy('created_at', 'desc')->with('especialista'),
+            'facturas' => fn($q) => $q->orderBy('created_at', 'desc')->with(['especialista', 'metodoPago']),
             'tipoDocumento',
             'eps',
         ]);
         $especialistas = Especialista::all();
         $sedes = Sede::all();
+        $metodoPagos = MetodoPago::all();
 
-        return view('factura', compact('cliente', 'especialistas', 'sedes'));
+        return view('factura', compact('cliente', 'especialistas', 'sedes', 'metodoPagos'));
     }
 
 
 
 
-    public function update(UpdateFacturaRequest $request, Factura $factura)
-    {
-
-        $data = $request->validated();
-
-        // PATCH sin data
-        if (empty($data)) {
-            return response()->json([
-                'message' => 'Sin datos'
-            ], 422);
-        }
-
-        // Cargar datos sin guardar
-        $factura->fill($data);
-
-        // No hubo cambios
-        if (! $factura->isDirty()) {
-            return response()->json([
-                'message' => 'No se detectaron cambios'
-            ], 422);
-        }
-
-        $factura->save();
-
-        return response()->json([
-            'message' => 'Actualizado Correctamente',
-            'data'    => $factura->fresh()
-        ], 200);
-    }
 
 
 
-    public function destroy(Factura $factura)
-    {
-        $factura->delete();
-        return response()->json([
-            'message' => 'Eliminado correctamente'
-        ], 200);
-    }
 
 
     public function buscar(Request $request)
     {
-        $numeroDocumento = $request->numeroDocumento;
-        $cliente = Cliente::where('numero_documento', $numeroDocumento)->first();
+        $busqueda = trim($request->numeroDocumento);
 
-        if (!$cliente) {
+        if ($busqueda === '') {
+            return back()->with('error', 'Escribe un documento o un nombre');
+        }
+
+        // Primero siempre por documento exacto, igual que siempre.
+        // Va antes que todo para no romper pasaportes ni cedulas de
+        // extranjeria, que pueden llevar letras.
+        $cliente = Cliente::where('numero_documento', $busqueda)->first();
+
+        if ($cliente) {
+            return redirect()->route('facturaCliente', $cliente->id);
+        }
+
+        // Si son solo numeros no tiene sentido buscarlo como nombre
+        if (ctype_digit($busqueda)) {
             return back()->with('error', 'Cliente no encontrado');
         }
 
-        return redirect()->route('facturaCliente', $cliente->id);
+        // Con letras: se busca por nombre y apellidos
+        $clientes = Cliente::buscarPorNombre($busqueda)->get();
+
+        if ($clientes->isEmpty()) {
+            return back()->with('error', 'Cliente no encontrado');
+        }
+
+        if ($clientes->count() === 1) {
+            return redirect()->route('facturaCliente', $clientes->first()->id);
+        }
+
+        $destino = 'facturaCliente';
+
+        return view('resultadosBusqueda', compact('clientes', 'busqueda', 'destino'));
     }
 
 
@@ -142,7 +94,9 @@ class FacturaController extends Controller
         //  Crear factura con el consecutivo
         Factura::create([
             'cliente_id'      => $request->clienteId,
+            'sede_id'      => $request->sedeId,
             'especialista_id' => $request->especialistaId,
+            'metodo_pago_id'  => $request->metodoPagoId,
             'nombre'          => $request->nombre,
             'abono'           => $request->abono,
             'saldo'           => $request->saldoFinal,
@@ -156,6 +110,16 @@ class FacturaController extends Controller
             'fecha_cita' => $request->fechaCita,
         ]);
 
+        //  Registrar la cita en su propia tabla, con el especialista
+        //  que atendio. clientes.fecha_cita sigue guardandose arriba.
+        if ($request->fechaCita) {
+            $cliente->agendarProximaCita(
+                $request->fechaCita,
+                $request->sedeId,
+                $request->especialistaId
+            );
+        }
+
         //  Retornar el noFactura al JS
         return response()->json([
             'success'   => true,
@@ -163,20 +127,55 @@ class FacturaController extends Controller
         ]);
     }
 
-    public function totalDia(Request $request)
-    {
-        $fecha = $request->input('fecha', now()->toDateString());
+   public function totalDia(Request $request)
+{
+    $fecha  = $request->input('fecha', now()->toDateString());
+    $sedeId = session('sede.id');
 
-        $sedes = Sede::with([
-            'especialistas' => function ($q) use ($fecha) {
-                $q->with([
-                    'facturas' => function ($q) use ($fecha) {
-                        $q->whereDate('created_at', $fecha);
-                    }
-                ]);
-            }
-        ])->get();
+    $sedes = Sede::with([
+        'especialistas.facturas' => function ($q) use ($fecha, $sedeId) {
+            $q->whereDate('created_at', $fecha)
+                ->where('sede_id', $sedeId);
+        }
+    ])->get();
 
-        return view('especialistasTotal', compact('sedes', 'fecha'));
-    }
+    // Agregar especialistas de otras sedes que facturaron aquí
+    $especialistasForaneos = Especialista::whereHas('facturas', function ($q) use ($fecha, $sedeId) {
+        $q->whereDate('created_at', $fecha)
+            ->where('sede_id', $sedeId);
+    })
+    ->where('sede_id', '!=', $sedeId) // solo los que NO son de esta sede
+    ->with(['facturas' => function ($q) use ($fecha, $sedeId) {
+        $q->whereDate('created_at', $fecha)
+            ->where('sede_id', $sedeId);
+    }])
+    ->get();
+
+    // Inyectarlos en la sede activa
+    $sedes = $sedes->map(function ($sede) use ($sedeId, $especialistasForaneos) {
+        if ($sede->id == $sedeId) {
+            $sede->especialistas = $sede->especialistas->merge($especialistasForaneos);
+        }
+        return $sede;
+    });
+
+    // Totales por metodo de pago de la sede activa.
+    // Las facturas anteriores a esta funcion tienen metodo_pago_id nulo
+    // y se agrupan bajo "Sin registrar".
+    $nombresMetodoPago = MetodoPago::pluck('nombre', 'id');
+
+    $totalesMetodoPago = Factura::whereDate('created_at', $fecha)
+        ->where('sede_id', $sedeId)
+        ->selectRaw('metodo_pago_id, SUM(abono) as total')
+        ->groupBy('metodo_pago_id')
+        ->get()
+        ->map(fn($fila) => [
+            'nombre' => $nombresMetodoPago->get($fila->metodo_pago_id, 'Sin registrar'),
+            'total'  => $fila->total,
+        ])
+        ->sortByDesc('total')
+        ->values();
+
+    return view('especialistasTotal', compact('sedes', 'fecha', 'totalesMetodoPago'));
+}
 }

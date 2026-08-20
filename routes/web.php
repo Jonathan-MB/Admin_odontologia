@@ -2,14 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\DienteController;
 use App\Http\Controllers\EpsController;
 use App\Http\Controllers\EspecialistaController;
 use App\Http\Controllers\FacturaController;
-use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HistoriaController;
-use App\Http\Controllers\RolController;
+use App\Http\Controllers\MetodoPagoController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TipoDocumentoController;
 use App\Http\Controllers\UsuarioController;
@@ -57,7 +56,10 @@ Route::middleware('auth')->group(function () {
 ------------------------------------------------------------------------------
 */
         Route::middleware('rol:1')->group(function () {
-            Route::resource('usuarios', UsuarioController::class);
+            Route::resource('usuarios', UsuarioController::class)
+                ->only(['index', 'store', 'edit', 'update']);
+            Route::get('/facturas/totalDia', [FacturaController::class, 'totalDia'])
+                ->name('facturas.totalDia');
         });
 
         //-------------------FIN SOLO ADMIN------------------------------------------------
@@ -68,24 +70,40 @@ Route::middleware('auth')->group(function () {
         Route::view('/facturacion', 'facturacion')->name('facturacion');
         Route::get('/citas/{sedeId}', [ClienteController::class, 'citas'])
             ->name('clientes.citas');
-        Route::get('/facturas/totalDia', [FacturaController::class, 'totalDia'])
-            ->name('facturas.totalDia');
+
+        Route::get('/agenda/clientes', [CitaController::class, 'buscarClientes'])
+            ->name('agenda.clientes');
+        Route::post('/agenda/citas', [CitaController::class, 'store'])
+            ->name('citas.store');
+
         Route::patch('/clientes/{cliente}/agendar', [clienteController::class, 'agendarCita'])->name('clientes.agendar');
         Route::get('facturas/{cliente}', [FacturaController::class, 'show'])->name('facturaCliente');
         Route::get('/clientes/verificar-documento/{numero}', [ClienteController::class, 'verificarDocumento'])->name('clientes.verificarDocumento');
 
 
-        Route::resources([
-            'clientes' => ClienteController::class,
-            'dientes' => DienteController::class,
-            'especialistas' => EspecialistaController::class,
-            'facturas' => FacturaController::class,
-            'grupos' => GrupoController::class,
-            'historias' => HistoriaController::class,
-            'roles' => RolController::class,
-            'tipoDocumentos' => TipoDocumentoController::class,
-            'eps' => EpsController::class,
-        ]);
+        /*
+|--------------------------------------------------------------------------
+| Resources
+| Solo se declaran las acciones que el controlador implementa y que la
+| aplicacion usa. Antes se registraban las 7 de cada uno y quedaban
+| rutas abiertas sin metodo detras.
+-------------------------------------------------------------------
+*/
+
+        Route::resource('clientes', ClienteController::class)
+            ->only(['create', 'store', 'show', 'edit', 'update']);
+
+        Route::resource('especialistas', EspecialistaController::class)
+            ->only(['index', 'store', 'edit', 'update']);
+
+        Route::resource('eps', EpsController::class)
+            ->only(['index', 'store', 'edit', 'update']);
+
+        Route::resource('tipoDocumentos', TipoDocumentoController::class)
+            ->only(['index', 'store', 'edit', 'update']);
+
+        Route::resource('metodoPagos', MetodoPagoController::class)
+            ->only(['index', 'store', 'edit', 'update']);
 
         Route::post('historias/bulk', [HistoriaController::class, 'bulkStore']);
         Route::post('/clientes/buscar', [ClienteController::class, 'buscar'])

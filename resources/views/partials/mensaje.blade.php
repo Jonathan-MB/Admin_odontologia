@@ -22,3 +22,9 @@
             <p>{{ session('mensaje') }}</p>
         </div>
     @endif
+
+    @if (session('mensajeAlerta'))
+        <div class="mensaje mensaje-alerta" id="mensaje">
+            <p>{{ session('mensajeAlerta') }}</p>
+        </div>
+    @endif

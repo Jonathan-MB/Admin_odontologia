@@ -98,3 +98,70 @@ body {
     border: 3px solid #01018c;
     border-radius: 8px;
 }
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .contenedor-login {
+        width: 100%;
+        height: auto;
+        min-height: calc(100vh - 70px);
+        padding: 24px 16px;
+    }
+
+    .tarjeta-login {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 340px;
+    }
+
+    /* El hover se salia de la pantalla en resoluciones chicas */
+    .tarjeta-login button:hover {
+        transform: scale(1.08);
+    }
+
+    .tarjeta-login input:hover {
+        transform: scale(1.04);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .tarjeta-login {
+        gap: 28px;
+        padding: 24px;
+    }
+
+    .tarjeta-login input {
+        font-size: large;
+        border-width: 4px;
+    }
+
+    .tarjeta-login button {
+        font-size: x-large;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .header-contenedor-logo {
+        width: 220px;
+    }
+
+    .tarjeta-login {
+        min-height: 0;
+        gap: 20px;
+        padding: 18px;
+    }
+
+    .tarjeta-login input {
+        font-size: medium;
+        height: 44px;
+    }
+
+    .tarjeta-login button {
+        font-size: large;
+        height: 46px;
+    }
+}

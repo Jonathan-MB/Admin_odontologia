@@ -3,7 +3,7 @@ let dienteActual = null;
 let haycambios = false;
 
 // ============ ELEMENTOS ============
-const botones = document.querySelectorAll('.diente');
+const botones = document.querySelectorAll('.diente:not(#boton-imprimir-cotizacion)');
 const popup = document.getElementById('pop-up-historias-diente');
 const popupNuevasHistorias = document.getElementById('pop-up-historias-nuevas');
 const cuerpo = document.getElementById('cuerpo-historias');
@@ -232,4 +232,112 @@ document.getElementById('boton-guardar-odontograma').addEventListener('click', a
         alert('Odontograma guardado correctamente');
         window.location.reload();
     }
+});
+
+// ============ COTIZACIÓN ============
+// El bloque solo se pinta si existe un diente llamado 'Cotizacion'.
+// Sin el ?. esta linea lanzaba TypeError y dejaba el boton muerto.
+document.getElementById('boton-imprimir-cotizacion')?.addEventListener('click', async () => {
+    const observacion = document.querySelector('.cotizacion-tarea').value.trim();
+
+    if (!observacion) {
+        alert('No hay contenido en la cotización');
+        return;
+    }
+
+    // Verificar si hay cambios
+    const dienteObj = dientes.find(d => d.nombre === 'Cotizacion');
+    const ultimaHistoria = ultimasHistorias[dienteObj?.id];
+    const hayNuevosCambios = !ultimaHistoria || ultimaHistoria.observacion !== observacion;
+
+    if (hayNuevosCambios) {
+        // Solo valida y guarda si hay cambios
+        const especialistaSelectOdonto = document.getElementById('especialistaId');
+        const fechaInputOdonto = document.getElementById('fechaOdontograma');
+
+        if (!especialistaSelectOdonto.value) {
+            especialistaSelectOdonto.style.backgroundColor = '#ef5252';
+            alert('Selecciona un especialista antes de imprimir');
+            return;
+        }
+        especialistaSelectOdonto.style.backgroundColor = '';
+
+        if (!fechaInputOdonto.value) {
+            fechaInputOdonto.style.backgroundColor = '#ef5252';
+            alert('Selecciona una fecha antes de imprimir');
+            return;
+        }
+        fechaInputOdonto.style.backgroundColor = '';
+
+        const res = await fetch('/historias/bulk', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                historias: [{
+                    clienteId,
+                    especialistaId: especialistaSelectOdonto.value,
+                    dienteId: dienteObj.id,
+                    observacion,
+                    fecha: fechaInputOdonto.value
+                }]
+            })
+        });
+
+        if (!res.ok) {
+            alert('Error al guardar la cotización');
+            return;
+        }
+    }
+
+    // Imprimir siempre
+    const ahora = new Date();
+    document.getElementById('cotizacion-fecha').textContent = ahora.toLocaleDateString('es-ES');
+    document.getElementById('cotizacion-hora').textContent  = ahora.toLocaleTimeString('es-ES');
+    document.getElementById('cotizacion-nombre').textContent = clienteNombre;
+    document.getElementById('cotizacion-observacion').textContent = observacion;
+
+    const clone = document.getElementById('cotizacion-imprimible').cloneNode(true);
+    clone.classList.remove('hidden');
+
+    const estilos = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .map(link => link.outerHTML).join('');
+
+    const blob = new Blob([`
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <base href="${window.location.origin}/">
+            ${estilos}
+            <style>
+                @font-face {
+                    font-family: "Breathing";
+                    src: url("${fontBreathingUrl}") format("truetype");
+                }
+                @page { margin: 5mm; size: auto; }
+                body { margin: 0; }
+            </style>
+        </head>
+        <body>${clone.outerHTML}</body>
+        </html>
+    `], { type: 'text/html; charset=utf-8' });
+
+    const url = URL.createObjectURL(blob);
+    const ventana = window.open(url, '_blank');
+
+    ventana.addEventListener('load', () => {
+        ventana.document.fonts.ready.then(() => {
+            ventana.focus();
+            ventana.print();
+        });
+    });
+
+    ventana.addEventListener('afterprint', () => {
+        ventana.close();
+        URL.revokeObjectURL(url);
+        window.location.reload(); 
+    });
 });

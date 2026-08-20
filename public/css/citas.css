@@ -13,13 +13,6 @@
     border-radius: 20px;
     background-color: #dedede;
 }
-.citas button p {
-    width: 300px;
-    font-size: large;
-    font-weight: bold;
-    padding: 10px;
-}
-
 .citas button:hover {
     transform: scale(1.1);
     transition: 0.4s;
@@ -109,4 +102,587 @@
     cursor: pointer;
     background-color: #ff0000;
     color: #ffffff;
+}
+
+
+/* ----------Agenda: atajos y franjas-------------- */
+
+.atajos-fecha {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin: 14px 0px;
+}
+
+.atajo-fecha {
+    padding: 6px 18px;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    color: #01018c;
+    background-color: #ffffff;
+    border: 3px solid #01018c;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.atajo-fecha:hover {
+    background-color: #fc6e75;
+    color: #ffffff;
+    transition: 0.4s;
+}
+
+.atajo-activo {
+    background-color: #01018c;
+    color: #ffffff;
+}
+
+.atajo-pendientes {
+    color: #a32d2d;
+    border-color: #a32d2d;
+}
+
+.contador-citas {
+    float: right;
+    margin-right: 20px;
+    font-size: large;
+    font-weight: normal;
+}
+
+.franja-titulo {
+    margin: 14px 0px 6px 4px;
+    font-size: medium;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #01018c;
+}
+
+.aviso-pendientes {
+    margin-bottom: 10px;
+    font-size: medium;
+    color: #01018c;
+}
+
+/* ----------Agenda: fila de cita-------------- */
+
+.citas button {
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 8px 14px;
+    text-align: left;
+    border-left: 8px solid #041ddec9;
+}
+
+.cita-hora {
+    display: flex;
+    flex-direction: column;
+    min-width: 90px;
+    font-size: large;
+    font-weight: bold;
+    color: #01018c;
+}
+
+.cita-dia {
+    font-size: small;
+    font-weight: normal;
+    color: #5F5E5A;
+}
+
+.cita-datos {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.cita-nombre {
+    font-size: large;
+    font-weight: bold;
+    color: #000000;
+}
+
+.cita-meta {
+    font-size: medium;
+    color: #5F5E5A;
+}
+
+.cita-badge {
+    padding: 2px 12px;
+    font-size: small;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #041dde;
+    border-radius: 20px;
+}
+
+.citas .cita-pasada {
+    opacity: 0.55;
+    border-left-color: #B4B2A9;
+}
+
+.citas .cita-proxima {
+    border-left-color: #fc6e75;
+    background-color: #ffffff;
+}
+
+
+/* ----------Acciones sobre el paciente-------------- */
+
+.acciones-cliente {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 10px 0px 10px;
+    background-color: #ffffff;
+}
+
+.accion-cliente {
+    padding: 6px 16px;
+    font-size: medium;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    background-color: #45aef0;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.accion-cliente:hover {
+    background-color: #fc6e75;
+    transform: scale(1.06);
+    transition: 0.4s;
+}
+
+
+/* ----------Agenda: dos columnas-------------- */
+
+.agenda {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 30px;
+}
+
+.agenda-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 0 280px;
+}
+
+.agenda-dia {
+    flex: 1 1 0;
+    min-width: 0;
+    background-color: #ffffff;
+    border: 4px solid #01018c;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* ----------Calendario-------------- */
+
+.calendario {
+    background-color: #ffffff;
+    border: 4px solid #01018c;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.calendario-encabezado {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background-color: #01018c;
+    color: #ffffff;
+}
+
+.calendario-mes {
+    font-size: large;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.calendario-mover {
+    padding: 0px 10px;
+    font-size: x-large;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.calendario-mover:hover {
+    color: #fc6e75;
+}
+
+.calendario-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 8px;
+}
+
+.calendario-inicial {
+    text-align: center;
+    font-size: small;
+    font-weight: bold;
+    color: #01018c;
+}
+
+.calendario-hueco {
+    visibility: hidden;
+}
+
+.calendario-dia {
+    position: relative;
+    padding: 6px 0px;
+    text-align: center;
+    font-size: medium;
+    font-weight: bold;
+    color: #000000;
+    border-radius: 8px;
+}
+
+.calendario-dia:hover {
+    background-color: #45aef0;
+    color: #ffffff;
+}
+
+.calendario-hoy {
+    border: 2px solid #fc6e75;
+}
+
+.calendario-elegido {
+    background-color: #041dde;
+    color: #ffffff;
+}
+
+.calendario-marca {
+    display: block;
+    margin: 1px auto 0px auto;
+    width: 16px;
+    font-size: 10px;
+    line-height: 14px;
+    color: #ffffff;
+    background-color: #fc6e75;
+    border-radius: 100%;
+}
+
+.calendario-elegido .calendario-marca {
+    background-color: #ffffff;
+    color: #041dde;
+}
+
+/* ----------Agrupacion por doctor-------------- */
+
+.doctor-titulo {
+    margin: 14px 0px 6px 0px;
+    padding: 4px 12px;
+    font-size: medium;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #45aef0;
+    border-radius: 20px;
+    border: 2px solid #000000cc;
+}
+
+.doctor-conteo {
+    float: right;
+    font-weight: normal;
+}
+
+.panel-pendientes {
+    padding: 10px;
+    background-color: #ffffff;
+    border: 3px solid #a32d2d;
+    border-radius: 15px;
+}
+
+
+/* ----------Agendar desde el calendario-------------- */
+
+.boton-nueva-cita {
+    width: 100%;
+    margin-top: 14px;
+    padding: 8px;
+    font-size: large;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #fc6e75;
+    border: 2px solid #000000cc;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.boton-nueva-cita:hover {
+    background-color: #041dde;
+    transform: scale(1.02);
+    transition: 0.4s;
+}
+
+.buscar-paciente-linea {
+    padding: 14px 20px 6px 20px;
+}
+
+.buscar-paciente-linea input {
+    width: 100%;
+    height: 40px;
+    padding: 6px;
+    font-size: medium;
+    font-weight: bold;
+    border: 3px solid #01018c;
+    border-radius: 20px;
+}
+
+.resultados-paciente {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.resultado-paciente {
+    margin: 2px 0px;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: medium;
+    background-color: #dedede;
+    border: 2px solid #041ddec9;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.resultado-paciente:hover {
+    background-color: #45aef0;
+    color: #ffffff;
+}
+
+.paciente-elegido {
+    margin: 10px 20px;
+    padding: 6px;
+    font-size: medium !important;
+    font-weight: bold;
+    color: #ffffff !important;
+    background-color: #01018c;
+    border-radius: 15px;
+}
+
+.sin-resultados {
+    padding: 8px;
+    text-align: center;
+    color: #01018c;
+}
+
+.fecha-reagendar select {
+    width: 150px;
+    text-align: center;
+    margin: 0px 5px;
+    font-weight: bold;
+    font-size: large;
+    padding: 4px;
+    border: 3px solid #000000;
+    border-radius: 20px;
+}
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .contenedor-general-totales {
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .citas {
+        width: 100%;
+    }
+
+    .citas button {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* El scale(1.1) sacaba la fila del contenedor */
+    .citas button:hover {
+        transform: scale(1.01);
+    }
+
+    .atajos-fecha {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .agenda {
+        flex-wrap: wrap;
+    }
+
+    .agenda-lateral {
+        flex: 1 1 260px;
+    }
+
+    .agenda-dia {
+        flex: 1 1 320px;
+    }
+
+    .cita-hora {
+        flex: 0 0 auto;
+    }
+
+    .contenedor-datos-reagendar {
+        width: 100%;
+        max-width: 640px;
+    }
+
+    .dato-reagendar p {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .dato-reagendar .titulo-dato-reagendar {
+        flex: 0 0 130px;
+    }
+
+    .fecha-reagendar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 16px 12px;
+    }
+
+    .fecha-reagendar form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .fecha-reagendar input,
+    .fecha-reagendar button {
+        margin: 0;
+    }
+
+    .fecha-reagendar button:hover,
+    #boton-eliminar-cita:hover {
+        transform: scale(1.06);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .citas {
+        padding: 16px;
+    }
+
+    .atajo-fecha {
+        padding: 5px 12px;
+        font-size: medium;
+    }
+
+    .contador-citas {
+        font-size: medium;
+    }
+
+    .cita-hora {
+        min-width: 74px;
+        font-size: medium;
+    }
+
+    .cita-nombre {
+        font-size: medium;
+    }
+
+    .cita-meta {
+        font-size: 0.85rem;
+    }
+
+    .contenedor-datos-reagendar p {
+        font-size: x-large;
+    }
+
+    .dato-reagendar p {
+        font-size: medium;
+        padding: 2px 16px;
+    }
+
+    .dato-reagendar .titulo-dato-reagendar {
+        flex: 0 0 110px;
+    }
+
+    .fecha-reagendar input {
+        width: 130px;
+        font-size: medium;
+    }
+
+    .fecha-reagendar button {
+        width: 92px;
+        font-size: medium;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .agenda-lateral,
+    .agenda-dia {
+        flex: 1 1 100%;
+    }
+
+    .citas {
+        padding: 10px;
+    }
+
+    .atajo-fecha {
+        flex: 1 1 auto;
+        padding: 5px 8px;
+        font-size: 0.85rem;
+    }
+
+    .citas button {
+        gap: 8px;
+        padding: 6px 10px;
+    }
+
+    .cita-hora {
+        min-width: 62px;
+        font-size: 0.9rem;
+    }
+
+    .cita-nombre {
+        font-size: 0.9rem;
+    }
+
+    .cita-meta {
+        font-size: 0.78rem;
+    }
+
+    .cita-badge {
+        display: none;
+    }
+
+    .contenedor-datos-reagendar p {
+        font-size: large;
+    }
+
+    .dato-reagendar p {
+        font-size: 0.85rem;
+        padding: 2px 10px;
+    }
+
+    .dato-reagendar .titulo-dato-reagendar {
+        flex: 0 0 90px;
+    }
+
+    .fecha-reagendar input {
+        width: 120px;
+    }
 }

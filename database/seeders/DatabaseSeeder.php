@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cita;
 use App\Models\Cliente;
 use App\Models\Especialista;
 use App\Models\Factura;
@@ -24,13 +25,17 @@ class DatabaseSeeder extends Seeder
             EpsSeeder::class,
             GrupoSeeder::class,
             DienteSeeder::class,
-            
+            MetodoPagoSeeder::class,
+
             ]);
 
-            Cliente::factory(10)->create();
-            Especialista::factory(8)->create();
-            Historia::factory(40)->create();
-            Factura::factory(50)->create();
+            //  Datos de prueba. Descomentar solo en local:
+            //  el orden importa porque unas dependen de otras.
+            // Especialista::factory(8)->create();
+            // Cliente::factory(10)->create();
+            // Historia::factory(40)->create();
+            // Factura::factory(50)->create();
+            // Cita::factory(15)->create();
 
             }
 }

@@ -52,6 +52,16 @@
     </a>
 
 
+    <a class="tarjeta-inicio" href="{{ route('metodoPagos.index') }}">
+        <div class="contenedor-inicio-img">
+            <img class="inicio-img" src="{{ asset('img/facturaB.png') }}" alt="">
+        </div>
+        <div class="contenedor-titulo-tarjeta">
+            <p class="titulo-tarjeta">Metodos de Pago</p>
+        </div>
+    </a>
+
+
 
 
 </div>

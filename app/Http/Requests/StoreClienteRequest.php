@@ -20,7 +20,7 @@ class StoreClienteRequest extends FormRequest
 
             'nombre'            => ['required', 'string', 'max:45'],
             'primer_apellido'   => ['required', 'string', 'max:45'],
-            'segundo_apellido'  => ['required', 'string', 'max:45'],
+            'segundo_apellido'  => ['nullable', 'string', 'max:45'],
             'numero_documento'  => ['required', 'string', 'max:45', 'unique:clientes,numero_documento'],
             'correo'            => ['nullable', 'email', 'max:150'],
             'telefono'          => ['required', 'string', 'max:45'],
@@ -30,7 +30,7 @@ class StoreClienteRequest extends FormRequest
             'saldo'             => ['nullable', 'regex:/^\d{1,10}(\.\d{1,2})?$/'],
             'tipo_documento_id' => ['required', 'integer', 'exists:tipo_documentos,id'],
             'eps_id'            => ['required', 'integer', 'exists:eps,id'],
-            'sedes_id'          => ['nullable', 'integer', 'exists:sedes,id'],
+            'sede_id'           => ['nullable', 'integer', 'exists:sedes,id'],
 
         ];
     }
@@ -39,14 +39,15 @@ class StoreClienteRequest extends FormRequest
     {
         $this->merge([
             'primer_apellido'   => $this->primerApellido,
-            'segundo_apellido'  => $this->segundoApellido,
+            'segundo_apellido'  => $this->segundoApellido  ?? null,
             'numero_documento'  => $this->numeroDocumento,
             'fecha_nacimiento'  => $this->fechaNacimiento,
-            'fecha_cita'        => $this->fechaCita,
+            'fecha_cita'        => $this->fechaCita ?? null,
             'tipo_documento_id' => $this->tipoDocumentoId,
             'eps_id'            => $this->epsId,
-            'sede_id'           => $this->sedeId,
+            'sede_id'           => $this->sedeId ?? null,
             'telefono'          => $this->telefono,
+            'correo'            => $this->correo ?? null,
         ]);
     }
 }

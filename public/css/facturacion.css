@@ -94,33 +94,64 @@
     text-shadow: 0px 3px 6px #000003a2;
 }
 
-.tarjeta-total-especialista {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .historias-contenedor {
+        width: 100%;
+        max-width: 1100px;
+    }
 }
 
-.sede-total{
-    text-align: center;
-    margin: 20px;
-    font-size: xx-large;
-    color: #01018c;
-    border-top: 6px solid #01018c;
+@media screen and (max-width: 1366px) {
+    .tarjeta-inicio {
+        width: 240px;
+        height: 240px;
+        margin-top: 40px;
+        border-width: 6px;
+    }
+
+    .tarjeta-inicio .contenedor-inicio-img {
+        border-bottom-width: 6px;
+    }
+
+    .contenedor-inicio-img img {
+        padding: 22px;
+    }
+
+    .titulo-tarjeta {
+        font-size: large;
+    }
+
+    .historia-encabezado {
+        padding: 18px;
+        font-size: x-large;
+        gap: 20px;
+    }
 }
 
-.columna-tarjeta {
-    width: 350px;
+@media screen and (max-width: 1024px) {
+    .tarjeta-inicio {
+        width: 200px;
+        height: 200px;
+        margin-top: 30px;
+    }
 
-    margin: 5px 10px;
-    display: flex;
-    justify-content: center;
-    font-size: large;
-}
+    .contenedor-inicio-img img {
+        padding: 16px;
+    }
 
-.titulo-tarjeta-total {
-    font-size: x-large;
-    font-weight: bold;
-    color: #01018c;
+    .titulo-tarjeta {
+        font-size: medium;
+    }
+
+    .historia-encabezado {
+        font-size: large;
+        padding: 14px;
+    }
 }
 
 

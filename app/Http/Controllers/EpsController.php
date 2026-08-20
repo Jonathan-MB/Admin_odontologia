@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use App\Filters\EpsFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEpsRequest;
 use App\Http\Requests\UpdateEpsRequest;
-use App\Http\Resources\EpsCollection;
-use App\Http\Resources\EpsResource;
 use App\Models\Eps;
 use Illuminate\Http\Request;
 
@@ -29,10 +26,6 @@ class EpsController extends Controller
     
     }
 
-    public function show(Eps $eps)
-    {
-        return new EpsResource($eps);
-    }
 
 
     public function edit(Eps $ep)
@@ -50,11 +43,4 @@ class EpsController extends Controller
 
 
 
-    public function destroy(Eps $eps)
-    {
-        $eps->delete();
-        return response()->json([
-            'message' => 'Eliminado correctamente'
-        ], 200);
-    }
 }

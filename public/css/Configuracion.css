@@ -17,3 +17,22 @@
 .contenedor-tarjetas{
     padding-top: 0px;
 }
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen and (max-width: 1366px) {
+    #agregar-especialista {
+        border-width: 6px;
+    }
+
+    #agregar-especialista .contenedor-inicio-img {
+        border-bottom-width: 6px;
+    }
+
+    .contenedor-tarjetas {
+        min-height: 0;
+        padding-bottom: 40px;
+    }
+}

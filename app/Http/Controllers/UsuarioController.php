@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\UsuarioFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
-use App\Http\Resources\UsuarioCollection;
-use App\Http\Resources\UsuarioResource;
 use App\Models\Rol;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -34,10 +30,6 @@ class UsuarioController extends Controller
 
 
 
-    public function show(Usuario $usuario)
-    {
-        return new UsuarioResource($usuario);
-    }
 
 
 

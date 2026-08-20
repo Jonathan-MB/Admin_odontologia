@@ -127,6 +127,14 @@
                     <p class="tarjeta-obsevacion ">{{ $factura->nombre }}</p>
                 </div>
                 <div class="columna-factura">
+                    <p class="tarjeta-encabezado">Documento</p>
+                    <p class="tarjeta-obsevacion ">{{ $cliente->numero_documento }}</p>
+                </div>
+                <div class="columna-factura">
+                    <p class="tarjeta-encabezado">Tipo de pago</p>
+                    <p class="tarjeta-obsevacion ">{{ $factura->metodoPago->nombre ?? 'Sin registrar' }}</p>
+                </div>
+                <div class="columna-factura">
                     <p class="tarjeta-encabezado">abono</p>
                     <p class="tarjeta-obsevacion ">$ {{ number_format($factura->abono, 0, ',', '.') }}</p>
                 </div>
@@ -138,6 +146,18 @@
                     <p class="tarjeta-encabezado">No. Factura</p>
                     <p class="tarjeta-obsevacion ">{{ str_pad($factura->no_factura, 4, '0', STR_PAD_LEFT) }}</p>
                 </div>
+                <div class="columna-factura columna-boton">
+                    <button type="button" class="Factura-antigua-imprimir imprimir-anterior"
+                        data-numero="{{ str_pad($factura->no_factura, 4, '0', STR_PAD_LEFT) }}"
+                        data-nombre="{{ $factura->nombre }}" data-abono="{{ $factura->abono }}"
+                        data-saldo="{{ $factura->saldo }}" data-fecha="{{ $factura->created_at }}"
+                        data-sede-id="{{ $factura->sede_id }}"
+                        data-especialista="{{ $factura->especialista->nombre ?? 'N/A' }}"
+                        data-cita="{{ $factura->proxima_cita ? \Carbon\Carbon::parse($factura->proxima_cita)->format('d/m/Y H:i') : 'Sin cita' }}">
+                        <img class="imagen-imprimir" src="{{ asset('img/imprimir.png') }}" title="Imprimir factura antigüa">
+                    </button>
+                </div>
+
             </div>
 
             <p class="tarjeta-separador">
@@ -167,7 +187,8 @@
 
                     <div class="factura-linea">
                         <label for="nombre">Nombre</label>
-                        <input autocomplete="off" type="text" name="nombre" id="nombre-input">
+                        <input autocomplete="off" type="text" name="nombre" id="nombre-input"
+                            value="{{ $cliente->nombre_completo }}">
                     </div>
                     <div class="factura-linea">
                         <label for="saldo-input">Saldo</label>
@@ -190,9 +211,17 @@
                         <select name="especialistaId" id="especialista-input">
                             <option value="" selected disabled> seleccionar </option>
                             @foreach ($especialistas as $especialista)
-                                @if ($especialista->sede_id == session('sede.id'))
-                                    <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
-                                @endif
+                                <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="factura-linea">
+                        <label for="metodoPagoId">Metodo de pago</label>
+                        <select name="metodoPagoId" id="metodo-pago-input">
+                            <option value="" selected disabled> seleccionar </option>
+                            @foreach ($metodoPagos as $metodoPago)
+                                <option value="{{ $metodoPago->id }}">{{ $metodoPago->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -227,10 +256,7 @@
 
 
 
-<script>
-    const clienteSaldo = {{ $cliente->saldo }};
-    const clienteId = {{ $cliente->id }};
-</script>
+
 <script src="{{ asset('js/factura.js') }}"></script>
 <script src="{{ asset('js/guardarImprimirFactura.js') }}"></script>
 @include('partials.footer')

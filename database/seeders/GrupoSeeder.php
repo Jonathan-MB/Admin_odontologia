@@ -19,7 +19,7 @@ class GrupoSeeder extends Seeder
             'Unguales Abajo Derecha',
             'Unguales Abajo Izquierda',
             'General',
-            'Otros',
+            'Cotizacion',
         ];
 
         foreach ($grupos as $nombre) {

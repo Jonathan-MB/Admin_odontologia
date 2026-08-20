@@ -64,3 +64,56 @@
     padding: 4px;
 }
 
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .contenedor-agregar-cliente {
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+        min-height: 350px;
+    }
+
+    .contenedor-buscador {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .buscador-input {
+        width: auto;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .contenedor-buscador button {
+        flex: 0 0 70px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .contenedor-buscador {
+        max-width: 420px;
+    }
+
+    .buscador-input {
+        font-size: large;
+        height: 38px;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .contenedor-buscador {
+        max-width: 100%;
+    }
+
+    .buscador-input {
+        font-size: medium;
+    }
+
+    .contenedor-buscador button {
+        flex: 0 0 56px;
+    }
+}
+

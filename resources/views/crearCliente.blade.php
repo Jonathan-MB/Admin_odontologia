@@ -48,7 +48,7 @@
 
                 <div class="elemento-formulario">
                     <label for="fecha-nacimiento">Fecha Nacimiento</label>
-                    <input type="date" name="fechaNacimiento" id="fecha-nacimiento" required autocomplete="off">
+                    <input type="date" name="fechaNacimiento" id="fecha-nacimiento" max="{{ now()->toDateString() }}"  required autocomplete="off" >
                 </div>
             </div>
 
@@ -67,8 +67,7 @@
 
                 <div class="elemento-formulario">
                     <label for="segundo-apellido">Segundo Apellido</label>
-                    <input autocomplete="off" type="text" name="segundoApellido" id="segundo-apellido" maxlength="45"
-                        required>
+                    <input autocomplete="off" type="text" name="segundoApellido" id="segundo-apellido" maxlength="45">
                 </div>
             </div>
 

@@ -183,3 +183,222 @@ margin: 1px;
     border-top-left-radius: 20px ;
     border-top-right-radius: 20px;
 }
+
+/* ----------Totales por metodo de pago-------------- */
+
+.contenedor-metodos-pago {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 3px solid #01018c;
+}
+
+.titulo-metodos-pago {
+    margin-bottom: 8px;
+    padding: 4px;
+    font-size: large;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #45aef0;
+    text-shadow: 0px 0px 1px #000000;
+    color: #ffffff;
+    border: 2px solid #000000cc;
+}
+
+.datos-metodo-pago {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #01018ca3;
+}
+
+.nombre-metodo-pago {
+    width: 300px;
+}
+
+.total-metodo-pago {
+    min-width: 150px;
+    text-align: right;
+    overflow: visible;
+}
+
+.sin-metodos-pago {
+    text-align: center;
+    margin: 8px 0px;
+    color: #01018c;
+}
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   ========================================================================== */
+
+@media screen {
+    .contenedor-fecha-facturacion {
+        width: 100%;
+        max-width: 500px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .contenedor-fecha-facturacion input {
+        width: 100%;
+        max-width: 300px;
+        flex: 1 1 200px;
+        min-width: 0;
+    }
+
+    .contenedor-fecha-facturacion button:hover {
+        transform: scale(1.08);
+    }
+
+    .contenedor-general-totales {
+        width: 100%;
+        max-width: 860px;
+    }
+
+    .contenedor-totales {
+        width: 100%;
+    }
+
+    .datos-especialista {
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nombre-especialista,
+    .nombre-metodo-pago {
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .nombre-especialista:hover {
+        transform: scale(1.02);
+    }
+
+    .total-especialista,
+    .total-metodo-pago {
+        flex: 0 0 auto;
+    }
+
+    .datos-metodo-pago {
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Popup de facturas del especialista */
+    .popup-nombre-especialista,
+    .popup-contenido-total-factura {
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .popup-contenido-total-factura {
+        max-height: calc(100vh - 200px);
+        overflow: auto;
+    }
+
+    .factura-tarjeta {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 12px;
+    }
+
+    .columna-factura {
+        width: auto;
+        flex: 1 1 130px;
+        min-width: 0;
+    }
+
+    .tarjeta-separador {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .contenedor-fecha-facturacion label {
+        font-size: large;
+    }
+
+    .contenedor-fecha-facturacion input {
+        font-size: medium;
+    }
+
+    .contenedor-fecha-facturacion button {
+        padding: 8px 14px;
+        font-size: medium;
+        margin-left: 0;
+    }
+
+    .fecha-busqueda {
+        font-size: x-large;
+    }
+
+    .contenedor-totales {
+        padding: 16px 20px;
+    }
+
+    .nombre-sede,
+    .titulo-metodos-pago {
+        font-size: large;
+    }
+
+    .contenedor-totales p,
+    .contenedor-totales button {
+        font-size: medium;
+    }
+
+    .datos-sede-total p {
+        font-size: large;
+    }
+
+    .popup-nombre-especialista {
+        font-size: x-large;
+    }
+
+    .popup-contenido-total-factura {
+        padding: 20px;
+    }
+
+    .columna-factura {
+        flex: 1 1 110px;
+    }
+
+    .factura-tarjeta p {
+        font-size: 0.85rem;
+    }
+
+    .factura-tarjeta .tarjeta-encabezado {
+        font-size: medium;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .fecha-busqueda {
+        font-size: large;
+    }
+
+    .contenedor-totales {
+        padding: 12px 14px;
+    }
+
+    .datos-sede-total {
+        gap: 10px;
+    }
+
+    .datos-sede-total p {
+        font-size: medium;
+    }
+
+    .popup-nombre-especialista {
+        font-size: large;
+    }
+
+    .popup-contenido-total-factura {
+        padding: 14px;
+    }
+
+    .columna-factura {
+        flex: 1 1 90px;
+    }
+}

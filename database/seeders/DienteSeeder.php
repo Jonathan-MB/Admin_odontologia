@@ -12,16 +12,31 @@ class DienteSeeder extends Seeder
     {
 
 
-        //  Crear diente "General" en grupo "General"
+        //  Estos dos no son dientes: son los campos de texto general de la
+        //  historia. Se guardan como dientes para no cambiar la estructura.
+        //  El ORDEN importa: historias.js asume id 1 = Evolucion, id 2 = Cotizacion.
         $grupoGeneral = Grupo::where('nombre', 'General')->first();
         if ($grupoGeneral) {
             Diente::firstOrCreate([
 
-                'nombre'    => 'General',
+                'nombre'    => 'Evolucion',
                 'grupo_id'  => $grupoGeneral->id,
 
             ]);
         }
+
+
+
+        $grupoCotizacion = Grupo::where('nombre', 'Cotizacion')->first();
+        if ($grupoCotizacion) {
+            Diente::firstOrCreate([
+
+                'nombre'    => 'Cotizacion',
+                'grupo_id'  => $grupoCotizacion->id,
+
+            ]);
+        }
+
 
 
         $config = [

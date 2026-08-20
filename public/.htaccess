@@ -19,3 +19,32 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# ==========================================================================
+# OPTIMIZACION DE ENTREGA
+# --------------------------------------------------------------------------
+# Solo afecta como se transmiten los archivos, no su contenido.
+# Si el servidor no tiene estos modulos, los bloques se ignoran solos.
+# A proposito NO se cachean CSS ni JS: si se cachean, el navegador sigue
+# mostrando la version vieja despues de cada cambio de estilos.
+# Para revertir: borrar este bloque completo.
+# ==========================================================================
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Fuentes: nunca cambian de contenido
+    ExpiresByType font/ttf                "access plus 1 year"
+    ExpiresByType application/x-font-ttf  "access plus 1 year"
+
+    # Imagenes: se revalidan cada semana
+    ExpiresByType image/png  "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 7 days"
+    ExpiresByType image/x-icon "access plus 7 days"
+</IfModule>

@@ -16,7 +16,7 @@
         @csrf
         <div class="contenedor-buscador">
             <div>
-                <input type="text" name="numeroDocumento" placeholder="Numero de Documento" class="buscador-input" minlength="5"maxlength="15" pattern="[0-9]+" required autocomplete="off">
+                <input type="text" name="numeroDocumento" placeholder="Documento o nombre" class="buscador-input" minlength="3" maxlength="60" required autocomplete="off">
             </div>
             <button type="submit">
                 <img src="{{asset('img/lupa.png')}}" alt="">

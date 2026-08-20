@@ -1,5 +1,7 @@
 @include('partials.head')
 
+<link rel="stylesheet" href="{{ asset('css/facturaImprimir.css') }}">
+
 <link rel="stylesheet" href="{{ asset('css/historias.css') }}">
 
 <title> Historias - {{ $cliente->nombre_completo }}</title>
@@ -102,7 +104,7 @@
         <form action="{{ route('facturas.buscar') }}" method="post" autocomplete="off">
             @csrf
             <input autocomplete="off" type="hidden" name="numeroDocumento" value="{{ $cliente->numero_documento }}">
-            <button id="boton-saldo-cliente-historia" type="submit" href="{{ route('facturacion') }}"
+            <button id="boton-saldo-cliente-historia" type="submit"
                 class="linea-agregar-cliente linea-saldo">
                 <p>Saldo: $ {{ number_format($cliente->saldo, 0, ',', '.') }}</p>
             </button>
@@ -110,7 +112,7 @@
         <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" autocomplete="off">
             @method('PATCH')
             @csrf
-            <div class="linea-agregar-cliente linea-cita" ">
+            <div class="linea-agregar-cliente linea-cita">
 
                 <p class="titulo-elemento-p">Proxima Cita:</p>
 
@@ -141,9 +143,33 @@
 
     <div class="historias-contenedor">
 
+    
+<div class="diente-general">
+@foreach ($dientes as $diente)
+                @if ($diente->nombre == 'Cotizacion')
+                    <div class="contenedor-info-diente info-diente-general">
+                        <button type="button" class="diente cotizacion" id="diente-general-img"
+                            data-diente="{{ $diente->nombre }}">
+                            Cotización
+                        </button>   
+                        
+                        <textarea class="diente-textarea cotizacion-tarea">{{ $ultimasHistorias[$diente->id]->observacion ?? '' }}</textarea>
+                        
+                        <button type="button" class="btn-cotizacion" id="boton-imprimir-cotizacion">
+                            <img class="imagen-imprimir" src="{{ asset('img/imprimir.png') }}">
+                        </button>
+                    </div>
+                    
 
 
-        <button class="boton-historial boton-nueva-historia" type="button" id="boton-guardar-odontograma"> + Guardar Odontograma</button>
+                @endif
+                @endforeach
+
+            </div>
+
+<button class="boton-historial diente" data-diente="Todas">Todas las historias</button>
+
+
         <div class="veribular-grupo">
             <div class="datos-historia">
                     <div class=" F-A-Odontograma">
@@ -157,18 +183,17 @@
 
                         <option value="" selected disabled>Seleccionar</option>
                         @foreach ($especialistas as $especialista)
-                @if ($especialista->sede_id == session('sede.id'))
+              
                     <option value="{{ $especialista->id }}">{{ $especialista->nombre }}</option>
-                @endif
+
                 @endforeach
                 </select>
             </div>
     </div>
 
-    <h3 class="tipo-diente">VESTIBULARES</h3>
+    <h3 class="tipo-diente">ODONTOGRAMA</h3>
     <div class="titulos-grupos">
-        <p>Vestibular Arriba Derecha</p>
-        <p>Vestibular Arriba Izquierda</p>
+
     </div>
     <div class="dientes-fila">
         <div class="dientes-grupo">
@@ -200,8 +225,6 @@
     </div>
     <div class="titulos-grupos">
 
-        <p>Vestibular Abajo Derecha</p>
-        <p>Vestibular Abajo Izquierda</p>
     </div>
     <div class="dientes-fila">
         <div class="dientes-grupo">
@@ -235,11 +258,10 @@
 
 
 <div class="ungular-grupo">
-    <h3 class="tipo-diente">UNGUALES</h3>
+    <h3 class="tipo-diente">TEMPORALES</h3>
     <div class="titulos-grupos">
 
-        <p>Unguales Arriba Derecha</p>
-        <p>Unguales Arriba Izquierda</p>
+
     </div>
     <div class="dientes-fila">
         <div class="dientes-grupo">
@@ -271,8 +293,7 @@
         </div>
     </div>
     <div class="titulos-grupos">
-        <p>Unguales Abajo Derecha</p>
-        <p>Unguales Abajo Izquierda</p>
+
     </div>
     <div class="dientes-fila">
         <div class="dientes-grupo">
@@ -306,18 +327,19 @@
 </div>
 <div class="diente-general">
     @foreach ($dientes as $diente)
-        @if ($diente->nombre == 'General')
+        @if ($diente->nombre == 'Evolucion')
             <div class="contenedor-info-diente info-diente-general">
                 <button type="button" class="diente" id="diente-general-img" data-diente="{{ $diente->nombre }}">
-                    {{ $diente->nombre }}
+                    Evolución
                 </button>
-                <textarea class="diente-textarea">{{ $ultimasHistorias[$diente->id]->observacion ?? '' }}</textarea>
+                <textarea class="diente-textarea tarea-evolucion">{{ $ultimasHistorias[$diente->id]->observacion ?? '' }}</textarea>
             </div>
         @endif
     @endforeach
 
 </div>
-<button class="boton-historial diente" data-diente="Todas">Todas las historias</button>
+
+<button class="boton-historial boton-nueva-historia" type="button" id="boton-guardar-odontograma"> + Guardar Evolucion</button>
 </div>
 
 
@@ -421,12 +443,14 @@
 </div>
 
 </div>
-
+@include('partials.cotizacionImprimir')
 <script>
+    const clienteNombre = @json($cliente->nombre_completo);
+    const fontBreathingUrl = "{{ asset('fonts/Breathing.ttf') }}"; 
     const historias = @json(
         $cliente->historias->map(function ($h) {
             return array_merge($h->toArray(), [
-                'fecha' => \Carbon\Carbon::parse($h->created_at)->setTimezone('America/Bogota')->format('Y-m-d'),
+                'fecha' =>  \Carbon\Carbon::parse($h->fecha)->format('Y-m-d'),
             ]);
         }));
 
@@ -437,5 +461,6 @@
 </script>
 
 <script src="{{ asset('js/historias.js') }}"></script>
+
 
 @include('partials.footer')

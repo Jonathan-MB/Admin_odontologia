@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Eps;
 use App\Models\TipoDocumento;
+use App\Models\Sede;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClienteFactory extends Factory
@@ -23,7 +24,7 @@ class ClienteFactory extends Factory
             'saldo'             => fake()->randomFloat(2, 0, 1000000),
             'tipo_documento_id' => TipoDocumento::inRandomOrder()->value('id'),
             'eps_id'            => Eps::inRandomOrder()->value('id'),
-            'sede_id'            => fake()->numberBetween(1,2),
+            'sede_id'            => Sede::inRandomOrder()->value('id'),
         ];
     }
 }

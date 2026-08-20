@@ -77,7 +77,7 @@
     height: 80px;
     justify-content: center;
     border-radius: 15px;
-    background-color: #01018c;
+    background-color: #fc6e75;
     box-shadow: 3px 3px 8px #00000071;
 }
 
@@ -96,4 +96,97 @@
 .linea-agregar-cliente p {
     color: #ffffff;
     font-weight: 600;
+}
+
+/* ==========================================================================
+   ADAPTABLE - SOLO PANTALLA  (ver nota en general.css)
+   El contenedor era de 1000px fijos y las filas no hacian salto de linea.
+   ========================================================================== */
+
+@media screen {
+    .contenedor-agregar-cliente {
+        width: 100%;
+        max-width: 1000px;
+    }
+
+    .linea-agregar-cliente {
+        flex-wrap: wrap;
+        gap: 12px;
+        row-gap: 14px;
+    }
+
+    .elemento-formulario {
+        flex: 1 1 200px;
+        min-width: 0;
+    }
+
+    .linea-agregar-cliente input,
+    .linea-agregar-cliente select {
+        width: 100%;
+        max-width: 230px;
+    }
+
+    .linea-agregar-cliente button {
+        flex: 0 0 auto;
+    }
+
+    /* El scale(1.1) al enfocar montaba el input sobre el de al lado */
+    .linea-agregar-cliente input:focus {
+        transform: scale(1.03);
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .contenedor-agregar-cliente {
+        padding: 14px;
+        gap: 8px;
+    }
+
+    .linea-agregar-cliente input,
+    .linea-agregar-cliente select {
+        height: 38px;
+        font-size: 15px;
+    }
+
+    .linea-agregar-cliente button {
+        width: 68px;
+        height: 68px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .elemento-formulario {
+        flex: 1 1 180px;
+    }
+
+    .linea-agregar-cliente label {
+        font-size: 0.9rem;
+    }
+
+    .linea-agregar-cliente input,
+    .linea-agregar-cliente select {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .linea-agregar-cliente button {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .linea-agregar-cliente {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .elemento-formulario {
+        flex: 1 1 100%;
+    }
+
+    .linea-agregar-cliente input,
+    .linea-agregar-cliente select {
+        max-width: 100%;
+    }
 }

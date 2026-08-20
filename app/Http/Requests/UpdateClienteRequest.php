@@ -24,7 +24,7 @@ class UpdateClienteRequest extends FormRequest
             return [
                 'nombre'            => ['required', 'string', 'max:45'],
                 'primer_apellido'   => ['required', 'string', 'max:45'],
-                'segundo_apellido'  => ['required', 'string', 'max:45'],
+                'segundo_apellido'  => ['nullable', 'string', 'max:45'],
                 'numero_documento'  => ['required', 'string', 'max:45', Rule::unique('clientes', 'numero_documento')->ignore($clienteId)],
                 'correo'            => ['nullable', 'email', 'max:150'],
                 'telefono'          => ['required', 'string', 'max:45'],

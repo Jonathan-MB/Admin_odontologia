@@ -14,9 +14,9 @@ class HistoriaFactory extends Factory
     public function definition(): array
     {
         return [
-            'cliente_id'        => fake()->numberBetween(1,10),
-            'especialista_id'   => fake()->numberBetween(1,8),
-            'diente_id'         => fake()->numberBetween(1,54),
+            'cliente_id'        => Cliente::inRandomOrder()->value('id'),
+            'especialista_id'   => Especialista::inRandomOrder()->value('id'),
+            'diente_id'         => Diente::inRandomOrder()->value('id'),
             'fecha'            => fake()->date(),
             'observacion'       => fake()->realTextBetween(15,400),
             ];

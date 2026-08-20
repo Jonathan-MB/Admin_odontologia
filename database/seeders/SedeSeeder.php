@@ -24,10 +24,10 @@ class SedeSeeder extends Seeder
             ]
         );
         Sede::firstOrCreate(
-            ['nombre' => 'Peñadent'], 
+            ['nombre' => 'Peña'], 
             [                                    
                 'nit'       => '14637567-1',
-                'direccion' => 'Diag 23 No.10B-45',
+                'direccion' => 'Diag 23 No.10B-45 B/Colseguros',
                 'telefono'  => '602 885 2034',
                 'celular'  => '305 332 8436',
 
