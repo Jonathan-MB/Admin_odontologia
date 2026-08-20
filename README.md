@@ -1,66 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Centro Odontológico Peñadent
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema interno para el manejo diario de la clínica: pacientes, historia clínica,
+agenda y facturación. Lo usa el personal de recepción y los odontólogos en las
+dos sedes.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Qué hace
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Todo gira alrededor del paciente. Se busca por documento o por nombre, y desde
+ahí se llega a las tres cosas que se hacen a diario:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**La historia clínica.** Un odontograma con los 32 dientes permanentes y los 20
+temporales. Cada diente guarda su propia evolución, y hay dos campos generales
+aparte: uno para la evolución del paciente y otro para cotizaciones, que se
+pueden imprimir.
 
-## Learning Laravel
+**La agenda.** Un calendario mensual que marca los días con citas. Al abrir un
+día se ven las citas agrupadas por doctor, con la hora, el documento y el
+teléfono del paciente. Desde ahí mismo se agenda, se reagenda o se cancela, y
+se puede saltar a la ficha del paciente si hay que consultarlo o llamarlo.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**La facturación.** Se registra el abono, el saldo pendiente, quién atendió y
+con qué método se pagó. Cada factura lleva un consecutivo propio por sede y se
+imprime en el acto. Al cerrar el día se ve cuánto generó cada odontólogo y
+cuánto entró por cada método de pago.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Alcance
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Cada sede trabaja por separado: al entrar se elige una, y a partir de ahí solo
+se ven sus citas, sus facturas y su consecutivo. Un mismo paciente puede
+atenderse en las dos.
 
-## Laravel Sponsors
+Hay dos roles. El **colaborador** hace el trabajo de recepción: pacientes,
+historias, agenda y facturación. El **administrador** además gestiona usuarios,
+odontólogos y ve el cierre diario.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Lo que el sistema **no** hace: no factura electrónicamente ante la DIAN, no
+maneja inventario ni nómina, no envía recordatorios automáticos y no tiene
+portal para el paciente. Es una herramienta de mostrador, no un ERP.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Requisitos
 
-## Contributing
+- PHP 8.2 o superior
+- MySQL 5.7 o superior (MariaDB sirve)
+- Composer
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Instalación
 
-## Code of Conduct
+```bash
+git clone https://github.com/Jonathan-MB/Admin_odontologia.git
+cd Admin_odontologia
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Crea la base de datos y ajusta `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD`
+en el `.env`. Después:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate --seed
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Usuarios de prueba
 
-## License
+El seeder crea dos usuarios para probar los dos roles:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Correo | Contraseña | Rol |
+|---|---|---|
+| `admin@demo.test` | `admin12345` | Administrador |
+| `recepcion@demo.test` | `recepcion12345` | Colaborador |
+
+Entra con cada uno y compara: el colaborador no ve Usuarios, Especialistas ni
+Total Diario, y tampoco entra escribiendo la URL directamente.
+
+Estos usuarios **no se crean en producción**: ahí las cuentas reales se dan de
+alta desde la aplicación, en Configuración → Usuarios.
+
+---
+
+## Estructura
+
+En desarrollo es un Laravel normal, con `public/` adentro. En el hosting la
+carpeta pública va aparte:
+
+```
+adminodontologiapenadent.com/
+├── public_html/          <- contenido de laravel/public/
+└── laravel/              <- el resto, fuera del docroot
+```
+
+`public/index.php` detecta solo dónde está montado, así que el mismo archivo
+sirve en los dos lados.
+
+Al desplegar, el contenido de `laravel/public/` va al **raíz** de
+`public_html/`, no a `public_html/public/`.
+
+---
+
+## Zonas delicadas
+
+Cosas que conviene saber antes de tocar el código.
+
+### La impresión de recibos
+
+La factura y la cotización no se imprimen desde la página: se clona el bloque
+oculto, se arma un HTML aparte y se abre en una pestaña nueva que se manda a
+imprimir. Está hecho así para que el papel salga exactamente igual siempre,
+sin que lo afecte el resto de la pantalla.
+
+Esa ventana hereda **todas** las hojas de estilo de la página, no solo
+`facturaImprimir.css`. Por eso todo el CSS de pantalla vive dentro de
+`@media screen`: al imprimir, el navegador lo ignora por completo.
+
+Si vas a tocar estilos, respeta esa separación. Y prueba imprimiendo, no solo
+mirando la pantalla.
+
+### Las citas y su espejo
+
+Las citas viven en la tabla `citas`, con su fecha, su sede y su doctor. Pero
+`clientes.fecha_cita` se conserva como espejo de la próxima cita, porque es lo
+que leen la facturación y el recibo impreso.
+
+Ese espejo se mantiene solo: cualquier cambio en una cita recalcula la columna.
+No la escribas a mano.
+
+Regla del negocio: un paciente tiene **una sola cita pendiente a la vez**.
+Reagendar mueve la que existe, no crea otra.
+
+### La sede vive en la sesión
+
+Al iniciar sesión se elige sede y queda guardada en la sesión. El middleware
+`verificar.sede` bloquea todo lo demás hasta que se elija. El consecutivo de
+factura, la agenda y el cierre diario dependen de ese dato.
+
+### Nombres que importan
+
+Hay puntos donde el nombre **es** la funcionalidad, y cambiarlo rompe cosas sin
+dar ningún error:
+
+- Los dientes `Evolucion` y `Cotizacion` no son dientes: son los dos campos de
+  texto general de la historia. Se guardaron así para no cambiar la estructura.
+  Las vistas los buscan por ese nombre exacto.
+- Los archivos de `public/` se sirven con el nombre literal. Windows no
+  distingue mayúsculas, Linux sí: `Configuracion.css` y `configuracion.css` son
+  dos archivos distintos en el servidor.
+
+---
+
+## Pruebas
+
+```bash
+php artisan test
+```
+
+Cubren el acceso por rol, la búsqueda por documento y por nombre, el guardado y
+la numeración de facturas, los métodos de pago, la agenda con sus citas por sede
+y que los seeders no expongan datos reales.
+
+---
+
+## Comandos útiles
+
+```bash
+php artisan migrate:status                        # qué migraciones faltan
+php artisan db:seed --class=MetodoPagoSeeder      # solo los métodos de pago
+php artisan optimize:clear                        # limpiar cachés
+```
+
+En producción, después de cada despliegue:
+
+```bash
+php artisan config:cache && php artisan route:cache && php artisan view:cache
+```
+
+Esas cachés guardan rutas absolutas, así que se generan **en el servidor**.
+Nunca subas `bootstrap/cache/` desde tu máquina.

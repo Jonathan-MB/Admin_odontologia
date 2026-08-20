@@ -43,15 +43,15 @@ class CitaController extends Controller
     {
         $cliente = Cliente::findOrFail($request->cliente_id);
 
-        // La sede sale de la sesion, no del formulario
+        //  La sede sale de la sesión, no del formulario
         $cita = $cliente->agendarProximaCita(
             $request->fecha_hora,
             (int) session('sede.id'),
             $request->especialista_id
         );
 
-        // Un paciente tiene una sola cita pendiente: si ya tenia una,
-        // esta se movio en vez de crearse otra. Conviene avisarlo.
+        //  Un paciente tiene una sola cita pendiente: si ya tenía una,
+        //  esta se movió en vez de crearse otra. Conviene avisarlo.
         $mensaje = $cita->wasRecentlyCreated
             ? 'Cita agendada correctamente'
             : 'El paciente ya tenia una cita pendiente y se movio a esta fecha';

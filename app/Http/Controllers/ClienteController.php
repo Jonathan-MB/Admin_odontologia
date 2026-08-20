@@ -79,7 +79,7 @@ class clienteController extends Controller
 
         $cliente->save();
 
-        // Si se agendo desde la ficha, reflejarlo tambien en la tabla citas
+        // Si se agendó desde la ficha, reflejarlo también en la tabla citas
         if (array_key_exists('fecha_cita', $data)) {
             if ($data['fecha_cita']) {
                 $cliente->agendarProximaCita(
@@ -136,16 +136,16 @@ class clienteController extends Controller
             return back()->with('error', 'Escribe un documento o un nombre');
         }
 
-        // Primero siempre por documento exacto, igual que siempre.
-        // Va antes que todo para no romper pasaportes ni cedulas de
-        // extranjeria, que pueden llevar letras.
+        //  Primero siempre por documento exacto, igual que siempre.
+        // Va antes que todo para no romper pasaportes ni cédulas de
+        // extranjería, que pueden llevar letras.
         $cliente = Cliente::where('numero_documento', $busqueda)->first();
 
         if ($cliente) {
             return redirect()->route('clientes.show', $cliente->id);
         }
 
-        // Si son solo numeros no tiene sentido buscarlo como nombre
+        // Si son solo números no tiene sentido buscarlo como nombre
         if (ctype_digit($busqueda)) {
             return back()->with('error', 'Cliente no encontrado');
         }
@@ -183,13 +183,13 @@ class clienteController extends Controller
         $fecha = $request->filled('fecha') ? $request->fecha : now()->toDateString();
         $dia   = Carbon::parse($fecha);
 
-        // Mes que pinta el calendario: el del dia elegido, salvo que
+        //  Mes que pinta el calendario: el del día elegido, salvo que
         // se navegue con ?mes=AAAA-MM
         $mes = $request->filled('mes')
             ? Carbon::parse($request->mes . '-01')
             : $dia->copy()->startOfMonth();
 
-        // Citas del dia, con su paciente y su doctor
+        // Citas del día, con su paciente y su doctor
         $citas = Cita::where('sede_id', $sedeId)
             ->where('estado', 'agendada')
             ->whereDate('fecha_hora', $fecha)
@@ -197,7 +197,7 @@ class clienteController extends Controller
             ->orderBy('fecha_hora')
             ->get();
 
-        // Cuantas citas tiene cada dia del mes, para marcar el calendario
+        // Cuántas citas tiene cada día del mes, para marcar el calendario
         $citasPorDia = Cita::where('sede_id', $sedeId)
             ->where('estado', 'agendada')
             ->whereBetween('fecha_hora', [
@@ -208,7 +208,7 @@ class clienteController extends Controller
             ->groupBy(fn($cita) => $cita->fecha_hora->toDateString())
             ->map->count();
 
-        // Citas vencidas que nadie volvio a agendar
+        // Citas vencidas que nadie volvió a agendar
         $pendientes = Cita::where('sede_id', $sedeId)
             ->where('estado', 'agendada')
             ->whereDate('fecha_hora', '<', now()->toDateString())

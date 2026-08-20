@@ -236,7 +236,7 @@ document.getElementById('boton-guardar-odontograma').addEventListener('click', a
 
 // ============ COTIZACIÓN ============
 // El bloque solo se pinta si existe un diente llamado 'Cotizacion'.
-// Sin el ?. esta linea lanzaba TypeError y dejaba el boton muerto.
+// Sin el ?. esta línea lanzaba TypeError y dejaba el botón muerto.
 document.getElementById('boton-imprimir-cotizacion')?.addEventListener('click', async () => {
     const observacion = document.querySelector('.cotizacion-tarea').value.trim();
 

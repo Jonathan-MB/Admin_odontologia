@@ -70,7 +70,7 @@ class Cliente extends Model
     /**
      * Regla del negocio: un paciente tiene una sola cita pendiente a la vez.
      * Si ya existe una futura se MUEVE; solo si no hay se crea una nueva.
-     * Asi reagendar no deja la cita vieja colgada en su dia original.
+     * Así reagendar no deja la cita vieja colgada en su día original.
      */
     public function agendarProximaCita($fechaHora, $sedeId = null, $especialistaId = null): Cita
     {
@@ -95,7 +95,7 @@ class Cliente extends Model
 
     /**
      * Marca la cita pendiente como cancelada. No se borra: queda el rastro
-     * de que existio y de que no se cumplio.
+     * de que existió y de que no se cumplió.
      */
     public function cancelarProximaCita(): void
     {
@@ -114,9 +114,9 @@ class Cliente extends Model
 
 
     /**
-     * Deja en clientes.fecha_cita la proxima cita agendada del paciente.
-     * Esa columna sigue siendo la que leen facturacion, historias y la
-     * impresion: aqui solo se mantiene al dia a partir de la tabla citas.
+     * Deja en clientes.fecha_cita la próxima cita agendada del paciente.
+     * Esa columna sigue siendo la que leen facturación, historias y la
+     * impresión: aquí solo se mantiene al día a partir de la tabla citas.
      */
     public function sincronizarProximaCita(): void
     {
@@ -139,7 +139,7 @@ class Cliente extends Model
     /**
      * Busca por nombre y apellidos.
      * Cada palabra escrita debe aparecer en alguno de los tres campos,
-     * asi "juan perez" encuentra a Juan Perez sin importar el orden.
+     * así "juan perez" encuentra a Juan Pérez sin importar el orden.
      */
     public function scopeBuscarPorNombre($query, string $busqueda)
     {

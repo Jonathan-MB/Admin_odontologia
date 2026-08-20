@@ -18,7 +18,7 @@ document.querySelectorAll('.btn-cliente').forEach(btn => {
         document.getElementById('popup-correo').textContent    = btn.dataset.correo;
         document.getElementById('popup-documento').textContent = btn.dataset.documento;
 
-        // Precargar la cita actual para no tener que reescribirla entera
+        //  Precargar la cita actual para no tener que reescribirla entera
         const inputDia  = document.getElementById('popup-fecha-dia');
         const inputHora = document.getElementById('popup-fecha-hora');
         const citaActual = btn.dataset.fecha;
@@ -65,7 +65,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Confirmar antes de eliminar: no habia forma de deshacer
+// Confirmar antes de eliminar: no había forma de deshacer
 document.getElementById('form-eliminar').addEventListener('submit', (e) => {
     const nombre = document.getElementById('popup-nombre').textContent;
 
@@ -111,7 +111,7 @@ if (popupNuevaCita) {
         if (e.key === 'Escape') cerrar();
     });
 
-    // Buscar paciente mientras se escribe, esperando a que deje de teclear
+    //  Buscar paciente mientras se escribe, esperando a que deje de teclear
     let temporizador = null;
 
     buscarPaciente.addEventListener('input', () => {

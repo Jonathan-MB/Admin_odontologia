@@ -26,8 +26,8 @@ class Cita extends Model
 
     /**
      * Cada vez que cambia una cita se recalcula clientes.fecha_cita,
-     * que es el espejo que siguen leyendo facturacion, historias y
-     * la impresion de recibos.
+     * que es el espejo que siguen leyendo facturación, historias y
+     * la impresión de recibos.
      */
     protected static function booted(): void
     {

@@ -111,7 +111,7 @@ class FacturaController extends Controller
         ]);
 
         //  Registrar la cita en su propia tabla, con el especialista
-        //  que atendio. clientes.fecha_cita sigue guardandose arriba.
+        //  que atendió. clientes.fecha_cita sigue guardándose arriba.
         if ($request->fechaCita) {
             $cliente->agendarProximaCita(
                 $request->fechaCita,
@@ -159,8 +159,8 @@ class FacturaController extends Controller
         return $sede;
     });
 
-    // Totales por metodo de pago de la sede activa.
-    // Las facturas anteriores a esta funcion tienen metodo_pago_id nulo
+    //  Totales por método de pago de la sede activa.
+    // Las facturas anteriores a esta función tienen metodo_pago_id nulo
     // y se agrupan bajo "Sin registrar".
     $nombresMetodoPago = MetodoPago::pluck('nombre', 'id');
 
