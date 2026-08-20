@@ -506,4 +506,68 @@ class RevisionTemporalTest extends TestCase
 
         $this->assertNull($cliente->fresh()->fecha_cita);
     }
+
+    // ------------------------------------------------- CONSECUTIVO DE FACTURA
+
+    public function test_el_consecutivo_avanza_de_uno_en_uno(): void
+    {
+        $cliente = $this->cliente();
+
+        foreach ([41, 42, 43] as $esperado) {
+            $this->conSede()->postJson('/facturas/guardar', [
+                'clienteId'      => $cliente->id,
+                'sedeId'         => $this->sede->id,
+                'especialistaId' => $this->especialista->id,
+                'metodoPagoId'   => $this->efectivo->id,
+                'nombre'         => 'Juan Perez',
+                'abono'          => 1000,
+                'saldoFinal'     => 0,
+            ])->assertOk()->assertJson(['noFactura' => $esperado]);
+        }
+
+        $this->assertEquals(43, $this->sede->fresh()->no_factura);
+        $this->assertEquals(3, Factura::count());
+    }
+
+    /** Si algo revienta a mitad, el consecutivo no se gasta */
+    public function test_si_falla_la_factura_el_consecutivo_no_avanza(): void
+    {
+        $cliente = $this->cliente();
+
+        try {
+            $this->conSede()->postJson('/facturas/guardar', [
+                'clienteId'      => $cliente->id,
+                'sedeId'         => $this->sede->id,
+                'especialistaId' => 99999,   // no existe: viola la llave foranea
+                'metodoPagoId'   => $this->efectivo->id,
+                'nombre'         => 'Juan Perez',
+                'abono'          => 1000,
+                'saldoFinal'     => 0,
+            ]);
+        } catch (\Throwable $e) {
+            // se esperaba que fallara
+        }
+
+        $this->assertEquals(40, $this->sede->fresh()->no_factura, 'El consecutivo no debe gastarse');
+        $this->assertEquals(0, Factura::count(), 'No debe quedar factura a medias');
+    }
+
+    public function test_sin_sede_activa_no_se_factura(): void
+    {
+        $cliente = $this->cliente();
+
+        $this->actingAs($this->admin)->withSession(['sede' => ['id' => 99999]])
+            ->postJson('/facturas/guardar', [
+                'clienteId'      => $cliente->id,
+                'sedeId'         => $this->sede->id,
+                'especialistaId' => $this->especialista->id,
+                'metodoPagoId'   => $this->efectivo->id,
+                'nombre'         => 'Juan Perez',
+                'abono'          => 1000,
+                'saldoFinal'     => 0,
+            ])
+            ->assertStatus(422);
+
+        $this->assertEquals(0, Factura::count());
+    }
 }
